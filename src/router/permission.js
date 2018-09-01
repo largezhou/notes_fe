@@ -30,22 +30,21 @@ router.beforeEach((to, from, next) => {
           .catch(err => {
             log('permission getInfo catch', err.response)
             const res = err.response
-            // 如果获取用户信息失败，且响应为未认证，则前端清除token，并：
-            //   如果去的页面不需要登录，则直接跳转
-            //   否则提示已登出，跳转到登录页
+            // 如果获取用户信息失败，且响应为未认证，则前端清除token，弹出提示 并：
+            //   则直接跳转
+            //   否则跳转到登录页
             if (res && res.status == 401) {
               store.dispatch('frontendLogout')
 
-              if (needAuth) {
-                MessageBox.alert('已登出，请重新登录', '已登出', {
-                  confirmButtonText: '重新登录',
-                  type: 'warning',
-                }).finally(() => {
+              MessageBox.alert('已登出，请重新登录', '已登出', {
+                type: 'warning',
+              }).finally(() => {
+                if (needAuth) {
                   next({ name: 'login' })
-                })
-              } else {
-                next()
-              }
+                } else {
+                  next()
+                }
+              })
             }
           })
       }

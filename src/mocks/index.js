@@ -11,8 +11,16 @@ if (process.env.VUE_APP_USE_MOCK) {
     ]
   })
 
-  mock.onGet('auth/info').reply(200, {
-    name: '周霜霖',
+  mock.onGet('auth/info').reply(config => {
+    log('mock onGet auth/info ', config)
+    const token = config.headers.Authorization
+
+    // 模拟token失效的情况
+    if (token != 'a token') {
+      return [401]
+    }
+
+    return [200, { name: '周霜霖' }]
   })
 
   mock.onPost('/auth/logout').reply(200)

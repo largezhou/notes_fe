@@ -1,6 +1,7 @@
 'use strict'
 
 import axios from 'axios'
+import { getToken } from '../libs/token'
 
 // Full config:  https://github.com/axios/axios#request-config
 // axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || '';
@@ -17,6 +18,8 @@ const _axios = axios.create(config)
 
 _axios.interceptors.request.use(
   config => {
+    config.headers.Authorization = getToken()
+
     // Do something before request is sent
     return config
   },
