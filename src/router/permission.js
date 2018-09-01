@@ -3,7 +3,6 @@ import store from '@/store'
 import { getToken } from '@/libs/token'
 import { MessageBox } from 'element-ui'
 
-const loginPage = 'login'
 const guestPage = 'needAuth'
 
 router.beforeEach((to, from, next) => {
@@ -13,7 +12,7 @@ router.beforeEach((to, from, next) => {
   if (getToken()) {
     // 已登录的情况下，访问登录页，跳转到首页
     // 否则获取用户信息
-    if (to.name == loginPage) {
+    if (to.name == 'login') {
       next({ name: guestPage })
     } else {
       // 如果已有用户信息，则直接跳转
@@ -42,7 +41,7 @@ router.beforeEach((to, from, next) => {
                   confirmButtonText: '重新登录',
                   type: 'warning',
                 }).finally(() => {
-                  next({ name: loginPage })
+                  next({ name: 'login' })
                 })
               } else {
                 next()
@@ -54,7 +53,7 @@ router.beforeEach((to, from, next) => {
   } else {
     if (needAuth) {
       next({
-        name: loginPage,
+        name: 'login',
         query: {
           redirect: to.fullPath,
         },

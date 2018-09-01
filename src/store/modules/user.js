@@ -1,5 +1,5 @@
 import { getToken, removeToken, setToken } from '@/libs/token'
-import { login, getInfo } from '@/api/auth'
+import { login, getInfo, logout } from '@/api/auth'
 
 export default {
   state: {
@@ -48,9 +48,28 @@ export default {
       })
     },
 
-    frontendLogout({ commit }) {
-      commit('setName', '')
+    frontendLogout({ dispatch }) {
+      dispatch('clearAuth')
       removeToken()
+    },
+
+    logout({ dispatch }) {
+      return new Promise((resolve, reject) => {
+        logout()
+          .then(res => {
+            dispatch('clearAuth')
+            removeToken()
+            resolve()
+          })
+          .catch(err => {
+            reject(err)
+          })
+      })
+    },
+
+    clearAuth({ commit }) {
+      commit('setName', '')
+      commit('setToken', '')
     },
   },
 }

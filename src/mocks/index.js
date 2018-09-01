@@ -14,4 +14,6 @@ if (process.env.VUE_APP_USE_MOCK) {
   mock.onGet('auth/info').reply(200, {
     name: '周霜霖',
   })
+
+  mock.onPost('/auth/logout').reply(200)
 }
