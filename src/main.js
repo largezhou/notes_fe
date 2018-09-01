@@ -1,3 +1,5 @@
+import '@/libs/globals'
+
 import Vue from 'vue'
 import './plugins/axios'
 import App from './App.vue'
