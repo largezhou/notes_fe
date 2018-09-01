@@ -1,9 +1,17 @@
 import axios from '@/plugins/axios'
 
 export function login({ data, config = {} }) {
-  return axios
-    .post('auth/login', {
-      data,
-      ...config,
-    })
+  return axios({
+    url: 'auth/login',
+    method: 'post',
+    data,
+    ...config,
+  })
+}
+
+export function getInfo() {
+  return axios({
+    url: 'auth/info',
+    method: 'get',
+  })
 }

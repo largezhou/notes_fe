@@ -1,5 +1,5 @@
 import { getToken, removeToken, setToken } from '@/libs/token'
-import { login } from '@/api/auth'
+import { login, getInfo } from '@/api/auth'
 
 export default {
   state: {
@@ -12,7 +12,7 @@ export default {
       state.token = token
     },
 
-    setNamn(state, name) {
+    setName(state, name) {
       state.name = name
     },
   },
@@ -27,10 +27,30 @@ export default {
             commit('setToken', data.token)
             resolve()
           })
-          .catch(error => {
-            reject(error)
+          .catch(err => {
+            reject(err)
           })
       })
+    },
+
+    getInfo({ commit }) {
+      return new Promise((resolve, reject) => {
+        getInfo()
+          .then(res => {
+            const data = res.data
+            commit('setName', data.name)
+            resolve(res)
+          })
+          .catch(err => {
+            log('store getInfo catch')
+            reject(err)
+          })
+      })
+    },
+
+    frontendLogout({ commit }) {
+      commit('setName', '')
+      removeToken()
     },
   },
 }

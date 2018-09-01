@@ -21,6 +21,7 @@ const routersNeedAuth = [
     meta: {
       auth: true,
     },
+    component: () => import('@/views/Layout'),
     children: [
       {
         path: '/need-auth',

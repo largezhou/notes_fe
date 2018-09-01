@@ -19,6 +19,7 @@ module.exports = {
         asyncArrow: 'always',
       },
     ],
+    'eqeqeq': ['warn'],
   },
   parserOptions: {
     parser: 'babel-eslint',
