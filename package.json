@@ -19,6 +19,7 @@
     "@vue/cli-service": "^3.0.1",
     "@vue/eslint-config-standard": "^3.0.1",
     "axios": "^0.18.0",
+    "axios-mock-adapter": "^1.15.0",
     "babel-plugin-component": "^1.1.1",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
