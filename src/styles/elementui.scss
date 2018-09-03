@@ -3,3 +3,11 @@
 .el-card.is-hover-shadow:hover {
   box-shadow: 0 1px 3px rgba(26, 26, 26, .1);
 }
+
+.el-scrollbar__bar.is-vertical {
+  width: 10px;
+}
+
+.el-scrollbar__thumb {
+  background-color: rgba(191, 191, 191, 0.8);
+}
