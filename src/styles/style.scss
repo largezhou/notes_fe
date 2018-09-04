@@ -60,3 +60,18 @@ $navbar-height: 60px;
     padding: 10px 10px;
   }
 }
+
+.notes-container {
+  .el-card {
+    margin-bottom: 10px;
+  }
+
+  .el-card__header {
+    border-bottom: none;
+  }
+
+  .note-title {
+    font-size: 16px;
+    font-weight: 600;
+  }
+}

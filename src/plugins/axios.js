@@ -2,6 +2,7 @@
 
 import axios from 'axios'
 import { getToken } from '../libs/token'
+import { Message } from 'element-ui'
 
 // Full config:  https://github.com/axios/axios#request-config
 // axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || '';
@@ -26,19 +27,34 @@ _axios.interceptors.request.use(
   error => {
     // Do something with request error
     return Promise.reject(error)
-  }
+  },
 )
 
 // Add a response interceptor
 _axios.interceptors.response.use(
-  response => {
+  res => {
+    log(res.config.url, res)
+
     // Do something with response data
-    return response
+    return res
   },
-  error => {
-    // Do something with response error
-    return Promise.reject(error)
-  }
+  err => {
+    log('err in axios response', { err })
+    const res = err.response
+
+    if (res) {
+      switch (res.status) {
+        case 404:
+          Message.error('请求的网址的不存在')
+          break
+        default:
+          Message.error(`服务器错误(code: ${res.status})`)
+      }
+    } else {
+      alert('请求错误')
+    }
+    return Promise.reject(err)
+  },
 )
 
 export default _axios

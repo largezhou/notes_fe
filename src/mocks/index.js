@@ -1,7 +1,10 @@
 import axios from 'axios'
-import MockAdapter from 'axios-mock-adapter'
 
 if (process.env.VUE_APP_USE_MOCK) {
+  const MockAdapter = require('axios-mock-adapter')
+  const Faker = require('faker')
+  Faker.locale = 'zh_CN'
+
   const mock = new MockAdapter(axios)
 
   mock.onPost('auth/login').reply(config => {
@@ -24,4 +27,24 @@ if (process.env.VUE_APP_USE_MOCK) {
   })
 
   mock.onPost('/auth/logout').reply(200)
+
+  mock.onGet('/notes').reply(config => {
+    const data = []
+    const count = 20
+
+    for (let i = 0; i < count; i++) {
+      data.push({
+        id: i,
+        title: Faker.lorem.sentence(),
+        desc: Faker.lorem.sentence(),
+      })
+    }
+
+    return [
+      200,
+      {
+        notes: data,
+      },
+    ]
+  })
 }
