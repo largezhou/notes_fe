@@ -2,8 +2,7 @@ import axios from 'axios'
 
 if (process.env.VUE_APP_USE_MOCK) {
   const MockAdapter = require('axios-mock-adapter')
-  const Faker = require('faker')
-  Faker.locale = 'zh_CN'
+  const { fakeData } = require('./data')
 
   const mock = new MockAdapter(axios)
 
@@ -29,38 +28,10 @@ if (process.env.VUE_APP_USE_MOCK) {
   mock.onPost('/auth/logout').reply(200)
 
   mock.onGet('/notes').reply(config => {
-    let data = localStorage.getItem('/notes')
-    try {
-      data = JSON.parse(data)
-    } catch (e) {
-    }
-
-    if (!data) {
-      data = []
-      const count = 20
-
-      for (let i = 0; i < count; i++) {
-        data.push({
-          id: i,
-          title: Faker.lorem.sentence(),
-          desc: Faker.lorem.sentence(),
-          book: (Math.random() > 0.3)
-            ? {
-              id: i,
-              title: Faker.lorem.words(),
-            }
-            : null,
-          page: Faker.random.number(999),
-        })
-      }
-
-      localStorage.setItem('/notes', JSON.stringify(data))
-    }
-
     return [
       200,
       {
-        notes: data,
+        notes: fakeData.notes.getIndex(),
       },
     ]
   })

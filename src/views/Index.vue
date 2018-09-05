@@ -23,12 +23,12 @@
               </div>
               <div v-else>书不见啦~</div>
             </div>
-            <div class="title">
+            <div v-if="item.title" class="title">
               <router-link :to="`/notes/${item.id}`">{{ item.title }}</router-link>
             </div>
           </div>
           <div>
-            {{ item.desc }}
+            <router-link :to="`/notes/${item.id}`">{{ item.desc }}</router-link>
           </div>
         </el-card>
       </el-col>
