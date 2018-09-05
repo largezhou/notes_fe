@@ -37,6 +37,13 @@ if (process.env.VUE_APP_USE_MOCK) {
         id: i,
         title: Faker.lorem.sentence(),
         desc: Faker.lorem.sentence(),
+        book: (Math.random() > 0.3)
+          ? {
+            id: i,
+            title: Faker.lorem.words(),
+          }
+          : null,
+        page: Faker.random.number(999),
       })
     }
 

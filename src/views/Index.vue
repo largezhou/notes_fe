@@ -15,7 +15,17 @@
           class="box-card"
         >
           <div slot="header">
-            <span class="note-title">{{ item.title }}</span>
+            <div class="belong">
+              <div v-if="item.book">
+                <router-link :to="`/books/${item.book.id}`">{{ item.book.title }}</router-link>
+                •
+                <router-link :to="`/books/${item.book.id}/pages/${item.page}`">第{{ item.page }}页</router-link>
+              </div>
+              <div v-else>书不见啦~</div>
+            </div>
+            <div class="title">
+              <router-link :to="`/notes/${item.id}`">{{ item.title }}</router-link>
+            </div>
           </div>
           <div>
             {{ item.desc }}
