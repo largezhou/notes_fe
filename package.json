@@ -9,7 +9,9 @@
     "dev": "vue-cli-service build --mode development"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "element-ui": "^2.4.5",
+    "lodash": "^4.17.10",
     "normalize.css": "^8.0.0",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
@@ -20,10 +22,8 @@
     "@vue/cli-plugin-eslint": "^3.0.1",
     "@vue/cli-service": "^3.0.1",
     "@vue/eslint-config-standard": "^3.0.1",
-    "axios": "^0.18.0",
-    "axios-mock-adapter": "^1.15.0",
     "babel-plugin-component": "^1.1.1",
-    "faker": "^4.1.0",
+    "mockjs": "^1.0.1-beta3",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
     "vue-cli-plugin-axios": "0.0.4",
