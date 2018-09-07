@@ -1,7 +1,4 @@
 import mock from '../mock'
-import moment from 'moment'
-
-moment.locale('zh-cn')
 
 const Mock = require('mockjs')
 const Random = Mock.Random
@@ -11,9 +8,7 @@ mock('/books', 'get', {
     {
       'id|+1': 1,
       title: '@ctitle',
-      updated_at: () => {
-        return moment(Mock.Random.datetime()).fromNow()
-      },
+      updated_at: '@datetime',
       cover: () => {
         return Random.image('245X344', Random.color(), Random.color(), Random.ctitle())
       },

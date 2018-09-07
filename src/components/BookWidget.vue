@@ -13,7 +13,9 @@
             <div class="title">{{ item.title }}</div>
             <div class="footer">
               <span>{{ item.read }} / {{ item.total }} 页</span>
-              <span class="pull-right">{{ item.updated_at }}</span>
+              <span class="pull-right">
+                <human-time :time="item.updated_at" prefix="更新于："/>
+              </span>
             </div>
           </div>
         </el-card>
@@ -25,9 +27,11 @@
 
 <script>
 import { getBooks } from '@/api/books'
+import HumanTime from '@/components/HumanTime'
 
 export default {
   name: 'BookWidget',
+  components: { HumanTime },
   data() {
     return {
       books: [],

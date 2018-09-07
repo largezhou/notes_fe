@@ -10,7 +10,9 @@
           :key="item.id"
         >
           <div slot="header">
-            <div class="time">{{ item.created_at }}</div>
+            <div class="time">
+              <human-time :time="item.created_at" prefix="发布于："/>
+            </div>
             <div>
               <div class="belong">
                 <div v-if="item.book">
@@ -48,10 +50,11 @@
 <script>
 import { getNotes } from '../api/notes'
 import BookWidget from '@/components/BookWidget'
+import HumanTime from '@/components/HumanTime'
 
 export default {
   name: 'Index',
-  components: { BookWidget },
+  components: { BookWidget, HumanTime },
   data() {
     return {
       notes: [],
