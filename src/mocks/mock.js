@@ -8,7 +8,7 @@ const resolve = path => {
   return _.trim(baseURL, '/') + '/' + _.trim(path, '/')
 }
 
-export default (path, method, template) => {
+export default (path, method, template = {}) => {
   Mock.mock(resolve(path), method, options => {
     const key = options.type + options.url
 
