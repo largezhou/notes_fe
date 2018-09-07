@@ -43,6 +43,14 @@ $non-important-color: #8590a6;
     background-color: #f6f6f6;
     transition: background-color .3s;
   }
+
+  .more {
+    & > a {
+      cursor: pointer;
+      padding: 12px;
+      font-size: 24px;
+    }
+  }
 }
 
 .container {
