@@ -1,4 +1,9 @@
 import mock from '../mock'
+import moment from 'moment'
+
+moment.locale('zh-cn')
+
+const Mock = require('mockjs')
 
 mock('/notes', 'get', {
   'notes|20': [
@@ -11,7 +16,9 @@ mock('/notes', 'get', {
         title: '@ctitle',
       },
       'page|1-1000': 1,
-      created_at: '@datetime',
+      created_at: () => {
+        return moment(Mock.Random.datetime()).fromNow()
+      },
     },
   ],
 })
