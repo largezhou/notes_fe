@@ -4,10 +4,6 @@ const Mock = require('mockjs')
 
 let baseURL = process.env.VUE_APP_BASE_URL || '/'
 
-if (baseURL == '/') {
-  baseURL = location.origin
-}
-
 const resolve = path => {
   return _.trim(baseURL, '/') + '/' + _.trim(path, '/')
 }
