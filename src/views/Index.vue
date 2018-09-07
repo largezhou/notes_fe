@@ -33,6 +33,17 @@
           <div>
             <router-link :to="`/notes/${item.id}`">{{ item.desc }}</router-link>
           </div>
+          <div class="card-footer">
+            <el-tag
+              v-for="tag of item.tags"
+              :key="tag.id"
+              size="small"
+              type="info"
+              disable-transitions
+            >
+              <router-link :to="`/tags/${tag.id}`">{{ tag.name }}</router-link>
+            </el-tag>
+          </div>
         </el-card>
       </el-col>
     </el-row>
