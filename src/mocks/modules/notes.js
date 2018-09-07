@@ -11,6 +11,7 @@ mock('/notes', 'get', {
         title: '@ctitle',
       },
       'page|1-1000': 1,
+      created_at: '@datetime',
     },
   ],
 })

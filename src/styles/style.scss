@@ -1,4 +1,5 @@
 $navbar-height: 60px;
+$non-important-color: #8590a6;
 
 #app {
   height: 100%;
@@ -68,10 +69,16 @@ $navbar-height: 60px;
 
   .el-card__header {
     border-bottom: none;
+
+    .time {
+      float: right;
+      color: $non-important-color;
+      font-size: 14px;
+    }
   }
 
   .title {
-    color: #8590a6;
+    color: $non-important-color;
     font-size: 14px;
   }
 
