@@ -15,18 +15,36 @@ const login = {
   component: () => import('@/views/Login'),
 }
 
-const routersNeedAuth = [
+const otherRouters = [
   {
     path: '',
-    meta: {
-      auth: true,
-    },
     component: () => import('@/views/Layout'),
     children: [
       {
         path: '/need-auth',
         name: 'needAuth',
+        meta: {
+          auth: true,
+        },
         component: () => import('@/views/NeedAuth'),
+      },
+
+      {
+        path: '/books',
+        name: 'bookIndex',
+        component: () => import('@/views/books/Index'),
+      },
+
+      {
+        path: '/books/:id(\\d+)',
+        name: 'bookShow',
+        component: () => import('@/views/books/Show'),
+      },
+
+      {
+        path: '/books/:id(\\d+)/edit',
+        name: 'bookEdit',
+        component: () => import('@/views/books/Edit'),
       },
     ],
   },
@@ -44,7 +62,7 @@ export default new Router({
   routes: [
     index,
     login,
-    ...routersNeedAuth,
+    ...otherRouters,
     page404,
   ],
 })
