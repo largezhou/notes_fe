@@ -23,8 +23,6 @@
 </template>
 
 <script>
-import { Message } from 'element-ui'
-
 export default {
   name: 'Login',
   data() {
@@ -52,8 +50,11 @@ export default {
               data: this.loginForm,
             })
             .then(res => {
-              Message.success('登录成功')
-              this.$router.push({ name: 'needAuth' })
+              this.$message.success('登录成功')
+              const r = this.$route.query._redirect
+              const to = r || { name: 'index' }
+
+              this.$router.push(to)
             })
         }
       })

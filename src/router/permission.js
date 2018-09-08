@@ -2,11 +2,12 @@ import router from './index'
 import store from '@/store'
 import { getToken } from '@/libs/token'
 import { MessageBox } from 'element-ui'
+import utils from '@/libs/utils'
 
 const guestPage = 'needAuth'
 
 router.beforeEach((to, from, next) => {
-  const needAuth = to.matched.some(r => (r.meta && r.meta.auth))
+  const needAuth = utils.needAuth(to)
 
   // 本地有token，表示已登录
   if (getToken()) {
@@ -54,7 +55,7 @@ router.beforeEach((to, from, next) => {
       next({
         name: 'login',
         query: {
-          redirect: to.fullPath,
+          _redirect: to.fullPath,
         },
       })
     } else {
