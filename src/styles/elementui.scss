@@ -11,3 +11,10 @@
 .el-scrollbar__thumb {
   background-color: rgba(191, 191, 191, 0.8);
 }
+
+@media only screen and (max-width: 768px) {
+  .el-card__body,
+  .el-card__header {
+    padding: 10px;
+  }
+}
