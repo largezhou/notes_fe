@@ -35,7 +35,6 @@
               v-for="tag of item.tags"
               :key="tag.id"
               size="small"
-              type="info"
               disable-transitions
             >
               <router-link :to="`/tags/${tag.id}`">{{ tag.name }}</router-link>
