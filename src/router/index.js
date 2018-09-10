@@ -56,9 +56,15 @@ const page404 = {
   component: () => import('@/views/errors/Page404'),
 }
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
+  scrollBehavior(to, from, savedPosition) {
+    if (to.meta.scrollTop) {
+      const content = document.querySelector('.content-wrapper .el-scrollbar__wrap')
+      content.scrollTop = to.meta.scrollTop
+    }
+  },
   routes: [
     index,
     login,
@@ -66,3 +72,13 @@ export default new Router({
     page404,
   ],
 })
+
+router.beforeEach((to, from, next) => {
+  const content = document.querySelector('.content-wrapper .el-scrollbar__wrap')
+  if (content) {
+    from.meta.scrollTop = content.scrollTop
+  }
+  next()
+})
+
+export default router

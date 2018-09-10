@@ -29,7 +29,9 @@
       </div>
     </div>
     <el-scrollbar class="content-wrapper">
-      <router-view/>
+      <keep-alive>
+        <router-view/>
+      </keep-alive>
     </el-scrollbar>
   </div>
 </template>
