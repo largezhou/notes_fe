@@ -2,7 +2,7 @@
   <div class="container content book-show">
     <el-row :gutter="10" type="flex" justify="center">
       <el-col :md="18" :sm="20">
-        <el-card class="book-card">
+        <el-card>
           <el-row :gutter="20" type="flex">
             <el-col :span="6" :xs="8" class="cover">
               <img src="http://dummyimage.com/245X344/7987f2/aaf279&text=呵呵">
@@ -27,6 +27,13 @@
               </div>
             </el-col>
           </el-row>
+        </el-card>
+        <el-card class="progress">
+          <el-progress
+            :percentage="25"
+            :stroke-width="20"
+            :text-inside="true"
+          ></el-progress>
         </el-card>
       </el-col>
     </el-row>
@@ -86,6 +93,19 @@ export default {
 
     .info {
       font-size: 14px;
+    }
+  }
+
+  .progress {
+    margin: 5px 0;
+
+    .el-card__body {
+      padding: 0;
+    }
+
+    .el-progress-bar__outer,
+    .el-progress-bar__inner {
+      border-radius: 0;
     }
   }
 }
