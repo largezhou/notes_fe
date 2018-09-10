@@ -60,9 +60,12 @@ const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   scrollBehavior(to, from, savedPosition) {
-    if (to.meta.scrollTop) {
+    // savedPosition为null表示页面是跳转的，而不是历史记录中`前进`或`后退`
+    if (to.meta.scrollTop && savedPosition !== null) {
       const content = document.querySelector('.content-wrapper .el-scrollbar__wrap')
       content.scrollTop = to.meta.scrollTop
+    } else {
+      return { x: 0, y: 0 }
     }
   },
   routes: [
