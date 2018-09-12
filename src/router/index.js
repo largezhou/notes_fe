@@ -6,6 +6,9 @@ Vue.use(Router)
 const index = {
   path: '/',
   name: 'index',
+  meta: {
+    keepAlive: true,
+  },
   component: () => import('@/views/Index'),
 }
 

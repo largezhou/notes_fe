@@ -30,8 +30,9 @@
     </div>
     <el-scrollbar class="content-wrapper">
       <keep-alive>
-        <router-view/>
+        <router-view v-if="$route.meta.keepAlive"/>
       </keep-alive>
+      <router-view v-if="!$route.meta.keepAlive"/>
     </el-scrollbar>
   </div>
 </template>
