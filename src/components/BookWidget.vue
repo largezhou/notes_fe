@@ -39,10 +39,10 @@ export default {
     }
   },
   mounted() {
-    this.getBooks()
+    this.getData()
   },
   methods: {
-    getBooks() {
+    getData() {
       getBooks()
         .then(res => {
           const data = res.data

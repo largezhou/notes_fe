@@ -60,11 +60,16 @@ export default {
     }
   },
   created() {
-    getNotes()
-      .then(res => {
-        const data = res.data
-        this.notes = data.notes
-      })
+    this.getData()
+  },
+  methods: {
+    getData() {
+      getNotes()
+        .then(res => {
+          const data = res.data
+          this.notes = data.notes
+        })
+    },
   },
 }
 </script>

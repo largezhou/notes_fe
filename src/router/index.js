@@ -61,7 +61,18 @@ const router = new Router({
   base: process.env.BASE_URL,
   scrollBehavior(to, from, savedPosition) {
     // savedPosition为null表示页面是跳转的，而不是历史记录中`前进`或`后退`
-    if (to.meta.scrollTop && savedPosition !== null) {
+
+    // 如果页面是跳转的，则标记前往的路由需要重新加载数据
+    // 否则不需要
+    if (savedPosition) {
+      to.meta.needReload = false
+    } else {
+      to.meta.needReload = true
+    }
+
+    // 如果去的页面是前进或者后退的，且存了滚动条位置，则滚到相应位置
+    // 否则滚到顶部
+    if (to.meta.scrollTop && savedPosition) {
       const content = document.querySelector('.content-wrapper .el-scrollbar__wrap')
       content.scrollTop = to.meta.scrollTop
     } else {
