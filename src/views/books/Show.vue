@@ -193,6 +193,10 @@ export default {
     font-size: 14px;
     text-align: center;
     color: $non-important-color;
+
+    .el-card__body {
+      padding: 80px 10px;
+    }
   }
 }
 </style>
