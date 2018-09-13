@@ -1,14 +1,14 @@
 <template>
-  <el-card>
+  <el-card class="note-item">
     <div slot="header">
       <div class="time">
         <human-time :time="item.created_at" prefix="发布于："/>
       </div>
       <div>
-        <div v-if="!disableBelong" class="belong">
+        <div class="belong">
           <div v-if="item.book">
-            <router-link :to="`/books/${item.book.id}`">{{ item.book.title }}</router-link>
-            •
+            <router-link v-if="!disableBook" :to="`/books/${item.book.id}`">{{ item.book.title }}</router-link>
+            <span v-if="!disableBook">•</span>
             <router-link :to="`/books/${item.book.id}/pages/${item.page}`">第{{ item.page }}页</router-link>
           </div>
           <div v-else>书不见啦~</div>
@@ -42,7 +42,7 @@ export default {
   components: { HumanTime },
   props: {
     item: Object,
-    disableBelong: Boolean,
+    disableBook: Boolean,
   },
 }
 </script>

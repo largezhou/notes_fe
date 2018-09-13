@@ -25,6 +25,10 @@
                 <span class="label">总页数</span>
                 <span>230</span> 页
               </div>
+              <div class="item">
+                <span class="label">笔记</span>
+                <span>25</span> 条
+              </div>
             </el-col>
           </el-row>
         </el-card>
@@ -39,6 +43,15 @@
           <el-button size="mini" plain @click="onChangeSort('page')">页数 <span>{{ sortIcon('page') }}</span></el-button>
           <el-button size="mini" plain @click="onChangeSort('created_at')">时间 <span>{{ sortIcon('created_at') }}</span></el-button>
         </el-button-group>
+        <div v-if="notes.length > 0">
+          <book-note-item
+            v-for="item of notes"
+            :key="item.id"
+            :item="item"
+            disable-book
+          />
+        </div>
+        <el-card class="no-notes" v-else>没有任何笔记</el-card>
       </el-col>
     </el-row>
   </div>
@@ -46,14 +59,17 @@
 
 <script>
 import HumanTime from '@/components/HumanTime'
+import BookNoteItem from '@/components/BookNoteItem'
 
 export default {
   name: 'Show',
-  components: { HumanTime },
+  components: { HumanTime, BookNoteItem },
   data() {
     return {
       sortField: 'page',
       sortType: 'desc',
+
+      notes: [],
     }
   },
   methods: {
@@ -109,12 +125,6 @@ export default {
 @import "~@/styles/variables";
 
 .book-show {
-  .title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-
   .cover {
     max-width: 150px;
     img {
@@ -125,6 +135,12 @@ export default {
   .info {
     padding: 10px 10px 0 10px;
     font-size: 15px;
+
+    .title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
 
     .item {
       margin-bottom: 10px;
@@ -143,12 +159,12 @@ export default {
   }
 
   @media only screen and (max-width: 768px) {
-    .title {
-      font-size: 16px;
-    }
-
     .info {
       font-size: 14px;
+
+      .title {
+        font-size: 16px;
+      }
     }
   }
 
@@ -171,6 +187,12 @@ export default {
       padding: 3px 5px;
       background-color: #f6f6f6;
     }
+  }
+
+  .no-notes {
+    font-size: 14px;
+    text-align: center;
+    color: $non-important-color;
   }
 }
 </style>

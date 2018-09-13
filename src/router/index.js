@@ -77,7 +77,9 @@ const router = new Router({
     // 否则滚到顶部
     if (to.meta.scrollTop && savedPosition) {
       const content = document.querySelector('.content-wrapper .el-scrollbar__wrap')
-      content.scrollTop = to.meta.scrollTop
+      if (content) {
+        content.scrollTop = to.meta.scrollTop
+      }
     } else {
       return { x: 0, y: 0 }
     }
