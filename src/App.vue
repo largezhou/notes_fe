@@ -28,12 +28,12 @@
         </el-row>
       </div>
     </div>
-    <el-scrollbar class="content-wrapper">
+    <div class="content-wrapper">
       <keep-alive>
         <router-view v-if="$route.meta.keepAlive"/>
       </keep-alive>
       <router-view v-if="!$route.meta.keepAlive"/>
-    </el-scrollbar>
+    </div>
   </div>
 </template>
 

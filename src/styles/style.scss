@@ -10,10 +10,6 @@
   clear: both;
 }
 
-#app {
-  height: 100%;
-}
-
 .navbar-wrapper {
   height: $navbar-height;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
@@ -56,7 +52,6 @@
 
 .container {
   box-sizing: border-box;
-  width: 100%;
   max-width: 960px;
   margin: 0 auto;
   padding: 0 10px;
@@ -64,15 +59,6 @@
 
 .content-wrapper {
   margin-top: $navbar-height;
-  height: calc(100% - #{$navbar-height});
-
-  .el-scrollbar__wrap {
-    overflow-x: hidden;
-  }
-
-  .el-scrollbar__bar.is-horizontal {
-    display: none;
-  }
 
   .content {
     padding: 10px 10px;

@@ -73,16 +73,7 @@ const router = new Router({
       to.meta.needReload = true
     }
 
-    // 如果去的页面是前进或者后退的，且存了滚动条位置，则滚到相应位置
-    // 否则滚到顶部
-    if (to.meta.scrollTop && savedPosition) {
-      const content = document.querySelector('.content-wrapper .el-scrollbar__wrap')
-      if (content) {
-        content.scrollTop = to.meta.scrollTop
-      }
-    } else {
-      return { x: 0, y: 0 }
-    }
+    return { x: 0, y: 0 }
   },
   routes: [
     index,
@@ -90,14 +81,6 @@ const router = new Router({
     ...otherRouters,
     page404,
   ],
-})
-
-router.beforeEach((to, from, next) => {
-  const content = document.querySelector('.content-wrapper .el-scrollbar__wrap')
-  if (content) {
-    from.meta.scrollTop = content.scrollTop
-  }
-  next()
 })
 
 export default router
