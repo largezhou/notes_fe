@@ -35,6 +35,10 @@
             :text-inside="true"
           ></el-progress>
         </el-card>
+        <el-button-group class="notes-sort-group">
+          <el-button size="mini" plain @click="onChangeSort('page')">页数 <span>{{ sortIcon('page') }}</span></el-button>
+          <el-button size="mini" plain @click="onChangeSort('created_at')">时间 <span>{{ sortIcon('created_at') }}</span></el-button>
+        </el-button-group>
       </el-col>
     </el-row>
   </div>
@@ -46,6 +50,58 @@ import HumanTime from '@/components/HumanTime'
 export default {
   name: 'Show',
   components: { HumanTime },
+  data() {
+    return {
+      sortField: 'page',
+      sortType: 'desc',
+    }
+  },
+  methods: {
+    onChangeSort(field) {
+      if (this.sortField == field) {
+        this.sortType = this.sortType == 'desc' ? 'asc' : 'desc'
+      } else {
+        this.sortField = field
+        this.sortType = 'desc'
+      }
+
+      this.$router.push({
+        path: this.$route.path,
+        query: Object.assign({}, this.$route.query, { _sort_field: this.sortField, _sort_type: this.sortType }),
+      })
+    },
+
+    sortIcon(field) {
+      if (this.sortField != field) {
+        return ''
+      }
+
+      return (this.sortType == 'asc') ? '↑' : '↓'
+    },
+  },
+  watch: {
+    $route: {
+      handler(newValue) {
+        const sortField = ['page', 'created_at']
+        const sortType = ['desc', 'asc']
+
+        const query = newValue.query
+
+        if (sortField.indexOf(query._sort_field) === -1) {
+          this.sortField = 'page'
+        } else {
+          this.sortField = query._sort_field
+        }
+
+        if (sortType.indexOf(query._sort_type) === -1) {
+          this.sortType = 'desc'
+        } else {
+          this.sortType = query._sort_type
+        }
+      },
+      immediate: true,
+    },
+  },
 }
 </script>
 
@@ -106,6 +162,14 @@ export default {
     .el-progress-bar__outer,
     .el-progress-bar__inner {
       border-radius: 0;
+    }
+  }
+
+  .notes-sort-group {
+    margin-bottom: 5px;
+    button {
+      padding: 3px 5px;
+      background-color: #f6f6f6;
     }
   }
 }
