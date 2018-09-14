@@ -117,26 +117,31 @@ export default {
           this.book = data.book
         })
     },
+
+    initSort() {
+      const sortField = ['page', 'created_at']
+      const sortType = ['desc', 'asc']
+
+      const query = this.$route.query
+
+      if (sortField.indexOf(query._sort_field) === -1) {
+        this.sortField = 'page'
+      } else {
+        this.sortField = query._sort_field
+      }
+
+      if (sortType.indexOf(query._sort_type) === -1) {
+        this.sortType = 'desc'
+      } else {
+        this.sortType = query._sort_type
+      }
+    },
   },
   watch: {
     $route: {
-      handler(newValue) {
-        const sortField = ['page', 'created_at']
-        const sortType = ['desc', 'asc']
-
-        const query = newValue.query
-
-        if (sortField.indexOf(query._sort_field) === -1) {
-          this.sortField = 'page'
-        } else {
-          this.sortField = query._sort_field
-        }
-
-        if (sortType.indexOf(query._sort_type) === -1) {
-          this.sortType = 'desc'
-        } else {
-          this.sortType = query._sort_type
-        }
+      handler(newValue, oldValue) {
+        this.initSort()
+        this.getData()
       },
       immediate: true,
     },
