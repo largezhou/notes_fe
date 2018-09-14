@@ -1,10 +1,18 @@
 .ivu-back-top-inner {
   border-radius: 50%;
   background-color: #fff;
+  height: 40px;
+  width: 40px;
+  text-align: center;
+  line-height: 40px;
 
   &:hover {
     background-color: #fff;
     box-shadow: 0 2px 8px 1px rgba(0, 0, 0, 0.2);
+  }
+
+  .el-icon-arrow-up {
+    font-weight: bolder;
   }
 }
 

@@ -34,7 +34,9 @@
       </keep-alive>
       <router-view v-if="!$route.meta.keepAlive"/>
     </div>
-    <back-top class="back-top"/>
+    <back-top>
+      <div class="ivu-back-top-inner"><i class="el-icon-arrow-up"/></div>
+    </back-top>
   </div>
 </template>
 
