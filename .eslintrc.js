@@ -20,6 +20,7 @@ module.exports = {
       },
     ],
     'eqeqeq': ['warn'],
+    'no-eval': ['warn'],
   },
   parserOptions: {
     parser: 'babel-eslint',

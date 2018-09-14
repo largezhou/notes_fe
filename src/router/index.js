@@ -41,6 +41,9 @@ const otherRouters = [
       {
         path: '/books/:id(\\d+)',
         name: 'bookShow',
+        meta: {
+          keepAlive: true,
+        },
         component: () => import('@/views/books/Show'),
       },
 
@@ -67,13 +70,9 @@ const router = new Router({
 
     // 如果页面是跳转的，则标记前往的路由需要重新加载数据
     // 否则不需要
-    if (savedPosition) {
-      to.meta.needReload = false
-    } else {
-      to.meta.needReload = true
-    }
+    to.meta.needReload = !savedPosition
 
-    return { x: 0, y: 0 }
+    return savedPosition || { x: 0, y: 0 }
   },
   routes: [
     index,

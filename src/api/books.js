@@ -6,3 +6,11 @@ export function getBooks() {
     method: 'get',
   })
 }
+
+export function getBook(id, query) {
+  return axios({
+    url: `books/${id}`,
+    method: 'get',
+    params: query,
+  })
+}

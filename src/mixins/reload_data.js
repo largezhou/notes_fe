@@ -10,6 +10,7 @@ export default {
   activated() {
     this.$nextTick(() => {
       if (this.$route.meta.needReload) {
+        log('in reload data mixin')
         // 清空旧数据
         Object.assign(this.$data, JSON.parse(this.oldData))
         // 重新获取数据

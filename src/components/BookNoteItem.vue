@@ -6,12 +6,15 @@
       </div>
       <div>
         <div class="belong">
-          <div v-if="item.book">
-            <router-link v-if="!disableBook" :to="`/books/${item.book.id}`">{{ item.book.title }}</router-link>
-            <span v-if="!disableBook">•</span>
+          <div v-if="!item.book && !disableBook">书不见啦~</div>
+          <div v-else-if="disableBook">
+            <router-link :to="`/books/${book.id}/pages/${item.page}`">第{{ item.page }}页</router-link>
+          </div>
+          <div v-else>
+            <router-link :to="`/books/${item.book.id}`">{{ item.book.title }}</router-link>
+            <span>•</span>
             <router-link :to="`/books/${item.book.id}/pages/${item.page}`">第{{ item.page }}页</router-link>
           </div>
-          <div v-else>书不见啦~</div>
         </div>
         <div v-if="item.title" class="title">
           <router-link :to="`/notes/${item.id}`">{{ item.title }}</router-link>
@@ -43,6 +46,7 @@ export default {
   props: {
     item: Object,
     disableBook: Boolean,
+    book: Object,
   },
 }
 </script>

@@ -1,40 +1,40 @@
 <template>
-  <div class="container content book-show">
+  <div class="container content book-show" v-if="book">
     <el-row :gutter="10" type="flex" justify="center">
       <el-col :md="18" :sm="20">
         <el-card>
           <el-row :gutter="20" type="flex">
             <el-col :span="6" :xs="8" class="cover">
-              <img src="http://dummyimage.com/245X344/7987f2/aaf279&text=呵呵">
+              <img :src="book.cover">
             </el-col>
             <el-col :span="16" class="info">
-              <div class="title">深入理解计算机系统（第3版）</div>
+              <div class="title">{{ book.title }}</div>
               <div class="item">
                 <span class="label">开始阅读</span>
-                <human-time time="2017-12-23 12:12:12" prefix="开始于："/>
+                <human-time :time="book.started_at" prefix="开始于："/>
               </div>
               <div class="item">
                 <span class="label">更新</span>
-                <human-time time="2018-08-23 12:12:12" prefix="最近更新："/>
+                <human-time :time="book.updated_at" prefix="最近更新："/>
               </div>
               <div class="item">
                 <span class="label">已读</span>
-                <span>111</span> 页
+                <span>{{ book.read }}</span> 页
               </div>
               <div class="item">
                 <span class="label">总页数</span>
-                <span>230</span> 页
+                <span>{{ book.total }}</span> 页
               </div>
               <div class="item">
                 <span class="label">笔记</span>
-                <span>25</span> 条
+                <span>{{ book.notes.length }}</span> 条
               </div>
             </el-col>
           </el-row>
         </el-card>
         <el-card class="progress">
           <el-progress
-            :percentage="25"
+            :percentage="readPercent"
             :stroke-width="20"
             :text-inside="true"
           ></el-progress>
@@ -43,11 +43,12 @@
           <el-button size="mini" plain @click="onChangeSort('page')">页数 <span>{{ sortIcon('page') }}</span></el-button>
           <el-button size="mini" plain @click="onChangeSort('created_at')">时间 <span>{{ sortIcon('created_at') }}</span></el-button>
         </el-button-group>
-        <div v-if="notes.length > 0">
+        <div v-if="book.notes.length > 0">
           <book-note-item
-            v-for="item of notes"
+            v-for="item of book.notes"
             :key="item.id"
             :item="item"
+            :book="book"
             disable-book
           />
         </div>
@@ -60,6 +61,7 @@
 <script>
 import HumanTime from '@/components/HumanTime'
 import BookNoteItem from '@/components/BookNoteItem'
+import { getBook } from '@/api/books'
 
 export default {
   name: 'Show',
@@ -69,8 +71,20 @@ export default {
       sortField: 'page',
       sortType: 'desc',
 
-      notes: [],
+      book: null,
     }
+  },
+  created() {
+    this.getData()
+  },
+  computed: {
+    readPercent() {
+      if (this.book.read > this.book.total) {
+        return 100
+      } else {
+        return Math.ceil(this.book.read / this.book.total * 100)
+      }
+    },
   },
   methods: {
     onChangeSort(field) {
@@ -93,6 +107,15 @@ export default {
       }
 
       return (this.sortType == 'asc') ? '↑' : '↓'
+    },
+
+    getData() {
+      const r = this.$route
+      getBook(r.params.id, r.query)
+        .then(res => {
+          const data = res.data
+          this.book = data.book
+        })
     },
   },
   watch: {
