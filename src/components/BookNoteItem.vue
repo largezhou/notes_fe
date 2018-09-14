@@ -12,7 +12,7 @@
           </div>
           <div v-else>
             <router-link :to="`/books/${item.book.id}`">{{ item.book.title }}</router-link>
-            <span>•</span>
+            <span> • </span>
             <router-link :to="`/pages/${item.page.id}`">第{{ item.page.page }}页</router-link>
           </div>
         </div>
