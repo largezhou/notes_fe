@@ -10,5 +10,12 @@ module.exports = {
         'styleLibraryName': 'theme-chalk',
       },
     ],
+    [
+      'import',
+      {
+        'libraryName': 'iview',
+        'libraryDirectory': 'src/components',
+      },
+    ],
   ],
 }

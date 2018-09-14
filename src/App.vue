@@ -34,15 +34,18 @@
       </keep-alive>
       <router-view v-if="!$route.meta.keepAlive"/>
     </div>
+    <back-top class="back-top"/>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import utils from '@/libs/utils'
+import { BackTop } from 'iview'
 
 export default {
   name: 'App',
+  components: { BackTop },
   computed: {
     ...mapState({
       username: state => state.user.name,
