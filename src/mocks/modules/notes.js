@@ -10,7 +10,10 @@ mock('/notes', 'get', {
         'id|+1': 1,
         title: '@ctitle',
       },
-      'page|1-1000': 1,
+      page: {
+        'id|+1': 1,
+        'page|1-1000': 1,
+      },
       created_at: '@datetime',
       'tags|5-20': [
         {

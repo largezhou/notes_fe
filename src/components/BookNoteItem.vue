@@ -8,12 +8,12 @@
         <div class="belong">
           <div v-if="!item.book && !disableBook">书不见啦~</div>
           <div v-else-if="disableBook">
-            <router-link :to="`/books/${book.id}/pages/${item.page}`">第{{ item.page }}页</router-link>
+            <router-link :to="`/pages/${item.page.id}`">第{{ item.page.page }}页</router-link>
           </div>
           <div v-else>
             <router-link :to="`/books/${item.book.id}`">{{ item.book.title }}</router-link>
             <span>•</span>
-            <router-link :to="`/books/${item.book.id}/pages/${item.page}`">第{{ item.page }}页</router-link>
+            <router-link :to="`/pages/${item.page.id}`">第{{ item.page.page }}页</router-link>
           </div>
         </div>
         <div v-if="item.title" class="title">
