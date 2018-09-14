@@ -62,9 +62,11 @@
 import HumanTime from '@/components/HumanTime'
 import BookNoteItem from '@/components/BookNoteItem'
 import { getBook } from '@/api/books'
+import reloadData from '@/mixins/reload_data'
 
 export default {
   name: 'Show',
+  mixins: [reloadData],
   components: { HumanTime, BookNoteItem },
   data() {
     return {

@@ -19,9 +19,11 @@
 import { getNotes } from '../api/notes'
 import BookWidget from '@/components/BookWidget'
 import BookNoteItem from '@/components/BookNoteItem'
+import reloadData from '@/mixins/reload_data'
 
 export default {
   name: 'Index',
+  mixins: [reloadData],
   components: { BookWidget, BookNoteItem },
   data() {
     return {

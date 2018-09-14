@@ -9,9 +9,6 @@ import store from '@/store'
 import '@/plugins/element.js'
 import '@/styles/index.scss'
 import '@/router/permission'
-import reloadData from '@/mixins/reload_data'
-
-Vue.mixin(reloadData)
 
 Vue.config.productionTip = false
 
