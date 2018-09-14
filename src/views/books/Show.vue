@@ -139,9 +139,11 @@ export default {
   },
   watch: {
     $route: {
-      handler(newValue, oldValue) {
-        this.initSort()
-        this.getData()
+      handler() {
+        if (!this._inactive) {
+          this.initSort()
+          this.getData()
+        }
       },
       immediate: true,
     },

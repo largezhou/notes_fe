@@ -41,6 +41,9 @@ const otherRouters = [
       {
         path: '/books/:id(\\d+)',
         name: 'bookShow',
+        meta: {
+          keepAlive: true,
+        },
         component: () => import('@/views/books/Show'),
       },
 
