@@ -10,46 +10,6 @@
   clear: both;
 }
 
-.navbar-wrapper {
-  height: $navbar-height;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
-  position: fixed;
-  width: 100%;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  background-color: #fff;
-
-  .header {
-    padding: 6px 0;
-  }
-
-  .navbar-brand {
-    padding: ($navbar-height - 60px) / 2 + 8px 20px;
-  }
-
-  a {
-    font-size: 18px;
-    padding: ($navbar-height - 60px) / 2 + 14px 20px;
-    vertical-align: middle;
-    border-radius: 4px;
-    display: inline-block;
-  }
-
-  a:hover {
-    background-color: #f6f6f6;
-    transition: background-color .3s;
-  }
-
-  .more {
-    & > a {
-      cursor: pointer;
-      padding: 12px;
-      font-size: 24px;
-    }
-  }
-}
-
 .container {
   box-sizing: border-box;
   max-width: 960px;

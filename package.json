@@ -9,14 +9,18 @@
     "dev": "vue-cli-service build --mode development"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.0.0-rc.1",
     "axios": "^0.18.0",
     "element-ui": "^2.4.5",
     "iview": "^3.0.1",
     "lodash": "^4.17.10",
+    "material-design-icons-iconfont": "^3.0.3",
     "moment": "^2.22.2",
     "normalize.css": "^8.0.0",
+    "roboto-fontface": "*",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
+    "vuetify": "^1.2.0",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
@@ -32,6 +36,7 @@
     "vue-cli-plugin-axios": "0.0.4",
     "vue-cli-plugin-element": "^1.0.0",
     "vue-cli-plugin-iview": "^1.0.6",
+    "vue-cli-plugin-vuetify": "^0.2.0",
     "vue-template-compiler": "^2.5.17"
   }
 }

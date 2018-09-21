@@ -1,30 +1,27 @@
 <template>
-  <div class="navbar-wrapper">
+  <div class="navbar-wrapper v-toolbar primary">
     <div class="container">
-      <el-row :gutter="10" type="flex" justify="center header">
-        <el-col :md="24" :sm="20">
-          <router-link class="navbar-brand" to="/">
+      <v-toolbar dark color="primary">
+        <v-toolbar-side-icon></v-toolbar-side-icon>
+        <v-toolbar-items>
+          <v-btn to="/" flat>
             <img width="30" height="30" src="@/assets/logo.png">
-          </router-link>
-          <router-link to="/books">书</router-link>
-          <router-link to="/tags">标签</router-link>
-          <el-dropdown
-            v-if="username"
-            class="more pull-right"
-            trigger="click"
-            @command="onMoreCommand"
-          >
-            <a href="javascript:void(0);" class="el-icon-more"></a>
-            <el-dropdown-menu slot="dropdown">
-
-              <el-dropdown-item command="edit">编辑</el-dropdown-item>
-              <el-dropdown-item command="logout">退出登录</el-dropdown-item>
-
-            </el-dropdown-menu>
-
-          </el-dropdown>
-        </el-col>
-      </el-row>
+          </v-btn>
+        </v-toolbar-items>
+        <v-toolbar-items class="hidden-sm-and-down">
+          <v-btn to="/books" flat>书</v-btn>
+          <v-btn to="/tags" flat>标签</v-btn>
+        </v-toolbar-items>
+        <v-spacer></v-spacer>
+        <v-toolbar-items v-if="username" class="hidden-sm-and-down">
+          <v-btn flat>
+            <i class="material-icons">edit</i>
+          </v-btn>
+          <v-btn flat @click="onLogout">
+            <i class="material-icons">exit_to_app</i>
+          </v-btn>
+        </v-toolbar-items>
+      </v-toolbar>
     </div>
   </div>
 </template>
@@ -41,20 +38,32 @@ export default {
     }),
   },
   methods: {
-    onMoreCommand(command) {
-      switch (command) {
-        case 'logout':
-          this.$store
-            .dispatch('logout')
-            .then(() => {
-              this.$message.success('已退出')
-              if (utils.needAuth(this.$route)) {
-                this.$router.push({ name: 'index' })
-              }
-            })
-          break
-      }
+    onLogout() {
+      this.$store
+        .dispatch('logout')
+        .then(() => {
+          this.$message.success('已退出')
+          if (utils.needAuth(this.$route)) {
+            this.$router.push({ name: 'index' })
+          }
+        })
     },
   },
 }
 </script>
+
+<style lang="scss">
+.v-btn--active:before {
+  background-color: initial;
+}
+
+.navbar-wrapper {
+  .v-toolbar {
+    box-shadow: none;
+  }
+
+  .v-btn {
+    font-size: 18px;
+  }
+}
+</style>
