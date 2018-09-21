@@ -2,7 +2,7 @@
   <v-container grid-list-md class="content">
     <v-layout row wrap justify-center>
       <v-flex md3 class="hidden-sm-and-down">
-        <!--<book-widget/>-->
+        <book-widget/>
       </v-flex>
       <v-flex md9 sm12 class="notes-container">
         <book-note-item

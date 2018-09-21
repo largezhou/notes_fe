@@ -20,38 +20,3 @@
 .content {
   padding: 15px 10px;
 }
-
-.book-widget {
-  .books {
-    .el-card {
-      margin-bottom: 10px;
-    }
-
-    .cover {
-      width: 100%;
-      display: block;
-    }
-
-    .info {
-      padding: 15px;
-    }
-
-    .el-card__body {
-      padding: 0;
-    }
-
-    .el-progress-bar__outer,
-    .el-progress-bar__inner {
-      border-radius: unset;
-    }
-
-    .title {
-      margin-bottom: 10px;
-    }
-
-    .footer {
-      color: #8590a6;
-      font-size: 14px;
-    }
-  }
-}
