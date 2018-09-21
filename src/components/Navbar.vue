@@ -1,7 +1,7 @@
 <template>
   <div class="navbar-wrapper v-toolbar primary">
     <div class="container">
-      <v-toolbar dark color="primary">
+      <v-toolbar dark color="primary" ref="toolbar">
         <v-toolbar-side-icon></v-toolbar-side-icon>
         <v-toolbar-items>
           <v-btn to="/" flat>
@@ -58,12 +58,21 @@ export default {
 }
 
 .navbar-wrapper {
+  z-index: 2;
+  position: fixed;
+  left: 0;
+  top: 0;
+
   .v-toolbar {
     box-shadow: none;
   }
 
   .v-btn {
     font-size: 18px;
+  }
+
+  .v-toolbar__content {
+    height: 60px !important;
   }
 }
 </style>

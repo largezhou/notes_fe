@@ -1,18 +1,18 @@
 <template>
-  <div class="container content">
-    <el-row :gutter="10" type="flex" justify="center">
-      <el-col :md="6" class="hidden-sm-and-down">
-        <book-widget/>
-      </el-col>
-      <el-col :md="18" :sm="20" class="notes-container">
+  <v-container grid-list-md class="content">
+    <v-layout row wrap justify-center>
+      <v-flex md3 class="hidden-sm-and-down">
+        <!--<book-widget/>-->
+      </v-flex>
+      <v-flex md9 sm12 class="notes-container">
         <book-note-item
           v-for="item of notes"
           :key="item.id"
           :item="item"
         />
-      </el-col>
-    </el-row>
-  </div>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>

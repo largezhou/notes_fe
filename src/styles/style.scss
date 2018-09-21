@@ -17,51 +17,8 @@
   padding: 0 10px;
 }
 
-.content-wrapper {
-  margin-top: $navbar-height;
-
-  .content {
-    padding: 10px 10px;
-  }
-}
-
-.note-item {
-  margin-bottom: 10px;
-
-  .el-card__header {
-    border-bottom: none;
-    padding-bottom: 10px;
-
-    .time {
-      float: right;
-      color: $non-important-color;
-      font-size: 14px;
-    }
-  }
-
-  .el-card__body {
-    padding-top: 10px;
-  }
-
-  .card-footer {
-    margin-top: 20px;
-
-    .el-tag {
-      margin-right: 10px;
-      margin-bottom: 5px;
-    }
-  }
-
-  .title {
-    color: $non-important-color;
-    font-size: 14px;
-  }
-
-  .belong {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
+.content {
+  padding: 15px 10px;
 }
 
 .book-widget {
