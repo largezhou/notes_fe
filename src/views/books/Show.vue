@@ -1,48 +1,47 @@
 <template>
-  <div class="container content book-show" v-if="book">
-    <el-row :gutter="10" type="flex" justify="center">
-      <el-col :md="18" :sm="20">
-        <el-card>
-          <el-row :gutter="20" type="flex">
-            <el-col :span="6" :xs="8" class="cover">
-              <img :src="book.cover">
-            </el-col>
-            <el-col :span="16" class="info">
-              <div class="title">{{ book.title }}</div>
-              <div class="item">
-                <span class="label">开始阅读</span>
-                <human-time :time="book.started_at" prefix="开始于："/>
-              </div>
-              <div class="item">
-                <span class="label">更新</span>
-                <human-time :time="book.updated_at" prefix="最近更新："/>
-              </div>
-              <div class="item">
-                <span class="label">已读</span>
-                <span>{{ book.read }}</span> 页
-              </div>
-              <div class="item">
-                <span class="label">总页数</span>
-                <span>{{ book.total }}</span> 页
-              </div>
-              <div class="item">
-                <span class="label">笔记</span>
-                <span>{{ book.notes.length }}</span> 条
-              </div>
-            </el-col>
-          </el-row>
-        </el-card>
-        <el-card class="progress">
-          <el-progress
-            :percentage="readPercent"
-            :stroke-width="20"
-            :text-inside="true"
-          ></el-progress>
-        </el-card>
-        <el-button-group class="notes-sort-group">
-          <el-button size="mini" plain @click="onChangeSort('page')">页数 <span>{{ sortIcon('page') }}</span></el-button>
-          <el-button size="mini" plain @click="onChangeSort('created_at')">时间 <span>{{ sortIcon('created_at') }}</span></el-button>
-        </el-button-group>
+  <v-container grid-list-md class="content book-show" v-if="book">
+    <v-layout row wrap justify-center>
+      <v-flex md9 sm12 class="notes-container">
+        <v-card>
+          <v-card-title>
+            <v-layout row wrap>
+              <v-flex md3 xs4 class="cover">
+                <img :src="book.cover">
+              </v-flex>
+              <v-flex md8 class="book-info">
+                <div class="title">{{ book.title }}</div>
+                <div class="item">
+                  <span class="label">开始阅读</span>
+                  <human-time :time="book.started_at" prefix="开始于："/>
+                </div>
+                <div class="item">
+                  <span class="label">更新</span>
+                  <human-time :time="book.updated_at" prefix="最近更新："/>
+                </div>
+                <div class="item">
+                  <span class="label">已读</span>
+                  <span>{{ book.read }}</span> 页
+                </div>
+                <div class="item">
+                  <span class="label">总页数</span>
+                  <span>{{ book.total }}</span> 页
+                </div>
+                <div class="item">
+                  <span class="label">笔记</span>
+                  <span>{{ book.notes.length }}</span> 条
+                </div>
+              </v-flex>
+            </v-layout>
+          </v-card-title>
+        </v-card>
+        <v-card class="read-progress">
+          <v-progress-linear color="info" height="18" :value="readPercent"/>
+          <span class="progress-text">{{ readPercent }}%</span>
+        </v-card>
+        <div class="notes-sort-group">
+          <v-btn flat small @click="onChangeSort('page')">页数<i class="material-icons">{{ sortIcon('page') }}</i></v-btn>
+          <v-btn flat small @click="onChangeSort('created_at')">时间<i class="material-icons">{{ sortIcon('created_at') }}</i></v-btn>
+        </div>
         <div v-if="book.notes.length > 0">
           <book-note-item
             v-for="item of book.notes"
@@ -52,10 +51,9 @@
             disable-book
           />
         </div>
-        <el-card class="no-notes" v-else>没有任何笔记</el-card>
-      </el-col>
-    </el-row>
-  </div>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
@@ -108,7 +106,7 @@ export default {
         return ''
       }
 
-      return (this.sortType == 'asc') ? '↑' : '↓'
+      return (this.sortType == 'asc') ? 'arrow_drop_up' : 'arrow_drop_down'
     },
 
     getData() {
@@ -164,14 +162,15 @@ export default {
     }
   }
 
-  .info {
-    padding: 10px 10px 0 10px;
+  .book-info {
     font-size: 15px;
+    margin-left: 10px;
 
     .title {
       font-size: 24px;
       font-weight: bold;
       margin-bottom: 20px;
+      margin-top: 10px;
     }
 
     .item {
@@ -191,31 +190,40 @@ export default {
   }
 
   @media only screen and (max-width: 768px) {
-    .info {
+    .book-info {
       font-size: 14px;
 
       .title {
         font-size: 16px;
+        margin-bottom: 10px;
+      }
+
+      .item {
+        margin-bottom: 5px;
       }
     }
   }
 
-  .progress {
-    margin: 5px 0;
+  .read-progress {
+    position: relative;
 
-    .el-card__body {
-      padding: 0;
+    .progress-text {
+      position: absolute;
+      right: 10px;
+      top: 0;
+      z-index: 2;
+      font-weight: 500;
     }
 
-    .el-progress-bar__outer,
-    .el-progress-bar__inner {
-      border-radius: 0;
+    .v-progress-linear {
+      margin: 10px 0;
     }
   }
 
   .notes-sort-group {
-    margin-bottom: 5px;
-    button {
+    margin-bottom: 10px;
+    .v-btn {
+      margin: 0;
       padding: 3px 5px;
       background-color: #f6f6f6;
     }
@@ -225,10 +233,6 @@ export default {
     font-size: 14px;
     text-align: center;
     color: $non-important-color;
-
-    .el-card__body {
-      padding: 80px 10px;
-    }
   }
 }
 </style>
