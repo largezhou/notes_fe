@@ -2,7 +2,6 @@
 
 import axios from 'axios'
 import { getToken } from '../libs/token'
-import { Message } from 'element-ui'
 
 // Full config:  https://github.com/axios/axios#request-config
 // axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || '';
@@ -45,10 +44,10 @@ _axios.interceptors.response.use(
     if (res) {
       switch (res.status) {
         case 404:
-          Message.error('请求的网址的不存在')
+          alert('请求的网址的不存在')
           break
         default:
-          Message.error(`服务器错误(code: ${res.status})`)
+          alert(`服务器错误(code: ${res.status})`)
       }
     } else {
       alert('请求错误')

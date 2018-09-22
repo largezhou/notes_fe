@@ -42,7 +42,7 @@ export default {
       this.$store
         .dispatch('logout')
         .then(() => {
-          this.$message.success('已退出')
+          alert('已退出')
           if (utils.needAuth(this.$route)) {
             this.$router.push({ name: 'index' })
           }

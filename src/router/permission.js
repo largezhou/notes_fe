@@ -37,15 +37,13 @@ router.beforeEach((to, from, next) => {
             if (res && res.status == 401) {
               store.dispatch('frontendLogout')
 
-              MessageBox.alert('已登出，请重新登录', '已登出', {
-                type: 'warning',
-              }).finally(() => {
-                if (needAuth) {
-                  next({ name: 'login' })
-                } else {
-                  next()
-                }
-              })
+              alert('已登出，请重新登录')
+
+              if (needAuth) {
+                next({ name: 'login' })
+              } else {
+                next()
+              }
             }
           })
       }
