@@ -1,7 +1,6 @@
 import router from './index'
 import store from '@/store'
 import { getToken } from '@/libs/token'
-import { MessageBox } from 'element-ui'
 import utils from '@/libs/utils'
 
 const guestPage = 'needAuth'
@@ -37,7 +36,7 @@ router.beforeEach((to, from, next) => {
             if (res && res.status == 401) {
               store.dispatch('frontendLogout')
 
-              alert('已登出，请重新登录')
+              utils.snackbar('已登出，请重新登录')
 
               if (needAuth) {
                 next({ name: 'login' })

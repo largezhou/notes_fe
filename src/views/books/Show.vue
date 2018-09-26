@@ -3,7 +3,7 @@
     <v-layout row wrap justify-center>
       <v-flex md9 sm12 class="notes-container">
         <v-card>
-          <v-card-title>
+          <v-card-text>
             <v-layout row wrap>
               <v-flex md3 xs4 class="cover">
                 <img :src="book.cover">
@@ -32,7 +32,7 @@
                 </div>
               </v-flex>
             </v-layout>
-          </v-card-title>
+          </v-card-text>
         </v-card>
         <v-card class="read-progress">
           <v-progress-linear color="info" height="18" :value="readPercent"/>

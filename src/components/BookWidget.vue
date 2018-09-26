@@ -13,13 +13,14 @@
 
         <v-card-title>
           <h3 class="title">{{ item.title }}</h3>
-          <div class="footer">
-            <span>{{ item.read }} / {{ item.total }} 页</span>
-            <span class="pull-right">
+        </v-card-title>
+
+        <v-card-text class="footer">
+          <span>{{ item.read }} / {{ item.total }} 页</span>
+          <span class="pull-right">
               <human-time :time="item.updated_at" prefix="更新于："/>
               </span>
-          </div>
-        </v-card-title>
+        </v-card-text>
 
         <v-card-actions>
           <v-spacer/>

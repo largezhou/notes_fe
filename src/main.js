@@ -10,8 +10,13 @@ import router from '@/router'
 import store from '@/store'
 import '@/styles/index.scss'
 import '@/router/permission'
+import utils from '@/libs/utils'
+
+window.store = store
 
 Vue.config.productionTip = false
+
+Vue.prototype.$snackbar = utils.snackbar
 
 new Vue({
   router,

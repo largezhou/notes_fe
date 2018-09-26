@@ -50,7 +50,7 @@ export default {
               data: this.loginForm,
             })
             .then(res => {
-              alert('登录成功')
+              this.$snackbar('登录成功')
               const r = this.$route.query._redirect
               const to = r || { name: 'index' }
 

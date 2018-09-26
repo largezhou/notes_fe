@@ -9,20 +9,18 @@
         <router-view v-if="!$route.meta.keepAlive"/>
       </v-content>
     </v-app>
+
+    <global-snackbar/>
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar'
+import GlobalSnackbar from '@/components/GlobalSnackbar'
 
 export default {
   name: 'App',
-  components: { Navbar },
-  data() {
-    return {
-      navbarHeight: 64,
-    }
-  },
+  components: { Navbar, GlobalSnackbar },
 }
 </script>
 
