@@ -76,7 +76,6 @@ export default {
 
   .belong {
     font-size: 18px;
-    font-weight: 600;
     margin-bottom: 8px;
   }
 
