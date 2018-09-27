@@ -13,13 +13,20 @@
           <v-btn to="/tags" flat>标签</v-btn>
         </v-toolbar-items>
         <v-spacer></v-spacer>
-        <v-toolbar-items v-if="username" class="hidden-sm-and-down">
-          <v-btn flat>
-            <i class="material-icons">edit</i>
-          </v-btn>
-          <v-btn flat @click="onLogout">
-            <i class="material-icons">exit_to_app</i>
-          </v-btn>
+        <v-toolbar-items v-if="username">
+          <v-menu left offset-y>
+            <v-btn slot="activator" flat>
+              <v-icon>more_horiz</v-icon>
+            </v-btn>
+            <v-list>
+              <v-list-tile @click="">
+                <v-list-tile-title>开始看书</v-list-tile-title>
+              </v-list-tile>
+              <v-list-tile @click="onLogout">
+                <v-list-tile-title>退出登录</v-list-tile-title>
+              </v-list-tile>
+            </v-list>
+          </v-menu>
         </v-toolbar-items>
       </v-toolbar>
     </div>
