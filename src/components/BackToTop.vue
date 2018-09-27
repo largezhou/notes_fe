@@ -1,7 +1,7 @@
 <template>
   <v-scale-transition>
     <v-btn
-      v-if="topBtnShown"
+      v-if="topBtnShown && !goTopScrolling"
       fab
       dark
       small
@@ -9,7 +9,7 @@
       right
       fixed
       color="red"
-      @click="$vuetify.goTo(0)"
+      @click="onGoTop"
     >
       <v-icon>keyboard_arrow_up</v-icon>
     </v-btn>
@@ -24,6 +24,7 @@ export default {
     hideOverY: 500,
 
     oldY: 0,
+    goTopScrolling: false,
   }),
   mounted() {
     this.oldY = window.scrollY
@@ -41,6 +42,12 @@ export default {
       this.topBtnShown = (scrollYNow > this.hideOverY) && (scrollYNow < this.oldY)
 
       this.oldY = scrollYNow
+    },
+    onGoTop() {
+      this.goTopScrolling = true
+      this.$vuetify.goTo(0).finally(() => {
+        this.goTopScrolling = false
+      })
     },
   },
 }
