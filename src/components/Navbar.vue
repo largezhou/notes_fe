@@ -20,9 +20,11 @@
             </v-btn>
             <v-list>
               <v-list-tile @click="">
+                <span class="navbar-menu-icon"><v-icon>add</v-icon></span>
                 <v-list-tile-title>开始看书</v-list-tile-title>
               </v-list-tile>
               <v-list-tile @click="onLogout">
+                <span class="navbar-menu-icon"><v-icon>exit_to_app</v-icon></span>
                 <v-list-tile-title>退出登录</v-list-tile-title>
               </v-list-tile>
             </v-list>
@@ -81,5 +83,9 @@ export default {
   .v-toolbar__content {
     height: 60px !important;
   }
+}
+
+.navbar-menu-icon {
+  margin-right: 10px;
 }
 </style>
