@@ -13,16 +13,13 @@
           <v-btn to="/tags" flat>标签</v-btn>
         </v-toolbar-items>
         <v-spacer></v-spacer>
-        <v-toolbar-items v-if="username">
+        <v-toolbar-items v-if="true || username">
           <v-menu left offset-y>
             <v-btn slot="activator" flat>
               <v-icon>more_horiz</v-icon>
             </v-btn>
             <v-list>
-              <v-list-tile @click="">
-                <span class="navbar-menu-icon"><v-icon>add</v-icon></span>
-                <v-list-tile-title>开始看书</v-list-tile-title>
-              </v-list-tile>
+              <new-book/>
               <v-list-tile @click="onLogout">
                 <span class="navbar-menu-icon"><v-icon>exit_to_app</v-icon></span>
                 <v-list-tile-title>退出登录</v-list-tile-title>
@@ -38,9 +35,11 @@
 <script>
 import { mapState } from 'vuex'
 import utils from '@/libs/utils'
+import NewBook from '@/components/NewBook'
 
 export default {
   name: 'Navbar',
+  components: { NewBook },
   computed: {
     ...mapState({
       username: state => state.user.name,

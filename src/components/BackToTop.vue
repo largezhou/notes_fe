@@ -1,19 +1,21 @@
 <template>
-  <v-scale-transition>
-    <v-btn
-      v-if="topBtnShown && !goTopScrolling"
-      fab
-      dark
-      small
-      bottom
-      right
-      fixed
-      color="red"
-      @click="onGoTop"
-    >
-      <v-icon>keyboard_arrow_up</v-icon>
-    </v-btn>
-  </v-scale-transition>
+  <div v-scroll="handleScrollTop">
+    <v-scale-transition>
+      <v-btn
+        v-if="topBtnShown && !goTopScrolling"
+        fab
+        dark
+        small
+        bottom
+        right
+        fixed
+        color="red"
+        @click="onGoTop"
+      >
+        <v-icon>keyboard_arrow_up</v-icon>
+      </v-btn>
+    </v-scale-transition>
+  </div>
 </template>
 
 <script>
@@ -31,7 +33,7 @@ export default {
 
     this.handleScrollTop()
 
-    window.addEventListener('scroll', this.handleScrollTop)
+    // window.addEventListener('scroll', this.handleScrollTop)
   },
   beforeDestroy() {
     window.removeEventListener('scroll', this.handleScrollTop)
