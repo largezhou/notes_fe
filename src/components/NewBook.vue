@@ -7,67 +7,70 @@
       v-model="modal"
       max-width="500px"
       :fullscreen="fullScreen"
+      persistent
     >
       <v-card>
         <v-toolbar card dark color="primary">
-          <v-btn icon dark @click.native="modal = false">
+          <v-btn icon dark @click="onCancel">
             <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>添加一本书</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat @click.native="modal = true">
+            <v-btn dark flat @click.native="modal = true" @click="onSubmit">
               <v-icon>save</v-icon>
             </v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <v-card-text>
           <v-container grid-list-md>
-            <v-layout wrap>
+            <v-form ref="form">
+              <v-layout wrap>
 
-              <v-flex xs12>
-                <v-text-field label="书名"/>
-              </v-flex>
+                <v-flex xs12>
+                  <v-text-field label="书名" v-model="form.title"/>
+                </v-flex>
 
-              <v-flex xs6>
-                <v-text-field label="已读" type="number" min="0"/>
-              </v-flex>
-              <v-flex xs6>
-                <v-text-field label="总页数" type="number" min="1"/>
-              </v-flex>
+                <v-flex xs6>
+                  <v-text-field label="已读" type="number" min="0" v-model="form.read"/>
+                </v-flex>
+                <v-flex xs6>
+                  <v-text-field label="总页数" type="number" min="1" v-model="form.total"/>
+                </v-flex>
 
-              <v-flex xs12>
-                <v-dialog
-                  ref="startDatePicker"
-                  v-model="startDatePicker"
-                  :return-value.sync="startDate"
-                  lazy
-                  full-width
-                  width="290px"
-                >
-                  <v-text-field
-                    slot="activator"
-                    v-model="startDate"
-                    label="开始时间"
-                    readonly
-                    clearable
-                  ></v-text-field>
-                  <v-date-picker
-                    v-model="startDate"
-                    scrollable
-                    locale="zh-cn"
+                <v-flex xs12>
+                  <v-dialog
+                    ref="startDateModal"
+                    v-model="startDateModal"
+                    :return-value.sync="form.started_at"
+                    lazy
+                    full-width
+                    width="290px"
                   >
-                    <v-spacer></v-spacer>
-                    <v-btn flat color="primary" @click="startDatePicker = false">取消</v-btn>
-                    <v-btn flat color="primary" @click="$refs.startDatePicker.save(startDate)">确定</v-btn>
-                  </v-date-picker>
-                </v-dialog>
-              </v-flex>
+                    <v-text-field
+                      v-model="form.started_at"
+                      slot="activator"
+                      label="开始时间"
+                      readonly
+                      clearable
+                    ></v-text-field>
+                    <v-date-picker
+                      v-model="form.started_at"
+                      scrollable
+                      locale="zh-cn"
+                    >
+                      <v-spacer/>
+                      <v-btn flat color="primary" @click="startDateModal = false">取消</v-btn>
+                      <v-btn flat color="primary" @click="$refs.startDateModal.save(form.started_at)">确定</v-btn>
+                    </v-date-picker>
+                  </v-dialog>
+                </v-flex>
 
-              <v-flex xs12>
-                <v-text-field clearable label="封面" type="file" accept="image/*"/>
-              </v-flex>
-            </v-layout>
+                <v-flex xs12>
+                  <v-text-field v-model="form.cover" clearable label="封面" type="file" accept="image/*"/>
+                </v-flex>
+              </v-layout>
+            </v-form>
           </v-container>
         </v-card-text>
       </v-card>
@@ -82,8 +85,15 @@ export default {
     modal: false,
     fullScreen: false,
 
-    startDate: '',
-    startDatePicker: false,
+    startDateModal: false,
+
+    form: {
+      title: '',
+      read: '',
+      total: '',
+      started_at: '',
+      cover: '',
+    },
   }),
   methods: {
     onClick() {
@@ -91,6 +101,13 @@ export default {
     },
     onWindowResize() {
       this.fullScreen = window.innerWidth < 600
+    },
+    onSubmit() {
+      log(this.form)
+    },
+    onCancel() {
+      this.modal = false
+      this.$refs.form.reset()
     },
   },
 }
