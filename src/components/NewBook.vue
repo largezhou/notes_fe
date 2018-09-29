@@ -36,20 +36,20 @@
 
                 <v-flex xs6>
                   <v-text-field
-                    label="已读"
-                    type="number"
-                    min="0"
-                    :error-messages="validateErrors('form.read')"
-                    v-model="$v.form.read.$model"
-                  />
-                </v-flex>
-                <v-flex xs6>
-                  <v-text-field
                     label="总页数"
                     type="number"
                     min="1"
                     :error-messages="validateErrors('form.total')"
                     v-model="$v.form.total.$model"
+                  />
+                </v-flex>
+                <v-flex xs6>
+                  <v-text-field
+                    label="已读"
+                    type="number"
+                    min="0"
+                    :error-messages="validateErrors('form.read')"
+                    v-model="$v.form.read.$model"
                   />
                 </v-flex>
 
