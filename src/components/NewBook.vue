@@ -180,7 +180,6 @@ export default {
       this.$v.$touch()
 
       if (this.$v.$invalid) {
-        alert('数据不对啊')
         return
       }
 
@@ -192,8 +191,16 @@ export default {
       window.t = this.$refs.form
 
       postCreateBook(fd)
-        .finally(res => {
-          log(res)
+        .then(res => {
+          const book = res.data.book
+          this.onCancel()
+          this.$snackbar('已添加')
+          this.$router.push({
+            name: 'bookShow',
+            params: {
+              id: book.id,
+            },
+          })
         })
     },
     onCancel() {
