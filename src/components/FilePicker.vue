@@ -62,21 +62,19 @@ export default {
     },
     onInputChange(e) {
       const file = e.target.files[0] || null
-      this.$emit('input', file)
-      this.handleFilePreview(file)
+
+      if (file) {
+        this.$emit('input', file)
+        this.handleFilePreview(file)
+      }
     },
     handleFilePreview(file) {
-      if (file) {
-        this.filename = file.name
+      this.filename = file.name
 
-        if (vImage(file)) {
-          this.src = URL.createObjectURL(file)
-        } else {
-          this.src = ''
-        }
+      if (vImage(file)) {
+        this.src = URL.createObjectURL(file)
       } else {
         this.src = ''
-        this.filename = ''
       }
     },
     onClear() {
