@@ -82,14 +82,11 @@
                 </v-flex>
 
                 <v-flex xs12>
-                  <v-text-field
-                    clearable
+                  <file-picker
                     label="封面"
-                    type="file"
                     :error-messages="validateErrors('form.cover')"
-                    accept="image/*"
-                    @change.native="onCoverChange($event)"
-                    @click:clear="onCoverClear"
+                    v-model="$v.form.cover.$model"
+                    accept=".png, .jpg, .jpeg"
                   />
                 </v-flex>
               </v-layout>
@@ -107,9 +104,11 @@ import { required, maxLength, integer, minValue, maxValue } from 'vuelidate/lib/
 import _ from 'lodash'
 import { postCreateBook } from '@/api/books'
 import { vImage } from '@/validators'
+import FilePicker from '@/components/FilePicker'
 
 export default {
   name: 'NewBook',
+  components: { FilePicker },
   mixins: [validationMixin],
   // 这里面的结构，一定要跟data中的form对应！！！！
   validations() {
@@ -188,8 +187,6 @@ export default {
         fd.append(k, this.form[k])
       }
 
-      window.t = this.$refs.form
-
       postCreateBook(fd)
         .then(res => {
           const book = res.data.book
@@ -221,12 +218,6 @@ export default {
           return _.get(this.attrs, key)[vt]
         }
       }
-    },
-    onCoverClear() {
-      this.$v.form.cover.$model = null
-    },
-    onCoverChange(e) {
-      this.$v.form.cover.$model = e.target.files[0] || null
     },
   },
 }
