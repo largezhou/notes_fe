@@ -105,7 +105,7 @@
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, integer, minValue, maxValue } from 'vuelidate/lib/validators'
 import _ from 'lodash'
-import axios from '@/plugins/axios'
+import { postCreateBook } from '@/api/books'
 import { vImage } from '@/validators'
 
 export default {
@@ -189,10 +189,9 @@ export default {
         fd.append(k, this.form[k])
       }
 
-      window.t = fd
-      log(fd)
+      window.t = this.$refs.form
 
-      axios.post('https://email-sender.cditd.com/api/senders/rs-pw/emails', fd)
+      postCreateBook(fd)
         .finally(res => {
           log(res)
         })

@@ -14,3 +14,11 @@ export function getBook(id, query) {
     params: query,
   })
 }
+
+export function postCreateBook(data) {
+  return axios({
+    url: 'books',
+    method: 'post',
+    data,
+  })
+}
