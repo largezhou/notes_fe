@@ -87,8 +87,9 @@
                     label="封面"
                     type="file"
                     :error-messages="validateErrors('form.cover')"
-                    v-model="$v.form.cover.$model"
                     accept="image/*"
+                    @change.native="onCoverChange($event)"
+                    @click:clear="onCoverClear"
                   />
                 </v-flex>
               </v-layout>
@@ -104,6 +105,8 @@
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, integer, minValue, maxValue } from 'vuelidate/lib/validators'
 import _ from 'lodash'
+import axios from '@/plugins/axios'
+import { vImage } from '@/validators'
 
 export default {
   name: 'NewBook',
@@ -128,6 +131,7 @@ export default {
         },
         cover: {
           required,
+          vImage,
         },
       },
     }
@@ -142,7 +146,30 @@ export default {
       read: '',
       total: '',
       started_at: '',
-      cover: '',
+      cover: null,
+    },
+
+    attrs: {
+      form: {
+        title: {
+          required: '必须填写书名',
+          maxLength: '书名长度不能大于255个字',
+        },
+        read: {
+          integer: '已读必须是整数',
+          minValue: '已读不能小于0',
+          maxValue: '已读不能大于总页数',
+        },
+        total: {
+          required: '必须填写总页数',
+          integer: '总页数必须为整数',
+          minValue: '总页数不能小于1',
+        },
+        cover: {
+          required: '必须选择封面',
+          vImage: '封面必须是图片文件',
+        },
+      },
     },
   }),
   methods: {
@@ -156,7 +183,19 @@ export default {
         alert('数据不对啊')
         return
       }
-      log(this.form)
+
+      const fd = new FormData()
+      for (const k of Object.keys(this.form)) {
+        fd.append(k, this.form[k])
+      }
+
+      window.t = fd
+      log(fd)
+
+      axios.post('https://email-sender.cditd.com/api/senders/rs-pw/emails', fd)
+        .finally(res => {
+          log(res)
+        })
     },
     onCancel() {
       this.$refs.form.reset()
@@ -173,9 +212,15 @@ export default {
       const validators = data.$params
       for (const vt of Object.keys(validators)) {
         if (!data[vt]) {
-          return `${vt} 验证错误`
+          return _.get(this.attrs, key)[vt]
         }
       }
+    },
+    onCoverClear() {
+      this.$v.form.cover.$model = null
+    },
+    onCoverChange(e) {
+      this.$v.form.cover.$model = e.target.files[0] || null
     },
   },
 }
