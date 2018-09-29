@@ -28,14 +28,30 @@
               <v-layout wrap>
 
                 <v-flex xs12>
-                  <v-text-field label="书名" v-model="form.title"/>
+                  <v-text-field
+                    label="书名"
+                    :error-messages="validateErrors('form.title')"
+                    v-model="$v.form.title.$model"
+                  />
                 </v-flex>
 
                 <v-flex xs6>
-                  <v-text-field label="已读" type="number" min="0" v-model="form.read"/>
+                  <v-text-field
+                    label="已读"
+                    type="number"
+                    min="0"
+                    :error-messages="validateErrors('form.read')"
+                    v-model="$v.form.read.$model"
+                  />
                 </v-flex>
                 <v-flex xs6>
-                  <v-text-field label="总页数" type="number" min="1" v-model="form.total"/>
+                  <v-text-field
+                    label="总页数"
+                    type="number"
+                    min="1"
+                    :error-messages="validateErrors('form.total')"
+                    v-model="$v.form.total.$model"
+                  />
                 </v-flex>
 
                 <v-flex xs12>
@@ -67,7 +83,14 @@
                 </v-flex>
 
                 <v-flex xs12>
-                  <v-text-field v-model="form.cover" clearable label="封面" type="file" accept="image/*"/>
+                  <v-text-field
+                    clearable
+                    label="封面"
+                    type="file"
+                    :error-messages="validateErrors('form.cover')"
+                    v-model="$v.form.cover.$model"
+                    accept="image/*"
+                  />
                 </v-flex>
               </v-layout>
             </v-form>
@@ -79,8 +102,37 @@
 </template>
 
 <script>
+import { validationMixin } from 'vuelidate'
+import { required, maxLength, integer, minValue, maxValue } from 'vuelidate/lib/validators'
+import _ from 'lodash'
+
 export default {
   name: 'NewBook',
+  mixins: [validationMixin],
+  // 这里面的结构，一定要跟data中的form对应！！！！
+  validations() {
+    return {
+      form: {
+        title: {
+          required,
+          maxLength: maxLength(255),
+        },
+        read: {
+          integer,
+          minValue: minValue(0),
+          maxValue: maxValue(this.form.total),
+        },
+        total: {
+          required,
+          integer,
+          minValue: minValue(1),
+        },
+        cover: {
+          required,
+        },
+      },
+    }
+  },
   data: () => ({
     modal: false,
     fullScreen: false,
@@ -103,16 +155,33 @@ export default {
       this.fullScreen = window.innerWidth < 600
     },
     onSubmit() {
+      this.$v.$touch()
+
+      if (this.$v.$invalid) {
+        alert('数据不对啊')
+        return
+      }
       log(this.form)
     },
     onCancel() {
-      this.modal = false
       this.$refs.form.reset()
+      this.$v.$reset()
+      this.modal = false
+    },
+    validateErrors(key) {
+      const data = _.get(this.$v, key)
+      // 输入框没有输入过值时，不要显示错误消息
+      if (!data.$dirty) {
+        return
+      }
+
+      const validators = data.$params
+      for (const vt of Object.keys(validators)) {
+        if (!data[vt]) {
+          return `${vt} 验证错误`
+        }
+      }
     },
   },
 }
 </script>
-
-<style scoped>
-
-</style>
