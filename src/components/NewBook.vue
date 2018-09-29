@@ -86,7 +86,7 @@
                     label="封面"
                     :error-messages="validateErrors('form.cover')"
                     v-model="$v.form.cover.$model"
-                    accept=".png, .jpg, .jpeg"
+                    accept="image/*"
                   />
                 </v-flex>
               </v-layout>
