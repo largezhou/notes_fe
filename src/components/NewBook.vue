@@ -1,12 +1,11 @@
 <template>
-  <v-list-tile @click="onClick" v-resize="onWindowResize">
+  <v-list-tile @click="onClick">
     <span class="navbar-menu-icon"><v-icon>add</v-icon></span>
     <v-list-tile-title>开始看书</v-list-tile-title>
 
     <v-dialog
       v-model="modal"
       max-width="500px"
-      :fullscreen="fullScreen"
       persistent
     >
       <v-card>
@@ -135,7 +134,6 @@ export default {
   },
   data: () => ({
     modal: false,
-    fullScreen: false,
 
     startDateModal: false,
 
@@ -150,9 +148,6 @@ export default {
   methods: {
     onClick() {
       this.modal = true
-    },
-    onWindowResize() {
-      this.fullScreen = window.innerWidth < 600
     },
     onSubmit() {
       this.$v.$touch()
