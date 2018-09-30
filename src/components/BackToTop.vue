@@ -30,13 +30,6 @@ export default {
   }),
   mounted() {
     this.oldY = window.scrollY
-
-    this.handleScrollTop()
-
-    // window.addEventListener('scroll', this.handleScrollTop)
-  },
-  beforeDestroy() {
-    window.removeEventListener('scroll', this.handleScrollTop)
   },
   methods: {
     handleScrollTop() {
