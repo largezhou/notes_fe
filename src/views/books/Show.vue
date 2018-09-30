@@ -33,6 +33,17 @@
               </v-flex>
             </v-layout>
           </v-card-text>
+
+          <v-btn
+            class="add-note-btn"
+            color="pink"
+            fab
+            dark
+            small
+            absolute
+          >
+            <v-icon>add</v-icon>
+          </v-btn>
         </v-card>
         <v-card class="read-progress">
           <v-progress-linear color="info" height="18" :value="readPercent"/>
@@ -154,6 +165,8 @@ export default {
 <style lang="scss">
 @import "~@/styles/variables";
 
+$add-note-btn-pos: 12px;
+
 .book-show {
   .cover {
     max-width: 150px;
@@ -233,6 +246,11 @@ export default {
     font-size: 14px;
     text-align: center;
     color: $non-important-color;
+  }
+
+  .add-note-btn {
+    right: $add-note-btn-pos;
+    bottom: $add-note-btn-pos;
   }
 }
 </style>
