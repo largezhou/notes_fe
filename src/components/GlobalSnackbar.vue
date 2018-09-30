@@ -1,7 +1,8 @@
 <template>
   <v-snackbar
     v-model="shown"
-    top
+    v-resize="onWindowResize"
+    :top="top"
   >
     {{ text }}
     <v-btn
@@ -22,6 +23,7 @@ export default {
   data() {
     return {
       shown: false,
+      top: false,
     }
   },
   computed: {
@@ -39,6 +41,11 @@ export default {
       if (!newValue) {
         this.$store.commit('closeSnackbar')
       }
+    },
+  },
+  methods: {
+    onWindowResize() {
+      this.top = window.innerWidth >= 600
     },
   },
 }
