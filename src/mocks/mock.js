@@ -1,9 +1,6 @@
 import _ from 'lodash'
 
 const Mock = require('mockjs')
-Mock.setup({
-  timeout: 500,
-})
 
 let baseURL = process.env.VUE_APP_BASE_URL || '/'
 
@@ -20,6 +17,11 @@ const resolve = path => {
   }
 }
 
-export default (path, method, template = {}) => {
-  Mock.mock(resolve(path), method, template)
+export default (path, method, template = {}, callback) => {
+  Mock.mock(resolve(path), method, options => {
+    if (typeof callback == 'function') {
+      callback(template, options)
+    }
+    return Mock.mock(template)
+  })
 }

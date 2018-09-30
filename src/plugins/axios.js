@@ -4,6 +4,8 @@ import axios from 'axios'
 import { getToken } from '../libs/token'
 import utils from '@/libs/utils'
 
+const Qs = require('qs')
+
 // Full config:  https://github.com/axios/axios#request-config
 // axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || '';
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
@@ -13,6 +15,11 @@ let config = {
   baseURL: process.env.VUE_APP_BASE_URL || '/',
   timeout: 60 * 1000,
   // withCredentials: true, // Check cross-site Access-Control
+
+  // 如果不重写该方法，query string中的类似`type of`会被转成`type+of`
+  paramsSerializer: params => {
+    return Qs.stringify(params, { arrayFormat: 'brackets' })
+  },
 }
 
 const _axios = axios.create(config)

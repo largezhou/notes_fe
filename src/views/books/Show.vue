@@ -34,16 +34,7 @@
             </v-layout>
           </v-card-text>
 
-          <v-btn
-            class="add-note-btn"
-            color="pink"
-            fab
-            dark
-            small
-            absolute
-          >
-            <v-icon>add</v-icon>
-          </v-btn>
+          <new-note :book="this.book"/>
         </v-card>
         <v-card class="read-progress">
           <v-progress-linear color="info" height="18" :value="readPercent"/>
@@ -72,11 +63,12 @@ import HumanTime from '@/components/HumanTime'
 import BookNoteItem from '@/components/BookNoteItem'
 import { getBook } from '@/api/books'
 import reloadData from '@/mixins/reload_data'
+import NewNote from '@/components/NewNote'
 
 export default {
   name: 'Show',
   mixins: [reloadData],
-  components: { HumanTime, BookNoteItem },
+  components: { HumanTime, BookNoteItem, NewNote },
   data() {
     return {
       sortField: 'page',

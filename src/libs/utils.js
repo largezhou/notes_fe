@@ -33,3 +33,29 @@ utils.findParentByTag = (component, tag) => {
 
   return utils.findParentByTag(parent, tag)
 }
+
+/**
+ * 从url创建一个a标签并返回，用来获取url中的各种属性，比如host，path，hash等
+ *
+ * @param url
+ * @returns {HTMLElement}
+ */
+utils.getUrlObj = url => {
+  const a = document.createElement('a')
+  a.href = url
+
+  return a
+}
+
+utils.queryFromUrl = url => {
+  url = utils.getUrlObj(url).search
+
+  const query = {}
+  let pairs = (url[0] === '?' ? url.substr(1) : url).split('&')
+  for (let i = 0; i < pairs.length; i++) {
+    const pair = pairs[i].split('=')
+    query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '')
+  }
+
+  return query
+}

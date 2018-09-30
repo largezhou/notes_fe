@@ -16,7 +16,7 @@
           <v-toolbar-title>添加一本书</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat @click.native="modal = true" @click="onSubmit">
+            <v-btn dark flat @click="onSubmit">
               <v-icon>save</v-icon>
             </v-btn>
           </v-toolbar-items>
