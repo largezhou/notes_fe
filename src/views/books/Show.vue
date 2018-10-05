@@ -216,7 +216,7 @@ $add-note-btn-pos: 12px;
       position: absolute;
       right: 10px;
       top: 0;
-      z-index: 2;
+      z-index: 1;
       font-weight: 500;
     }
 

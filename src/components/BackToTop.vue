@@ -47,3 +47,10 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+.v-btn--floating.v-btn--absolute,
+.v-btn--floating.v-btn--fixed {
+  z-index: 1;
+}
+</style>
