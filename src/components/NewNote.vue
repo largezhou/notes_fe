@@ -34,13 +34,13 @@
         <v-card-text>
           <v-container grid-list-md>
             <v-form ref="form">
-              <v-layout wrap>
+              <v-layout wrap justify-center>
 
-                <v-flex xs12>
+                <v-flex xs12 md9>
                   <div class="title">{{ book.title }}</div>
                 </v-flex>
 
-                <v-flex xs8>
+                <v-flex xs12 sm8 md6>
                   <v-text-field
                     label="标题（选填）"
                     :error-messages="validateErrors('form.title')"
@@ -48,7 +48,7 @@
                   />
                 </v-flex>
 
-                <v-flex xs4>
+                <v-flex xs12 sm4 md3>
                   <v-text-field
                     :label="`第几页？（共 ${book.total} 页）`"
                     type="number"
@@ -59,7 +59,7 @@
                   />
                 </v-flex>
 
-                <v-flex xs12>
+                <v-flex xs12 md9>
                   <v-textarea
                     label="描述（选填）"
                     hint="会自动截取笔记内容的前部"
@@ -68,7 +68,7 @@
                   ></v-textarea>
                 </v-flex>
 
-                <v-flex xs12>
+                <v-flex xs12 md9>
                   <v-combobox
                     id="heihei"
                     v-model="$v.form.tags.$model"
@@ -96,7 +96,7 @@
                   </v-combobox>
                 </v-flex>
 
-                <v-flex xs12>
+                <v-flex xs12 md9>
                   <v-textarea
                     label="笔记"
                     :error-messages="validateErrors('form.content')"
