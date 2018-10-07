@@ -104,8 +104,16 @@ export default {
       }
     },
   },
+  mounted() {
+    this.textarea = this.$refs.editor.$refs.vNoteEdit.querySelector('textarea')
+    this.cancelClearAllShortCut()
+
+    // 取消编辑器自动获取焦点
+    this.textarea.blur()
+  },
   methods: {
     onChange(raw, html) {
+      window.t = this.$refs.editor
       // 该编辑器渲染完就会触发几次 change 事件，此时如果直接 $emit input 事件，validate 会标记为 dirty，直接显示验证错误信息
       // 这里处理一下：默认 dirty = false，前几次change事件，内容肯定为空，所以不处理
       // 之后内容不为空时，把 dirty 标记为 true
@@ -124,6 +132,18 @@ export default {
 
       e.d_value = ''
       e.d_render = ''
+    },
+
+    /**
+     * 取消编辑器 ctrl + backspace 清空编辑器的快捷键
+     * 因为这个快捷键是用来删除前面一个词的
+     */
+    cancelClearAllShortCut() {
+      this.textarea.addEventListener('keydown', e => {
+        if (e.code == 'Backspace' && e.ctrlKey === true) {
+          e.stopPropagation()
+        }
+      })
     },
   },
 }
