@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-resize="onWindowResize">
     <v-app>
       <navbar ref="navbar"/>
       <v-content>
@@ -19,10 +19,25 @@
 import Navbar from '@/components/Navbar'
 import GlobalSnackbar from '@/components/GlobalSnackbar'
 import BackToTop from '@/components/BackToTop'
+import { mapState } from 'vuex'
 
 export default {
   name: 'App',
   components: { Navbar, GlobalSnackbar, BackToTop },
+  computed: {
+    ...mapState({
+      widescreen: state => state.app.widescreen,
+    }),
+  },
+  methods: {
+    onWindowResize() {
+      const widescreen = window.innerWidth >= 600
+
+      if (widescreen != this.widescreen) {
+        this.$store.commit('changeWidescreen', widescreen)
+      }
+    },
+  },
 }
 </script>
 

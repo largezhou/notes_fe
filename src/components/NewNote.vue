@@ -97,10 +97,11 @@
                 </v-flex>
 
                 <v-flex xs12 md9>
-                  <v-textarea
+                  <m-d-editor
                     label="笔记"
                     :error-messages="validateErrors('form.content')"
                     v-model="$v.form.content.$model"
+                    @change="onContentChange"
                   />
                 </v-flex>
 
@@ -118,9 +119,11 @@ import { validationMixin } from 'vuelidate'
 import { required, maxLength, integer, minValue, maxValue } from 'vuelidate/lib/validators'
 import _ from 'lodash'
 import { getTags } from '@/api/tags'
+import MDEditor from '@/components/MDEditor'
 
 export default {
   name: 'NewNote',
+  components: { MDEditor },
   mixins: [validationMixin],
   validations() {
     return {
@@ -159,6 +162,7 @@ export default {
       desc: '',
       content: '',
       tags: [],
+      html_content: '',
     },
 
     attrs: {
@@ -232,6 +236,9 @@ export default {
         .finally(() => {
           this.searching = false
         })
+    },
+    onContentChange(content, html) {
+      this.form.html_content = html
     },
   },
   watch: {

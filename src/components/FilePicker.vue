@@ -1,5 +1,5 @@
 <template>
-  <div class="v-input-upload" :class="{ 'has-error': hasError }">
+  <div class="v-form-item v-input-upload" :class="{ 'has-error': hasError }">
     <div class="label">{{ label }}</div>
     <div class="picker" @click="onClickPicker">
       <v-icon v-if="!this.filename">cloud_upload</v-icon>
@@ -31,29 +31,19 @@
 
 <script>
 import { vImage } from '@/validators'
-import utils from '@/libs/utils'
+import vFormItem from '@/mixins/vform_item'
 
 export default {
   name: 'FilePicker',
+  mixins: [vFormItem],
   data: () => ({
     src: '',
     filename: '',
   }),
   props: {
-    label: String,
-    value: {},
-    errorMessages: String,
     accept: {
       type: String,
       default: '*/*',
-    },
-  },
-  created() {
-    this.registerToVForm()
-  },
-  computed: {
-    hasError() {
-      return !!this.errorMessages
     },
   },
   methods: {
@@ -86,21 +76,12 @@ export default {
       this.$refs.input.value = null
       this.$emit('input', null)
     },
-    /**
-     * 如果父组件中有v-form，则向他注册，
-     * 这样v-form调用reset时，可以调用该组件的reset方法
-     */
-    registerToVForm() {
-      const vForm = utils.findParentByTag(this, 'v-form')
-      vForm && vForm.register(this)
-    },
   },
 }
 </script>
 
 <style lang="scss">
 $uploader-size: 100px;
-$error-color: #ff5252 !important;
 $clear-btn-size: 24px;
 $clear-btn-pos: -6px;
 
@@ -122,32 +103,10 @@ $clear-btn-pos: -6px;
     }
   }
 
-  .label {
-    color: rgba(0, 0, 0, .54);
-    font-size: 16px;
-    margin-bottom: 5px;
-  }
-
   input {
     width: 0;
     height: 0;
     display: none;
-  }
-
-  &.has-error {
-    .label {
-      color: $error-color;
-    }
-  }
-
-  .error-message {
-    margin-top: 4px;
-    font-size: 12px;
-    color: $error-color;
-    overflow-wrap: break-word;
-    word-break: break-word;
-    word-wrap: break-word;
-    height: 18px;
   }
 
   .clear {

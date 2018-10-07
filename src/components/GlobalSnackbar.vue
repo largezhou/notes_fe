@@ -1,8 +1,7 @@
 <template>
   <v-snackbar
     v-model="shown"
-    v-resize="onWindowResize"
-    :top="top"
+    :top="widescreen"
   >
     {{ text }}
     <v-btn
@@ -23,13 +22,13 @@ export default {
   data() {
     return {
       shown: false,
-      top: false,
     }
   },
   computed: {
     ...mapState({
       snackbarShown: state => state.snackbar.shown,
       text: state => state.snackbar.text,
+      widescreen: state => state.app.widescreen,
     }),
   },
   watch: {
@@ -41,11 +40,6 @@ export default {
       if (!newValue) {
         this.$store.commit('closeSnackbar')
       }
-    },
-  },
-  methods: {
-    onWindowResize() {
-      this.top = window.innerWidth >= 600
     },
   },
 }
