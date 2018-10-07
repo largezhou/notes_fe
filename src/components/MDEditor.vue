@@ -13,6 +13,7 @@
       :class="{ widescreen: widescreen }"
       :value="value"
       @change="onChange"
+      ref="editor"
     />
     <div class="error-message">{{ errorMessages }}</div>
   </div>
@@ -117,11 +118,20 @@ export default {
       this.$emit('input', raw)
       this.$emit('change', raw, html)
     },
+
+    reset() {
+      const e = this.$refs.editor
+
+      e.d_value = ''
+      e.d_render = ''
+    },
   },
 }
 </script>
 
 <style lang="scss">
+@import '~@/styles/variables';
+
 .v-md-editor {
   [type=button] {
     -webkit-appearance: none !important;
@@ -145,6 +155,12 @@ export default {
 
   .v-note-wrapper.fullscreen {
     height: auto;
+  }
+}
+
+.has-error {
+  .v-note-wrapper {
+    border-bottom: 2px solid $error-color;
   }
 }
 </style>

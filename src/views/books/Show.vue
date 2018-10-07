@@ -34,7 +34,17 @@
             </v-layout>
           </v-card-text>
 
-          <new-note :book="this.book"/>
+          <v-btn
+            class="add-note-btn"
+            color="pink"
+            fab
+            dark
+            small
+            absolute
+            :to="createNoteLink"
+          >
+            <v-icon>add</v-icon>
+          </v-btn>
         </v-card>
         <v-card class="read-progress">
           <v-progress-linear color="info" height="18" :value="readPercent"/>
@@ -63,12 +73,11 @@ import HumanTime from '@/components/HumanTime'
 import BookNoteItem from '@/components/BookNoteItem'
 import { getBook } from '@/api/books'
 import reloadData from '@/mixins/reload_data'
-import NewNote from '@/components/NewNote'
 
 export default {
   name: 'Show',
   mixins: [reloadData],
-  components: { HumanTime, BookNoteItem, NewNote },
+  components: { HumanTime, BookNoteItem },
   data() {
     return {
       sortField: 'page',
@@ -86,6 +95,14 @@ export default {
         return 100
       } else {
         return Math.ceil(this.book.read / this.book.total * 100)
+      }
+    },
+    createNoteLink() {
+      return {
+        name: 'noteCreate',
+        params: {
+          id: this.book.id,
+        },
       }
     },
   },
@@ -243,6 +260,11 @@ $add-note-btn-pos: 12px;
   .add-note-btn {
     right: $add-note-btn-pos;
     bottom: $add-note-btn-pos;
+
+    .v-icon {
+      text-align: center;
+      line-height: 40px;
+    }
   }
 }
 </style>

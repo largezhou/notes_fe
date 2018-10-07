@@ -52,6 +52,12 @@ const otherRouters = [
         name: 'bookEdit',
         component: () => import('@/views/books/Edit'),
       },
+
+      {
+        path: 'books/:id(\\d+)/notes/create',
+        name: 'noteCreate',
+        component: () => import('@/views/notes/Create'),
+      },
     ],
   },
 ]
