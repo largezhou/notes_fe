@@ -131,7 +131,7 @@ export default {
 
     getData() {
       const r = this.$route
-      getBook(r.params.id, r.query)
+      getBook(r.params.bookId, r.query)
         .then(res => {
           const data = res.data
           this.book = data.book

@@ -39,7 +39,7 @@ const otherRouters = [
       },
 
       {
-        path: '/books/:id(\\d+)',
+        path: '/books/:bookId(\\d+)',
         name: 'bookShow',
         meta: {
           keepAlive: true,
@@ -48,13 +48,13 @@ const otherRouters = [
       },
 
       {
-        path: '/books/:id(\\d+)/edit',
+        path: '/books/:bookId(\\d+)/edit',
         name: 'bookEdit',
         component: () => import('@/views/books/Edit'),
       },
 
       {
-        path: 'books/:id(\\d+)/notes/create',
+        path: 'books/:bookId(\\d+)/notes/create',
         name: 'noteCreate',
         component: () => import('@/views/notes/Create'),
       },
