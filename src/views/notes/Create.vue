@@ -2,7 +2,7 @@
   <v-container grid-list-md class="content note-create">
     <v-layout row wrap justify-center>
       <v-flex md9 sm12 v-if="book">
-        <book-info-card :book="book" :new-note-btn="false"/>
+        <book-info-card :book="book" :new-note-btn="false" :expand="false"/>
 
         <div class="desc">添加笔记</div>
 
