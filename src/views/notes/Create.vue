@@ -234,17 +234,6 @@ export default {
     },
   },
   watch: {
-    modal(newValue) {
-      if (newValue) {
-        getTags({
-          scope: 'hot',
-        })
-          .then(res => {
-            const data = res.data
-            this.tags = data.tags
-          })
-      }
-    },
     search(newValue) {
       // 如果有匹配项，则不搜索
       if (this.$refs.tags.filteredItems.length > 0) {
