@@ -2,50 +2,9 @@
   <v-container grid-list-md class="content book-show" v-if="book">
     <v-layout row wrap justify-center>
       <v-flex md9 sm12 class="notes-container">
-        <v-card>
-          <v-card-text>
-            <v-layout row wrap>
-              <v-flex md3 xs4 class="cover">
-                <img :src="book.cover">
-              </v-flex>
-              <v-flex md8 class="book-info">
-                <div class="title">{{ book.title }}</div>
-                <div class="item">
-                  <span class="label">开始阅读</span>
-                  <human-time :time="book.started_at" prefix="开始于："/>
-                </div>
-                <div class="item">
-                  <span class="label">更新</span>
-                  <human-time :time="book.updated_at" prefix="最近更新："/>
-                </div>
-                <div class="item">
-                  <span class="label">已读</span>
-                  <span>{{ book.read }}</span> 页
-                </div>
-                <div class="item">
-                  <span class="label">总页数</span>
-                  <span>{{ book.total }}</span> 页
-                </div>
-                <div class="item">
-                  <span class="label">笔记</span>
-                  <span>{{ book.notes.length }}</span> 条
-                </div>
-              </v-flex>
-            </v-layout>
-          </v-card-text>
 
-          <v-btn
-            class="add-note-btn"
-            color="pink"
-            fab
-            dark
-            small
-            absolute
-            :to="createNoteLink"
-          >
-            <v-icon>add</v-icon>
-          </v-btn>
-        </v-card>
+        <book-info-card :book="book"/>
+
         <v-card class="read-progress">
           <v-progress-linear color="info" height="18" :value="readPercent"/>
           <span class="progress-text">{{ readPercent }}%</span>
@@ -69,15 +28,15 @@
 </template>
 
 <script>
-import HumanTime from '@/components/HumanTime'
 import BookNoteItem from '@/components/BookNoteItem'
 import { getBook } from '@/api/books'
 import reloadData from '@/mixins/reload_data'
+import BookInfoCard from '@/components/BookInfoCard'
 
 export default {
   name: 'Show',
   mixins: [reloadData],
-  components: { HumanTime, BookNoteItem },
+  components: { BookNoteItem, BookInfoCard },
   data() {
     return {
       sortField: 'page',
@@ -174,58 +133,7 @@ export default {
 <style lang="scss">
 @import "~@/styles/variables";
 
-$add-note-btn-pos: 12px;
-
 .book-show {
-  .cover {
-    max-width: 150px;
-    img {
-      width: 100%;
-    }
-  }
-
-  .book-info {
-    font-size: 15px;
-    margin-left: 10px;
-
-    .title {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 20px;
-      margin-top: 10px;
-    }
-
-    .item {
-      margin-bottom: 10px;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-  }
-
-  .label {
-    display: inline-block;
-    width: 65px;
-    margin-right: 10px;
-    color: $non-important-color;
-  }
-
-  @media only screen and (max-width: 768px) {
-    .book-info {
-      font-size: 14px;
-
-      .title {
-        font-size: 16px;
-        margin-bottom: 10px;
-      }
-
-      .item {
-        margin-bottom: 5px;
-      }
-    }
-  }
-
   .read-progress {
     position: relative;
 
@@ -255,16 +163,6 @@ $add-note-btn-pos: 12px;
     font-size: 14px;
     text-align: center;
     color: $non-important-color;
-  }
-
-  .add-note-btn {
-    right: $add-note-btn-pos;
-    bottom: $add-note-btn-pos;
-
-    .v-icon {
-      text-align: center;
-      line-height: 40px;
-    }
   }
 }
 </style>

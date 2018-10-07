@@ -1,14 +1,13 @@
 <template>
   <v-container grid-list-md class="content note-create">
     <v-layout row wrap justify-center>
-      <v-flex md9 sm12>
-        <v-card v-if="book">
-          <v-card-text>
-            <v-card-title primary-title>
-              <div class="title">{{ book.title }}</div>
-              <div style="margin-left: 10px;">添加笔记</div>
-            </v-card-title>
+      <v-flex md9 sm12 v-if="book">
+        <book-info-card :book="book" :new-note-btn="false"/>
 
+        <div class="desc">添加笔记</div>
+
+        <v-card>
+          <v-card-text>
             <v-container grid-list-md>
               <v-form ref="form">
                 <v-layout wrap justify-center>
@@ -99,10 +98,11 @@ import _ from 'lodash'
 import { getTags } from '@/api/tags'
 import MDEditor from '@/components/MDEditor'
 import { getBook } from '@/api/books'
+import BookInfoCard from '@/components/BookInfoCard'
 
 export default {
   name: 'Create',
-  components: { MDEditor },
+  components: { MDEditor, BookInfoCard },
   mixins: [validationMixin],
   validations() {
     return {
@@ -252,9 +252,16 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~@/styles/variables';
+
 .note-create {
   .v-note-wrapper {
     z-index: 1;
+  }
+
+  .desc {
+    margin: 10px 0;
+    color: $non-important-color
   }
 }
 </style>
