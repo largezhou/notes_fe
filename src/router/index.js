@@ -58,6 +58,12 @@ const otherRouters = [
         name: 'noteCreate',
         component: () => import('@/views/notes/Create'),
       },
+
+      {
+        path: 'notes/:noteId(\\d+)',
+        name: 'noteShow',
+        component: () => import('@/views/notes/Show'),
+      },
     ],
   },
 ]

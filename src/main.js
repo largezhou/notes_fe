@@ -11,6 +11,7 @@ import store from '@/store'
 import '@/styles/index.scss'
 import '@/router/permission'
 import utils from '@/libs/utils'
+import '@/components'
 
 Vue.config.productionTip = false
 

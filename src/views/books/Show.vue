@@ -1,30 +1,25 @@
 <template>
-  <v-container grid-list-md class="content book-show" v-if="book">
-    <v-layout row wrap justify-center>
-      <v-flex md9 sm12 class="notes-container">
+  <page-layout>
+    <book-info-card :book="book"/>
 
-        <book-info-card :book="book"/>
-
-        <v-card class="read-progress">
-          <v-progress-linear color="info" height="18" :value="readPercent"/>
-          <span class="progress-text">{{ readPercent }}%</span>
-        </v-card>
-        <div class="notes-sort-group">
-          <v-btn flat small @click="onChangeSort('page')">页数<i class="material-icons">{{ sortIcon('page') }}</i></v-btn>
-          <v-btn flat small @click="onChangeSort('created_at')">时间<i class="material-icons">{{ sortIcon('created_at') }}</i></v-btn>
-        </div>
-        <div v-if="book.notes.length > 0">
-          <book-note-item
-            v-for="item of book.notes"
-            :key="item.id"
-            :item="item"
-            :book="book"
-            disable-book
-          />
-        </div>
-      </v-flex>
-    </v-layout>
-  </v-container>
+    <v-card class="read-progress">
+      <v-progress-linear color="info" height="18" :value="readPercent"/>
+      <span class="progress-text">{{ readPercent }}%</span>
+    </v-card>
+    <div class="notes-sort-group">
+      <v-btn flat small @click="onChangeSort('page')">页数<i class="material-icons">{{ sortIcon('page') }}</i></v-btn>
+      <v-btn flat small @click="onChangeSort('created_at')">时间<i class="material-icons">{{ sortIcon('created_at') }}</i></v-btn>
+    </div>
+    <div v-if="book.notes.length > 0">
+      <book-note-item
+        v-for="item of book.notes"
+        :key="item.id"
+        :item="item"
+        :book="book"
+        disable-book
+      />
+    </div>
+  </page-layout>
 </template>
 
 <script>

@@ -1,94 +1,90 @@
 <template>
-  <v-container grid-list-md class="content note-create">
-    <v-layout row wrap justify-center>
-      <v-flex md9 sm12 v-if="book">
-        <book-info-card :book="book" :new-note-btn="false" :expand="false"/>
+  <page-layout class="note-create" v-if="book">
+    <book-info-card :book="book" :new-note-btn="false" :expand="false"/>
 
-        <div class="desc">添加笔记</div>
+    <div class="desc">添加笔记</div>
 
-        <v-card>
-          <v-card-text>
-            <v-container grid-list-md>
-              <v-form ref="form">
-                <v-layout wrap justify-center>
+    <v-card>
+      <v-card-text>
+        <v-container grid-list-md>
+          <v-form ref="form">
+            <v-layout wrap justify-center>
 
-                  <v-flex xs12 sm8>
-                    <v-text-field
-                      label="标题（选填）"
-                      :error-messages="validateErrors('form.title')"
-                      v-model="$v.form.title.$model"
-                    />
-                  </v-flex>
+              <v-flex xs12 sm8>
+                <v-text-field
+                  label="标题（选填）"
+                  :error-messages="validateErrors('form.title')"
+                  v-model="$v.form.title.$model"
+                />
+              </v-flex>
 
-                  <v-flex xs12 sm4>
-                    <v-text-field
-                      :label="`第几页？（共 ${book.total} 页）`"
-                      type="number"
-                      min="1"
-                      :max="book.total"
-                      :error-messages="validateErrors('form.page')"
-                      v-model="$v.form.page.$model"
-                    />
-                  </v-flex>
+              <v-flex xs12 sm4>
+                <v-text-field
+                  :label="`第几页？（共 ${book.total} 页）`"
+                  type="number"
+                  min="1"
+                  :max="book.total"
+                  :error-messages="validateErrors('form.page')"
+                  v-model="$v.form.page.$model"
+                />
+              </v-flex>
 
-                  <v-flex xs12>
-                    <v-textarea
-                      label="描述（选填）"
-                      hint="会自动截取笔记内容的前部"
-                      :error-messages="validateErrors('form.desc')"
-                      v-model="$v.form.desc.$model"
-                      rows="2"
-                    />
-                  </v-flex>
+              <v-flex xs12>
+                <v-textarea
+                  label="描述（选填）"
+                  hint="会自动截取笔记内容的前部"
+                  :error-messages="validateErrors('form.desc')"
+                  v-model="$v.form.desc.$model"
+                  rows="2"
+                />
+              </v-flex>
 
-                  <v-flex xs12>
-                    <v-combobox
-                      id="heihei"
-                      v-model="$v.form.tags.$model"
-                      :items="tags"
-                      label="标签"
-                      multiple
-                      small-chips
-                      clearable
-                      deletable-chips
-                      :search-input.sync="search"
-                      ref="tags"
-                    >
-                      <template slot="no-data">
-                        <v-list-tile>
-                          <v-list-tile-content>
-                            <v-list-tile-title v-if="searching">
-                              搜索中...
-                            </v-list-tile-title>
-                            <v-list-tile-title v-else>
-                              没有与 "<strong>{{ search }}</strong>" 匹配的标签，按 <kbd>enter</kbd> 添加
-                            </v-list-tile-title>
-                          </v-list-tile-content>
-                        </v-list-tile>
-                      </template>
-                    </v-combobox>
-                  </v-flex>
+              <v-flex xs12>
+                <v-combobox
+                  id="heihei"
+                  v-model="$v.form.tags.$model"
+                  :items="tags"
+                  label="标签"
+                  multiple
+                  small-chips
+                  clearable
+                  deletable-chips
+                  :search-input.sync="search"
+                  ref="tags"
+                >
+                  <template slot="no-data">
+                    <v-list-tile>
+                      <v-list-tile-content>
+                        <v-list-tile-title v-if="searching">
+                          搜索中...
+                        </v-list-tile-title>
+                        <v-list-tile-title v-else>
+                          没有与 "<strong>{{ search }}</strong>" 匹配的标签，按 <kbd>enter</kbd> 添加
+                        </v-list-tile-title>
+                      </v-list-tile-content>
+                    </v-list-tile>
+                  </template>
+                </v-combobox>
+              </v-flex>
 
-                  <v-flex xs12>
-                    <m-d-editor
-                      label="笔记"
-                      :error-messages="validateErrors('form.content')"
-                      v-model="$v.form.content.$model"
-                      @change="onContentChange"
-                    />
-                  </v-flex>
+              <v-flex xs12>
+                <m-d-editor
+                  label="笔记"
+                  :error-messages="validateErrors('form.content')"
+                  v-model="$v.form.content.$model"
+                  @change="onContentChange"
+                />
+              </v-flex>
 
-                  <v-btn color="primary" @click="onSubmit">添加笔记</v-btn>
-                  <v-btn @click="onReset">重置</v-btn>
+              <v-btn color="primary" @click="onSubmit">添加笔记</v-btn>
+              <v-btn @click="onReset">重置</v-btn>
 
-                </v-layout>
-              </v-form>
-            </v-container>
-          </v-card-text>
-        </v-card>
-      </v-flex>
-    </v-layout>
-  </v-container>
+            </v-layout>
+          </v-form>
+        </v-container>
+      </v-card-text>
+    </v-card>
+  </page-layout>
 </template>
 
 <script>

@@ -4,7 +4,7 @@
       <v-flex md3 class="hidden-sm-and-down">
         <book-widget/>
       </v-flex>
-      <v-flex md9 sm12 class="notes-container">
+      <v-flex md9 sm12>
         <book-note-item
           v-for="item of notes"
           :key="item.id"
