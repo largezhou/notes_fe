@@ -45,9 +45,6 @@ export default {
       book: null,
     }
   },
-  created() {
-    this.getData()
-  },
   computed: {
     readPercent() {
       if (this.book.read > this.book.total) {

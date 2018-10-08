@@ -99,6 +99,7 @@ import { getTags } from '@/api/tags'
 import MDEditor from '@/components/MDEditor'
 import { getBook } from '@/api/books'
 import BookInfoCard from '@/components/BookInfoCard'
+import { postCreateNote } from '@/api/notes'
 
 export default {
   name: 'Create',
@@ -184,7 +185,13 @@ export default {
         return
       }
 
-      log(this.form)
+      postCreateNote(this.book.id, this.form)
+        .then(res => {
+          this.$router.push({
+            name: 'bookShow',
+            bookId: this.book.id,
+          })
+        })
     },
 
     validateErrors(key) {

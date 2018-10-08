@@ -1,15 +1,15 @@
 import axios from '@/plugins/axios'
 
-export function getNotes() {
+export function getAllNotes() {
   return axios({
     url: 'notes',
     method: 'get',
   })
 }
 
-export function postCreateNote(data) {
+export function postCreateNote(bookId, data) {
   return axios({
-    url: 'notes',
+    url: `books/${bookId}/notes`,
     method: 'post',
     data,
   })

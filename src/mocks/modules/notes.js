@@ -1,8 +1,5 @@
 import mock from '../mock'
 
-const Mock = require('mockjs')
-const Random = Mock.Random
-
 mock('/notes', 'get', {
   'notes|20': [
     {
@@ -33,10 +30,8 @@ mock('/notes', 'get', {
     'id|+1': 1,
     title: '@ctitle',
     desc: '@cparagraph',
-    book: {
-      'id|+1': 1,
-      title: '@ctitle',
-    },
+    content: '@cparagraph',
+    html_content: '@cparagraph',
     page: {
       'id|+1': 1,
       'page|1-1000': 1,
@@ -54,14 +49,5 @@ mock('/notes', 'get', {
     note: noteTmpl,
   }
 
-  mock('/notes', 'post', tmpl, (tmpl, options) => {
-    const body = options.body
-
-    // 如果是上传图片时，自动生成笔记草稿，则要返回一个图片链接
-    if (body.get('scope') === 'uploadImage') {
-      tmpl.image = Random.image()
-    } else {
-      delete tmpl.image
-    }
-  })
+  mock(/\/books\/\d+\/notes/, 'post', tmpl)
 }
