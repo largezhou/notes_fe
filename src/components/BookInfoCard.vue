@@ -1,5 +1,5 @@
 <template>
-  <v-card class="book-info-card">
+  <v-card class="book-info-card" :class="{ collapsed: !vExpand }">
     <v-card-text>
       <v-layout row wrap>
         <v-flex xs4 class="cover" v-show="vExpand">
@@ -176,6 +176,19 @@ $add-note-btn-pos: 12px;
   .toggle-btn {
     right: $add-note-btn-pos;
     top: $add-note-btn-pos;
+  }
+
+  &.collapsed {
+    background: initial;
+    box-shadow: none;
+
+    .v-card__text {
+      padding-left: 0;
+    }
+
+    .book-info {
+      margin-left: 0;
+    }
   }
 }
 </style>
