@@ -24,6 +24,7 @@ import vFormItem from '@/mixins/vform_item'
 import { mavonEditor } from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import { mapState } from 'vuex'
+import { postCreateImage } from '@/api/images'
 
 export default {
   name: 'MDEditor',
@@ -69,7 +70,6 @@ export default {
         save: true, // 保存（触发events中的save事件）
         undo: true, // 上一步
         redo: true, // 下一步
-        imagelink: true, // 图片链接
         table: true, // 表格
         fullscreen: true, // 全屏编辑
       }
@@ -110,6 +110,8 @@ export default {
 
     // 取消编辑器自动获取焦点
     this.textarea.blur()
+
+    window.md = this.$refs.editor
   },
   methods: {
     onChange(raw, html) {
@@ -145,6 +147,16 @@ export default {
         }
       })
     },
+
+    onImgAdd(pos, file) {
+      const formData = new FormData()
+      formData.append('image', file)
+      postCreateImage(formData)
+        .then(res => {
+          const data = res.data
+          this.$refs.editor.$img2Url(pos, data.src)
+        })
+    },
   },
 }
 </script>
@@ -155,13 +167,6 @@ export default {
 .v-md-editor {
   [type=button] {
     -webkit-appearance: none !important;
-  }
-
-  code {
-    box-shadow: none;
-    color: inherit;
-    font-weight: inherit;
-    white-space: inherit;
   }
 
   .v-note-wrapper {
@@ -175,6 +180,16 @@ export default {
 
   .v-note-wrapper.fullscreen {
     height: auto;
+  }
+}
+
+.v-note-help-show,
+.v-md-editor {
+  code {
+    box-shadow: none;
+    color: inherit;
+    font-weight: inherit;
+    white-space: inherit;
   }
 }
 
