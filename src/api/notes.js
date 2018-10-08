@@ -6,3 +6,11 @@ export function getNotes() {
     method: 'get',
   })
 }
+
+export function postCreateNote(data) {
+  return axios({
+    url: 'notes',
+    method: 'post',
+    data,
+  })
+}

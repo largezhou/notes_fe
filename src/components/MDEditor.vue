@@ -14,6 +14,8 @@
       :value="value"
       @change="onChange"
       ref="editor"
+      @imgAdd="onImgAdd"
+      @imgDel="onImgDel"
     />
     <div class="error-message">{{ errorMessages }}</div>
   </div>
@@ -24,6 +26,7 @@ import vFormItem from '@/mixins/vform_item'
 import { mavonEditor } from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import { mapState } from 'vuex'
+import { postCreateNote } from '@/api/notes'
 
 export default {
   name: 'MDEditor',
@@ -144,6 +147,25 @@ export default {
           e.stopPropagation()
         }
       })
+    },
+
+    onImgAdd(pos, file) {
+      log('add', { pos, file })
+
+      const formData = new FormData()
+      formData.append('image', file)
+      // 标记为上传图片
+      formData.append('scope', 'uploadImage')
+      formData.append('data', this.form)
+      // 上传图片会自动生成笔记的草稿，之后会自动跳转到笔记编辑页面
+      postCreateNote(formData)
+        .then(res => {
+          const data = res.data
+          this.$refs.editor.$img2Url(pos, data.image)
+        })
+    },
+    onImgDel(data) {
+      log('del', { pos: data[1], file: data[0] })
     },
   },
 }
