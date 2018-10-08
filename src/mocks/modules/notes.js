@@ -1,5 +1,6 @@
 import mock from '../mock'
 
+// 获取所有笔记
 mock('/notes', 'get', {
   'notes|20': [
     {
@@ -25,6 +26,7 @@ mock('/notes', 'get', {
   ],
 })
 
+// 在某本书下添加笔记
 {
   const noteTmpl = {
     'id|+1': 1,

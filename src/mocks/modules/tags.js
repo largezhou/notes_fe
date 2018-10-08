@@ -2,6 +2,7 @@ import mock from '../mock'
 import utils from '@/libs/utils'
 import _ from 'lodash'
 
+// 获取所有标签，可搜索
 {
   const key = 'tags|20'
   const searchKey = 'tags|1-3'

@@ -1,8 +1,10 @@
 import mock from '../mock'
+import router from '@/router'
 
 const Mock = require('mockjs')
 const Random = Mock.Random
 
+// 获取所有书籍
 mock('/books', 'get', {
   'books|5': [
     {
@@ -18,9 +20,9 @@ mock('/books', 'get', {
   ],
 })
 
+// 获取书籍详情
 mock(/\/books\/\d+/, 'get', {
   book: {
-    'id|+1': 1,
     title: '@ctitle',
     started_at: '@datetime',
     updated_at: '@datetime',
@@ -46,8 +48,11 @@ mock(/\/books\/\d+/, 'get', {
       },
     ],
   },
+}, (tmpl, options) => {
+  tmpl.book.id = router.currentRoute.params.bookId
 })
 
+// 添加书籍
 mock('/books', 'post', {
   book: {
     'id|+1': 1,
