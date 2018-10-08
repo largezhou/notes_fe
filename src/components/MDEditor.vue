@@ -14,6 +14,7 @@
       :value="value"
       @change="onChange"
       ref="editor"
+      @imgAdd="onImgAdd"
     />
     <div class="error-message">{{ errorMessages }}</div>
   </div>
@@ -70,6 +71,7 @@ export default {
         save: true, // 保存（触发events中的save事件）
         undo: true, // 上一步
         redo: true, // 下一步
+        imagelink: true,
         table: true, // 表格
         fullscreen: true, // 全屏编辑
       }
@@ -111,11 +113,24 @@ export default {
     // 取消编辑器自动获取焦点
     this.textarea.blur()
 
-    window.md = this.$refs.editor
+    this.editor = this.$refs.editor
+    this.leftBar = this.editor.$refs.toolbar_left
+
+    // 修改md编辑框中的一些默认逻辑
+
+    const $fileInput = this.leftBar.$el.querySelector('[type=file]')
+
+    // 该值默认有一个值，会导致删除图片出错，所以先清空
+    this.leftBar.img_file = []
+
+    this.leftBar.$imgAdd = $e => {
+      this.leftBar.$imgFilesAdd($e.target.files)
+      // 每次选完文件后，清空file input，这样就可以重复选择
+      $fileInput.value = null
+    }
   },
   methods: {
     onChange(raw, html) {
-      window.t = this.$refs.editor
       // 该编辑器渲染完就会触发几次 change 事件，此时如果直接 $emit input 事件，validate 会标记为 dirty，直接显示验证错误信息
       // 这里处理一下：默认 dirty = false，前几次change事件，内容肯定为空，所以不处理
       // 之后内容不为空时，把 dirty 标记为 true
@@ -130,10 +145,12 @@ export default {
     },
 
     reset() {
-      const e = this.$refs.editor
-
-      e.d_value = ''
-      e.d_render = ''
+      // 清空原始值
+      this.editor.d_value = ''
+      // 清空html值
+      this.editor.d_render = ''
+      // 清空已上传的文件
+      this.leftBar.img_file = []
     },
 
     /**
