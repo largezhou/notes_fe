@@ -22,26 +22,26 @@
       <router-link :to="`/notes/${item.id}`">{{ item.desc }}</router-link>
     </v-card-text>
 
-    <v-card-actions>
-      <v-btn
-        flat
-        color="primary"
+    <div class="tags">
+      <tag
         v-for="tag of item.tags"
         :key="tag.id"
         :to="`/tags/${tag.id}`"
-      >{{ tag.name }}
-      </v-btn>
-    </v-card-actions>
+        :tag="tag"
+        :outline="false"
+      />
+    </div>
 
   </v-card>
 </template>
 
 <script>
 import HumanTime from '@/components/HumanTime'
+import Tag from '@/components/Tag'
 
 export default {
   name: 'BookNoteItem',
-  components: { HumanTime },
+  components: { HumanTime, Tag },
   props: {
     item: Object,
     disableBook: Boolean,
@@ -56,23 +56,8 @@ export default {
 .note-item {
   margin-bottom: 10px;
 
-  .v-card__actions {
-    flex-wrap: wrap;
-
-    .v-btn {
-      height: 30px;
-      padding: 0 10px;
-      min-width: initial;
-    }
-
-    .v-btn {
-      margin-right: 8px;
-      margin-left: 0;
-
-      &:last-child {
-        margin-right: 0;
-      }
-    }
+  .tags {
+    padding: 8px;
   }
 
   .v-card__title {

@@ -6,6 +6,13 @@
       <span>{{ note.created_at }}</span>
       <span style="margin-left: 20px;">{{ note.updated_at }}</span>
     </div>
+    <div class="tags">
+      <tag
+        v-for="tag of note.tags"
+        :key="tag.id"
+        :tag="tag"
+      />
+    </div>
     <div class="content" v-html="note.html_content"/>
   </page-layout>
 </template>
@@ -13,10 +20,11 @@
 <script>
 import { getNote } from '@/api/notes'
 import BookInfoCard from '@/components/BookInfoCard'
+import Tag from '@/components/Tag'
 
 export default {
   name: 'Show',
-  components: { BookInfoCard },
+  components: { BookInfoCard, Tag },
   data: () => ({
     note: null,
   }),
@@ -54,6 +62,10 @@ export default {
     img {
       max-width: 100%;
     }
+  }
+
+  .tags {
+    margin-top: 10px;
   }
 }
 </style>
