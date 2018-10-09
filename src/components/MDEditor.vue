@@ -110,9 +110,6 @@ export default {
     this.textarea = this.$refs.editor.$refs.vNoteEdit.querySelector('textarea')
     this.cancelClearAllShortCut()
 
-    // 取消编辑器自动获取焦点
-    this.textarea.blur()
-
     this.editor = this.$refs.editor
     this.leftBar = this.editor.$refs.toolbar_left
 
