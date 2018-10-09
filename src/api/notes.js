@@ -14,3 +14,10 @@ export function postCreateNote(bookId, data) {
     data,
   })
 }
+
+export function getNote(noteId) {
+  return axios({
+    url: `notes/${noteId}`,
+    method: 'get',
+  })
+}

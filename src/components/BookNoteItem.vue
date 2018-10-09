@@ -14,6 +14,10 @@
       </div>
     </v-card-title>
 
+    <v-card-text class="note-title" v-if="item.title">
+      <router-link :to="`/notes/${item.id}`">{{ item.title }}</router-link>
+    </v-card-text>
+
     <v-card-text class="desc">
       <router-link :to="`/notes/${item.id}`">{{ item.desc }}</router-link>
     </v-card-text>
@@ -47,6 +51,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~@/styles/variables';
+
 .note-item {
   margin-bottom: 10px;
 
@@ -81,6 +87,13 @@ export default {
 
   .desc {
     font-size: 14px;
+  }
+
+  .note-title {
+    color: $non-important-color;
+    font-size: 14px;
+    padding-top: 5px;
+    padding-bottom: 5px;
   }
 }
 </style>
