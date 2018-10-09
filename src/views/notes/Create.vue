@@ -9,8 +9,8 @@
         <v-container grid-list-md>
           <v-form ref="form">
             <v-tabs slider-color="primary" grow>
-              <v-tab ripple>内容</v-tab>
-              <v-tab ripple>其他</v-tab>
+              <v-tab :class="{ 'has-error': contentError }" ripple>内容</v-tab>
+              <v-tab :class="{ 'has-error': otherError }" ripple>其他</v-tab>
               <v-tab-item>
                 <v-layout wrap justify-center>
                   <v-flex xs7>
@@ -179,6 +179,14 @@ export default {
       },
     },
   }),
+  computed: {
+    contentError() {
+      return this.fieldsAnyError(['content', 'page'])
+    },
+    otherError() {
+      return this.fieldsAnyError(['title', 'desc', 'tags'])
+    },
+  },
   created() {
     this.debounceSearchTags = _.debounce(this.searchTags, 500)
 
@@ -253,6 +261,11 @@ export default {
           this.book = data.book
         })
     },
+    fieldsAnyError(fields) {
+      return fields.some(f => {
+        return this.$v.form[f].$anyError
+      })
+    },
   },
   watch: {
     search(newValue) {
@@ -283,6 +296,13 @@ export default {
   .desc {
     margin: 10px 0;
     color: $non-important-color
+  }
+
+  .has-error {
+    .v-tabs__item {
+      color: $error-color;
+      font-weight: 900;
+    }
   }
 }
 </style>
