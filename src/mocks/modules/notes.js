@@ -1,8 +1,42 @@
 import mock from '../mock'
 import router from '@/router'
 import Mock from 'mockjs'
+import detail from '../data/note_detail'
 
 const Random = Mock.Random
+
+const fullBook = {
+  'id|+1': 1,
+  title: '@ctitle',
+  started_at: '@datetime',
+  updated_at: '@datetime',
+  cover: Random.image('245X344', Random.color(), Random.color(), Random.ctitle()),
+  'read|1-900': 1,
+  'total|100-900': 1,
+  'notes|5': [
+    {
+      'id|+1': 1,
+      title: '@ctitle',
+      desc: '@cparagraph',
+      page: {
+        'id|+1': 1,
+        'page|1-1000': 1,
+      },
+      created_at: '@datetime',
+      'tags|5-10': [
+        {
+          'id|+1': 1,
+          'name|3-5': '@cword',
+        },
+      ],
+    },
+  ],
+}
+
+const briefBook = {
+  'id|+1': 1,
+  title: '@ctitle',
+}
 
 const noteTmpl = {
   'id|+1': 1,
@@ -15,10 +49,6 @@ const noteTmpl = {
   },
   desc: '@cparagraph',
   content: '@cparagraph',
-  html_content() {
-    // 模拟html内容
-    return '<h1>HTML CONTENT</h1>' + Random.cparagraph() + `<br><img src="${Random.image()}">`
-  },
   page: {
     'id|+1': 1,
     'page|1-1000': 1,
@@ -31,33 +61,6 @@ const noteTmpl = {
       'name|3-5': '@cword',
     },
   ],
-  book: {
-    'id|+1': 1,
-    title: '@ctitle',
-    started_at: '@datetime',
-    updated_at: '@datetime',
-    cover: Random.image('245X344', Random.color(), Random.color(), Random.ctitle()),
-    'read|1-900': 1,
-    'total|100-900': 1,
-    'notes|5': [
-      {
-        'id|+1': 1,
-        title: '@ctitle',
-        desc: '@cparagraph',
-        page: {
-          'id|+1': 1,
-          'page|1-1000': 1,
-        },
-        created_at: '@datetime',
-        'tags|5-10': [
-          {
-            'id|+1': 1,
-            'name|3-5': '@cword',
-          },
-        ],
-      },
-    ],
-  },
 }
 
 // 获取所有笔记
@@ -65,12 +68,22 @@ mock('/notes', 'get', {
   'notes|20': [
     noteTmpl,
   ],
+}, (tmpl, options) => {
+  const t = tmpl['notes|20'][0]
+  delete t.id
+  delete t.html_content
+  t.book = briefBook
 })
 
 // 在某本书下添加笔记
-mock(/\/books\/\d+\/notes/, 'post', { note: noteTmpl })
+mock(/\/books\/\d+\/notes/, 'post', { note: noteTmpl }, (tmpl, options) => {
+  delete tmpl.note.id
+  delete tmpl.note.book
+})
 
 // 获取笔记详情
 mock(/\/notes\/\d+/, 'get', { note: noteTmpl }, (tmpl, options) => {
   tmpl.note.id = router.currentRoute.params.noteId
+  tmpl.note.html_content = detail
+  tmpl.note.book = fullBook
 })
