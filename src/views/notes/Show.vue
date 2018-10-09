@@ -34,7 +34,27 @@ export default {
         .then(res => {
           const data = res.data
           this.note = data.note
+
+          this.$nextTick(() => {
+            this.handleFootnoteAnchor()
+          })
         })
+    },
+
+    // 处理脚注锚点偏移的问题，把脚注的锚点放到 sup 标签前面，脚注数字的 a 标签去掉 id 属性
+    handleFootnoteAnchor() {
+      const footnotes = document.querySelectorAll('sup.footnote-ref')
+      for (const ft of footnotes) {
+        // 如果sup元素前面有元素，说明已经添加锚点了
+        if (ft.previousElementSibling) {
+          continue
+        }
+        const ftNumNode = ft.children[0]
+        const anchor = document.createElement('a')
+        anchor.id = ftNumNode.id
+        ftNumNode.removeAttribute('id')
+        ft.parentElement.insertBefore(anchor, ft)
+      }
     },
   },
   watch: {
@@ -79,11 +99,14 @@ export default {
   }
 
   /*有id的a标签应该是锚点，加一个padding，避免顶部固定状态栏遮拦*/
-  .markdown-body a[id] {
-    display: block;
-    height: 60px;
-    margin-top: -60px;
-    visibility: hidden;
+  .markdown-body {
+    a[id] {
+      display: block;
+      height: 60px;
+      margin-top: -60px;
+      visibility: hidden;
+      float: left;
+    }
   }
 }
 </style>
