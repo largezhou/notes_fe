@@ -195,7 +195,7 @@ export default {
           this.$router.push({
             name: 'bookShow',
             params: {
-              id: book.id,
+              bookId: book.id,
             },
           })
         })
