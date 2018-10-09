@@ -184,12 +184,11 @@ export default {
   }
 
   .v-note-wrapper {
-    min-height: 200px;
-    height: 200px;
+    min-width: initial;
   }
 
   .v-note-wrapper.widescreen {
-    height: 400px;
+    height: 450px;
   }
 
   .v-note-wrapper.fullscreen {
