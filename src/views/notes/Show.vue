@@ -3,8 +3,15 @@
     <book-info-card :book="note.book" :expand="false"/>
     <h1 style="text-align: center">{{ note.title || '-- UNDEFINED TITLE --'}}</h1>
     <div class="time">
-      <span>{{ note.created_at }}</span>
-      <span style="margin-left: 20px;">{{ note.updated_at }}</span>
+      <v-tooltip top>
+        <span slot="activator">{{ note.created_at }}</span>
+        <span>添加于</span>
+      </v-tooltip>
+
+      <v-tooltip top style="margin-left: 10px;">
+        <span slot="activator">{{ note.updated_at }}</span>
+        <span>修改于</span>
+      </v-tooltip>
     </div>
     <div class="tags">
       <tag
