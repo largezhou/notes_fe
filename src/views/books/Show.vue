@@ -1,5 +1,5 @@
 <template>
-  <page-layout>
+  <page-layout class="book-show" v-if="book">
     <book-info-card :book="book"/>
 
     <v-card class="read-progress">
