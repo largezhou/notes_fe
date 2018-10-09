@@ -10,7 +10,7 @@
           <v-form ref="form">
             <v-layout wrap justify-center>
 
-              <v-flex xs12 sm8>
+              <v-flex xs12>
                 <v-text-field
                   label="标题（选填）"
                   :error-messages="validateErrors('form.title')"
@@ -18,15 +18,19 @@
                 />
               </v-flex>
 
-              <v-flex xs12 sm4>
+              <v-flex xs7>
                 <v-text-field
-                  :label="`第几页？（共 ${book.total} 页）`"
+                  label="第几页？"
                   type="number"
                   min="1"
                   :max="book.total"
                   :error-messages="validateErrors('form.page')"
                   v-model="$v.form.page.$model"
                 />
+              </v-flex>
+
+              <v-flex xs5>
+                <v-checkbox label="已读到此处" v-model="form.mark_read" color="primary"/>
               </v-flex>
 
               <v-flex xs12>
@@ -139,6 +143,7 @@ export default {
       content: '',
       tags: [],
       html_content: '',
+      mark_read: true,
     },
 
     attrs: {
