@@ -1,5 +1,5 @@
 <template>
-  <v-card class="book-info-card" :class="{ collapsed: !vExpand }">
+  <v-card class="book-info-card" :class="{ collapsed: !vExpand }" v-if="book">
     <v-card-text>
       <v-layout row wrap>
         <v-flex xs4 class="cover" v-show="vExpand">
