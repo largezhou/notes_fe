@@ -1,7 +1,8 @@
 <template>
-  <!--<el-tooltip class="item" effect="dark" :content="prefix + time" placement="top">-->
-    <span>{{ human() }}</span>
-  <!--</el-tooltip>-->
+  <v-tooltip top>
+    <span slot="activator">{{ human() }}</span>
+    <span>{{ prefix + time }}</span>
+  </v-tooltip>
 </template>
 
 <script>
