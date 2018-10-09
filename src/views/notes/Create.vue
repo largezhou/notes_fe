@@ -8,10 +8,7 @@
       <v-card-text>
         <v-container grid-list-md>
           <v-form ref="form">
-            <v-tabs
-              fixed-tabs
-              slider-color="primary"
-            >
+            <v-tabs slider-color="primary" grow>
               <v-tab ripple>内容</v-tab>
               <v-tab ripple>其他</v-tab>
               <v-tab-item>
@@ -28,7 +25,7 @@
                   </v-flex>
 
                   <v-flex xs5>
-                    <v-checkbox label="已读到此处" v-model="form.mark_read" color="primary"/>
+                    <v-checkbox label="已读到此处" v-model="form.mark_read" color="primary" checked/>
                   </v-flex>
 
                   <v-flex xs12>
@@ -94,11 +91,14 @@
               </v-tab-item>
             </v-tabs>
 
-            <v-btn color="primary" @click="onSubmit">添加笔记</v-btn>
-            <v-btn @click="onReset">重置</v-btn>
           </v-form>
         </v-container>
       </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn depressed color="primary" @click="onSubmit">添加笔记</v-btn>
+        <v-btn depressed @click="onClear">清空</v-btn>
+      </v-card-actions>
     </v-card>
   </page-layout>
 </template>
@@ -186,9 +186,10 @@ export default {
     this.getBook()
   },
   methods: {
-    onReset() {
+    onClear() {
       this.$refs.form.reset()
       this.$v.$reset()
+      this.form.mark_read = true
     },
 
     onSubmit() {
