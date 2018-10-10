@@ -13,7 +13,7 @@
           <v-btn to="/tags" flat>标签</v-btn>
         </v-toolbar-items>
         <v-spacer></v-spacer>
-        <v-toolbar-items v-if="true || username">
+        <v-toolbar-items v-if="username">
           <v-menu left offset-y>
             <v-btn slot="activator" flat>
               <v-icon>more_horiz</v-icon>

@@ -35,7 +35,7 @@
 
     <v-btn
       v-show="vExpand"
-      v-if="newNoteBtn"
+      v-if="newNoteBtn && username"
       class="add-note-btn"
       color="pink"
       fab
@@ -62,6 +62,7 @@
 
 <script>
 import HumanTime from '@/components/HumanTime'
+import { mapState } from 'vuex'
 
 export default {
   name: 'BookInfoCard',
@@ -81,6 +82,9 @@ export default {
     vExpand: true,
   }),
   computed: {
+    ...mapState({
+      username: state => state.user.name,
+    }),
     createNoteLink() {
       return {
         name: 'noteCreate',

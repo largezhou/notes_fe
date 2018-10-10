@@ -3,7 +3,7 @@ import store from '@/store'
 import { getToken } from '@/libs/token'
 import utils from '@/libs/utils'
 
-const guestPage = 'needAuth'
+const guestPage = 'index'
 
 router.beforeEach((to, from, next) => {
   const needAuth = utils.needAuth(to)
