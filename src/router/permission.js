@@ -12,7 +12,7 @@ router.beforeEach((to, from, next) => {
   if (getToken()) {
     // 已登录的情况下，访问登录页，跳转到首页
     // 否则获取用户信息
-    if (to.name == 'login') {
+    if (to.name == 'login' || to.name == 'loginEverywhere') {
       next({ name: guestPage })
     } else {
       // 如果已有用户信息，则直接跳转

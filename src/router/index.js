@@ -79,6 +79,13 @@ const page404 = {
   component: () => import('@/views/errors/Page404'),
 }
 
+// 任何路径后面加一个/login，即可跳转到登录页
+const loginEverywhere = {
+  path: '*/login',
+  name: 'loginEverywhere',
+  component: () => import('@/views/Login'),
+}
+
 const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -96,6 +103,7 @@ const router = new Router({
     login,
     ...otherRouters,
     page404,
+    loginEverywhere,
   ],
 })
 
