@@ -29,14 +29,33 @@ import { getNote } from '@/api/notes'
 import BookInfoCard from '@/components/BookInfoCard'
 import Tag from '@/components/Tag'
 import _ from 'lodash'
+import seo from '@/mixins/seo'
 
 export default {
   name: 'Show',
   components: { BookInfoCard, Tag },
+  mixins: [seo],
   data: () => ({
     note: null,
     oldRoute: null,
   }),
+  computed: {
+    pageTitle() {
+      if (this.note == null) {
+        return ''
+      }
+
+      return `${_.get(this.note, 'book.title')} 第${_.get(this.note, 'page.page')}页 ${_.get(this.note, 'title') || ''}`
+    },
+    pageDesc() {
+      return this.note ? this.note.desc : ''
+    },
+    pageKeywords() {
+      const tags = this.note ? this.note.tags : []
+
+      return tags.map(t => t.name).join(',')
+    },
+  },
   methods: {
     getData(id = this.$route.params.noteId) {
       getNote(id)
