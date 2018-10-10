@@ -110,9 +110,6 @@ export default {
     this.textarea = this.$refs.editor.$refs.vNoteEdit.querySelector('textarea')
     this.cancelClearAllShortCut()
 
-    // 取消编辑器自动获取焦点
-    this.textarea.blur()
-
     this.editor = this.$refs.editor
     this.leftBar = this.editor.$refs.toolbar_left
 
@@ -187,12 +184,11 @@ export default {
   }
 
   .v-note-wrapper {
-    min-height: 200px;
-    height: 200px;
+    min-width: initial;
   }
 
   .v-note-wrapper.widescreen {
-    height: 400px;
+    height: 450px;
   }
 
   .v-note-wrapper.fullscreen {
