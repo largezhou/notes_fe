@@ -20,6 +20,13 @@ const login = {
   component: () => import('@/views/Login'),
 }
 
+// 任何路径后面加一个/login，即可跳转到登录页
+const loginEverywhere = {
+  path: '*/login',
+  name: 'loginEverywhere',
+  component: () => import('@/views/Login'),
+}
+
 const otherRouters = [
   {
     path: '',
@@ -77,13 +84,6 @@ const page404 = {
   path: '*',
   name: 'page404',
   component: () => import('@/views/errors/Page404'),
-}
-
-// 任何路径后面加一个/login，即可跳转到登录页
-const loginEverywhere = {
-  path: '*/login',
-  name: 'loginEverywhere',
-  component: () => import('@/views/Login'),
 }
 
 const router = new Router({
