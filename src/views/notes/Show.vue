@@ -13,13 +13,9 @@
         <span>修改于</span>
       </v-tooltip>
     </div>
-    <div class="tags">
-      <tag
-        v-for="tag of note.tags"
-        :key="tag.id"
-        :tag="tag"
-      />
-    </div>
+
+    <tags :tags="note.tags"/>
+
     <div class="content markdown-body" v-html="note.html_content"/>
   </page-layout>
 </template>
@@ -27,16 +23,39 @@
 <script>
 import { getNote } from '@/api/notes'
 import BookInfoCard from '@/components/BookInfoCard'
-import Tag from '@/components/Tag'
+import Tags from '@/components/Tags'
 import _ from 'lodash'
+import seo from '@/mixins/seo'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Show',
-  components: { BookInfoCard, Tag },
+  components: { BookInfoCard, Tags },
+  mixins: [seo],
   data: () => ({
     note: null,
     oldRoute: null,
   }),
+  computed: {
+    ...mapState({
+      widescreen: state => state.app.widescreen,
+    }),
+    pageTitle() {
+      if (this.note == null) {
+        return ''
+      }
+
+      return `${_.get(this.note, 'book.title')} 第${_.get(this.note, 'page.page')}页 ${_.get(this.note, 'title') || ''}`
+    },
+    pageDesc() {
+      return this.note ? this.note.desc : ''
+    },
+    pageKeywords() {
+      const tags = this.note ? this.note.tags : []
+
+      return tags.map(t => t.name).join(',')
+    },
+  },
   methods: {
     getData(id = this.$route.params.noteId) {
       getNote(id)
@@ -108,10 +127,6 @@ export default {
     img {
       max-width: 100%;
     }
-  }
-
-  .tags {
-    margin-top: 10px;
   }
 
   code {

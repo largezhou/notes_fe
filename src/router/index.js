@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
+// 首页
 const index = {
   path: '/',
   name: 'index',
@@ -12,9 +13,17 @@ const index = {
   component: () => import('@/views/Index'),
 }
 
+// 登录
 const login = {
   path: '/login',
   name: 'login',
+  component: () => import('@/views/Login'),
+}
+
+// 任何路径后面加一个/login，即可跳转到登录页
+const loginEverywhere = {
+  path: '*/login',
+  name: 'loginEverywhere',
   component: () => import('@/views/Login'),
 }
 
@@ -23,21 +32,14 @@ const otherRouters = [
     path: '',
     component: () => import('@/views/Layout'),
     children: [
-      {
-        path: '/need-auth',
-        name: 'needAuth',
-        meta: {
-          auth: true,
-        },
-        component: () => import('@/views/NeedAuth'),
-      },
-
+      // 书籍列表
       {
         path: '/books',
         name: 'bookIndex',
         component: () => import('@/views/books/Index'),
       },
 
+      // 书籍详情
       {
         path: '/books/:bookId(\\d+)',
         name: 'bookShow',
@@ -47,18 +49,27 @@ const otherRouters = [
         component: () => import('@/views/books/Show'),
       },
 
+      // 编辑书籍
       {
         path: '/books/:bookId(\\d+)/edit',
         name: 'bookEdit',
+        meta: {
+          auth: true,
+        },
         component: () => import('@/views/books/Edit'),
       },
 
+      // 添加笔记表单页
       {
         path: 'books/:bookId(\\d+)/notes/create',
         name: 'noteCreate',
+        meta: {
+          auth: true,
+        },
         component: () => import('@/views/notes/Create'),
       },
 
+      // 笔记详情页
       {
         path: 'notes/:noteId(\\d+)',
         name: 'noteShow',
@@ -68,6 +79,7 @@ const otherRouters = [
   },
 ]
 
+// 404
 const page404 = {
   path: '*',
   name: 'page404',
@@ -91,6 +103,7 @@ const router = new Router({
     login,
     ...otherRouters,
     page404,
+    loginEverywhere,
   ],
 })
 
