@@ -55,7 +55,7 @@ const noteTmpl = {
   },
   created_at: '@datetime',
   updated_at: '@datetime',
-  'tags|5-20': [
+  'tags|20': [
     {
       'id|+1': 1,
       'name|3-5': '@cword',
