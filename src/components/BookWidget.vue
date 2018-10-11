@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     getData() {
-      getBooks()
+      getBooks({ limit: 5 })
         .then(res => {
           const data = res.data
           this.books = data.books

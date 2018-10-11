@@ -2,7 +2,7 @@
   <page-layout class="note-create" v-if="book">
     <book-info-card :book="book" :new-note-btn="false" :expand="false"/>
 
-    <div class="desc">添加笔记</div>
+    <div class="page-desc">~~ 添加笔记 ~~</div>
 
     <v-card>
       <v-card-text>
@@ -291,11 +291,6 @@ export default {
 .note-create {
   .v-note-wrapper {
     z-index: 1;
-  }
-
-  .desc {
-    margin: 10px 0;
-    color: $non-important-color
   }
 
   .has-error {

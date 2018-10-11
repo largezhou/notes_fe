@@ -9,7 +9,7 @@
           </v-btn>
         </v-toolbar-items>
         <v-toolbar-items class="hidden-sm-and-down">
-          <v-btn to="/books" flat>书</v-btn>
+          <v-btn to="/books" flat>看过</v-btn>
           <v-btn to="/tags" flat>标签</v-btn>
         </v-toolbar-items>
         <v-spacer></v-spacer>

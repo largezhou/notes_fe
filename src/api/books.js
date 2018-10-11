@@ -1,9 +1,10 @@
 import axios from '@/plugins/axios'
 
-export function getBooks() {
+export function getBooks(params) {
   return axios({
     url: 'books',
     method: 'get',
+    params,
   })
 }
 

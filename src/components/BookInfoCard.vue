@@ -6,7 +6,9 @@
           <img :src="book.cover">
         </v-flex>
         <v-flex :xs6="vExpand" :sm8="vExpand" :xs10="!vExpand" class="book-info">
-          <div class="title text-ellipsis" :class="{ collapsed: !vExpand }">{{ book.title }}</div>
+          <div class="title text-ellipsis" :class="{ collapsed: !vExpand }">
+            <router-link :to="`/books/${book.id}`">{{ book.title }}</router-link>
+          </div>
           <div v-show="vExpand">
             <div class="item">
               <span class="label">开始阅读</span>
@@ -26,7 +28,7 @@
             </div>
             <div class="item">
               <span class="label">笔记</span>
-              <span>{{ book.notes.length }}</span> 条
+              <span>{{ book.notes_count }}</span> 条
             </div>
           </div>
         </v-flex>
@@ -48,6 +50,7 @@
     </v-btn>
 
     <v-btn
+      v-if="canExpand"
       class="toggle-btn"
       flat
       icon
@@ -74,6 +77,10 @@ export default {
       default: true,
     },
     expand: {
+      type: Boolean,
+      default: true,
+    },
+    canExpand: {
       type: Boolean,
       default: true,
     },
@@ -114,6 +121,11 @@ export default {
 $add-note-btn-pos: 12px;
 
 .book-info-card {
+
+  + .book-info-card {
+    margin-top: 10px;
+  }
+
   .cover {
     max-width: 150px;
     img {

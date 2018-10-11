@@ -1,7 +1,7 @@
 import axios from '@/plugins/axios'
 
 /**
- * @param scope 比如为hot时，后台会返回最热的标签
+ * @param params
  */
 export function getTags(params) {
   return axios({
