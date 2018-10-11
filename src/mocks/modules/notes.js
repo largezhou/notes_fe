@@ -18,10 +18,7 @@ const fullBook = {
       'id|+1': 1,
       title: '@ctitle',
       desc: '@cparagraph',
-      page: {
-        'id|+1': 1,
-        'page|1-1000': 1,
-      },
+      'page|1-1000': 1,
       created_at: '@datetime',
       'tags|5-10': [
         {
@@ -49,10 +46,7 @@ const noteTmpl = {
   },
   desc: '@cparagraph',
   content: '@cparagraph',
-  page: {
-    'id|+1': 1,
-    'page|1-1000': 1,
-  },
+  'page|1-1000': 1,
   created_at: '@datetime',
   updated_at: '@datetime',
   'tags|20': [

@@ -34,10 +34,7 @@ mock(/\/books\/\d+/, 'get', {
         'id|+1': 1,
         title: '@ctitle',
         desc: '@cparagraph',
-        page: {
-          'id|+1': 1,
-          'page|1-1000': 1,
-        },
+        'page|1-1000': 1,
         created_at: '@datetime',
         'tags|5-10': [
           {
