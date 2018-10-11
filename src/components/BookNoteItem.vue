@@ -55,7 +55,7 @@ export default {
       height: 50px;
 
       .more {
-        top: 6px;
+        top: 8px;
         right: 8px;
       }
     }
