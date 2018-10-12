@@ -2,28 +2,42 @@
   <div class="navbar-wrapper v-toolbar primary">
     <div class="container">
       <v-toolbar dark color="primary" ref="toolbar">
-        <v-toolbar-side-icon></v-toolbar-side-icon>
-        <v-toolbar-items>
+        <v-toolbar-items class="brand-icon">
           <v-btn to="/" flat>
             <img width="30" height="30" src="@/assets/logo.png">
           </v-btn>
         </v-toolbar-items>
-        <v-toolbar-items class="hidden-sm-and-down">
+        <v-toolbar-items v-if="widescreen">
           <v-btn to="/books" flat>看过</v-btn>
           <v-btn to="/tags" flat>标签</v-btn>
         </v-toolbar-items>
         <v-spacer></v-spacer>
-        <v-toolbar-items v-if="username">
+        <v-toolbar-items v-if="username || !widescreen">
           <v-menu left offset-y>
-            <v-btn slot="activator" flat>
+            <v-btn slot="activator" flat class="more-menu">
               <v-icon>more_horiz</v-icon>
             </v-btn>
             <v-list>
-              <new-book/>
-              <v-list-tile @click="onLogout">
-                <span class="navbar-menu-icon"><v-icon>exit_to_app</v-icon></span>
-                <v-list-tile-title>退出登录</v-list-tile-title>
-              </v-list-tile>
+              <div v-if="!widescreen">
+                <v-list-tile to="/books">
+                  <span class="navbar-menu-icon"><v-icon>library_books</v-icon></span>
+                  <v-list-tile-title>看过</v-list-tile-title>
+                </v-list-tile>
+                <v-list-tile to="/tags">
+                  <span class="navbar-menu-icon"><v-icon>text_fields</v-icon></span>
+                  <v-list-tile-title>标签</v-list-tile-title>
+                </v-list-tile>
+              </div>
+
+              <v-divider v-if="username && !widescreen"/>
+
+              <div v-if="username">
+                <new-book/>
+                <v-list-tile @click="onLogout">
+                  <span class="navbar-menu-icon"><v-icon>exit_to_app</v-icon></span>
+                  <v-list-tile-title>退出登录</v-list-tile-title>
+                </v-list-tile>
+              </div>
             </v-list>
           </v-menu>
         </v-toolbar-items>
@@ -43,6 +57,7 @@ export default {
   computed: {
     ...mapState({
       username: state => state.user.name,
+      widescreen: state => state.app.widescreen,
     }),
   },
   methods: {
@@ -81,6 +96,21 @@ export default {
 
   .v-toolbar__content {
     height: 60px !important;
+    padding: 0;
+  }
+
+  .brand-icon {
+    .v-btn {
+      padding: 0;
+      min-width: 45px;
+    }
+  }
+
+  .more-menu {
+    &.v-btn {
+      padding: 0;
+      min-width: 45px;
+    }
   }
 }
 
