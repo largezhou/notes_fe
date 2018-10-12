@@ -1,22 +1,28 @@
 <template>
   <page-layout v-if="note" class="note-show">
     <book-info-card :book="note.book" :expand="false"/>
-    <h1 style="text-align: center">{{ note.title || '-- UNDEFINED TITLE --'}}</h1>
-    <div class="time">
-      <v-tooltip top>
-        <span slot="activator">{{ note.created_at }}</span>
-        <span>添加于</span>
-      </v-tooltip>
 
-      <v-tooltip top style="margin-left: 10px;">
-        <span slot="activator">{{ note.updated_at }}</span>
-        <span>修改于</span>
-      </v-tooltip>
-    </div>
+    <v-card style="margin-top: 10px;">
+      <v-card-text style="padding: 10px;">
+        <h1 style="text-align: center">{{ note.title || '-- UNDEFINED TITLE --'}}</h1>
+        <div class="time">
+          <v-tooltip top>
+            <span slot="activator">{{ note.created_at }}</span>
+            <span>添加于</span>
+          </v-tooltip>
 
-    <tags :tags="note.tags"/>
+          <v-tooltip top style="margin-left: 10px;">
+            <span slot="activator">{{ note.updated_at }}</span>
+            <span>修改于</span>
+          </v-tooltip>
+        </div>
 
-    <div class="content markdown-body" v-html="note.html_content"/>
+        <tags :tags="note.tags"/>
+
+        <div class="content markdown-body" v-html="note.html_content"/>
+
+      </v-card-text>
+    </v-card>
   </page-layout>
 </template>
 
