@@ -45,7 +45,7 @@ export default {
         return ''
       }
 
-      return `${_.get(this.note, 'book.title')} 第${_.get(this.note, 'page.page')}页 ${_.get(this.note, 'title') || ''}`
+      return `${_.get(this.note, 'book.title')} 第${this.note.page}页 ${_.get(this.note, 'title') || ''}`
     },
     pageDesc() {
       return this.note ? this.note.desc : ''
