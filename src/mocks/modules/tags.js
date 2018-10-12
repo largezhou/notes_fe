@@ -9,7 +9,8 @@ import _ from 'lodash'
   // 保持模板为同一个对象,这样id才会持续增加
   const tagTmpl = {
     'id|+1': 1,
-    'text': '@word',
+    'name|2-5': '@cword',
+    'notes_count|1-10': 1,
   }
   const template = {}
   template[key] = [
@@ -24,7 +25,7 @@ import _ from 'lodash'
       if (Math.random() > 0.7) {
         delete tmpl[key]
 
-        tagTmpl.text = _.trimStart(q.q) + '@word'
+        tagTmpl['name|2-5'] = _.trimStart(q.q) + '@cword'
 
         tmpl[searchKey] = [
           tagTmpl,
@@ -33,7 +34,7 @@ import _ from 'lodash'
         tmpl[key] = []
       }
     } else {
-      tagTmpl.text = '@word'
+      tagTmpl['name|2-5'] = '@cword'
 
       tmpl[key] = [
         tagTmpl,

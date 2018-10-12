@@ -71,6 +71,7 @@
                       deletable-chips
                       :search-input.sync="search"
                       ref="tags"
+                      item-text="name"
                     >
                       <template slot="no-data">
                         <v-list-tile>

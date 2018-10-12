@@ -49,16 +49,6 @@ const otherRouters = [
         component: () => import('@/views/books/Show'),
       },
 
-      // 编辑书籍
-      {
-        path: '/books/:bookId(\\d+)/edit',
-        name: 'bookEdit',
-        meta: {
-          auth: true,
-        },
-        component: () => import('@/views/books/Edit'),
-      },
-
       // 添加笔记表单页
       {
         path: 'books/:bookId(\\d+)/notes/create',
@@ -74,6 +64,13 @@ const otherRouters = [
         path: 'notes/:noteId(\\d+)',
         name: 'noteShow',
         component: () => import('@/views/notes/Show'),
+      },
+
+      // 所有标签
+      {
+        path: 'tags',
+        name: 'tagIndex',
+        component: () => import('@/views/tags/Index'),
       },
     ],
   },

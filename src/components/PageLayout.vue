@@ -3,6 +3,7 @@
   <v-container grid-list-md class="content">
     <v-layout row wrap justify-center>
       <v-flex md9 sm12>
+        <div v-if="pageDesc" class="page-desc">~~ {{ pageDesc }} ~~</div>
         <slot/>
       </v-flex>
     </v-layout>
@@ -12,6 +13,9 @@
 <script>
 export default {
   name: 'PageLayout',
+  props: {
+    pageDesc: String,
+  },
 }
 </script>
 
