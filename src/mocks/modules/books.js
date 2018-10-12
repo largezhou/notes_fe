@@ -25,12 +25,10 @@ mock(/\/books(\?.*)?$/, 'get', {
   ],
 }, (tmpl, options) => {
   const q = utils.queryFromUrl(options.url)
-
-  log(q)
 })
 
 // 获取书籍详情
-mock(/\/books\/\d+$/, 'get', {
+mock(/\/books\/\d+(\?.*)?$/, 'get', {
   book: {
     title: '@ctitle',
     started_at: '@datetime',

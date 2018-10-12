@@ -25,7 +25,7 @@ import _ from 'lodash'
       if (Math.random() > 0.7) {
         delete tmpl[key]
 
-        tagTmpl['name|2-5'] = _.trimStart(q.q) + '@cword'
+        tagTmpl.name = _.trimStart(q.q) + '@cword'
 
         tmpl[searchKey] = [
           tagTmpl,
