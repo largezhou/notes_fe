@@ -13,6 +13,7 @@ const fullBook = {
   cover: Random.image('245X344', Random.color(), Random.color(), Random.ctitle()),
   'read|1-900': 1,
   'total|100-900': 1,
+  'notes_count|5-20': 1,
   'notes|5': [
     {
       'id|+1': 1,
