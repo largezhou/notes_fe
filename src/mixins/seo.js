@@ -2,7 +2,7 @@ export default {
   watch: {
     pageTitle: {
       handler(newValue) {
-        document.title = (newValue || '') + ' 读书笔记'
+        document.title = (newValue || '') + ' 笔记'
       },
       immediate: true,
     },
