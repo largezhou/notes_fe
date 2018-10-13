@@ -10,6 +10,7 @@ import _ from 'lodash'
     'id|+1': 1,
     'name|2-5': '@cword',
     'notes_count|1-10': 1,
+    'posts_count|1-10': 1,
   }
   const template = {}
   template[key] = [

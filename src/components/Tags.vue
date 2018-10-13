@@ -1,28 +1,26 @@
 <template>
   <div class="tags" :class="{ 'one-line': oneLine }">
-    <div>
-      <v-btn
-        v-for="tag of tags"
-        :key="tag.id"
-        class="tag"
-        flat
-        color="primary"
-        :outline="outline"
-        :to="`/tags/${tag.id}`"
-      >{{ tag.name }}
-      </v-btn>
-      <v-btn
-        :ripple="false"
-        class="tag more"
-        v-if="!widescreen"
-        flat
-        color="primary"
-        @click="onShowMore"
-        v-text="oneLine ? '更多' : '收起'"
-        :absolute="oneLine"
-        :outline="!outline"
-      />
-    </div>
+    <v-btn
+      v-for="tag of tags"
+      :key="tag.id"
+      class="tag"
+      flat
+      color="primary"
+      :outline="outline"
+      :to="`/tags/${tag.id}`"
+    >{{ tag.name }}
+    </v-btn>
+    <v-btn
+      :ripple="false"
+      class="tag more"
+      v-if="!widescreen"
+      flat
+      color="primary"
+      @click="onShowMore"
+      v-text="oneLine ? '更多' : '收起'"
+      :absolute="oneLine"
+      :outline="!outline"
+    />
   </div>
 </template>
 
@@ -57,22 +55,18 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .tags {
   margin-top: 10px;
 
   &.one-line {
     height: 35px;
     position: relative;
-
-    > div {
-      margin-right: 60px;
-      height: 100%;
-      overflow: hidden;
-    }
+    padding-right: 55px;
+    overflow: hidden;
 
     .more {
-      top: 0;
+      top: 1px;
       right: 0;
     }
   }

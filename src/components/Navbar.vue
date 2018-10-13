@@ -10,6 +10,7 @@
         <v-toolbar-items v-if="widescreen">
           <v-btn to="/books" flat>看过</v-btn>
           <v-btn to="/tags" flat>标签</v-btn>
+          <v-btn to="/posts" flat>博客</v-btn>
         </v-toolbar-items>
         <v-spacer></v-spacer>
         <v-toolbar-items v-if="username || !widescreen">
@@ -27,16 +28,30 @@
                   <span class="navbar-menu-icon"><v-icon>text_fields</v-icon></span>
                   <v-list-tile-title>标签</v-list-tile-title>
                 </v-list-tile>
+                <v-list-tile to="/posts">
+                  <span class="navbar-menu-icon"><v-icon>insert_drive_file</v-icon></span>
+                  <v-list-tile-title>博客</v-list-tile-title>
+                </v-list-tile>
               </div>
 
               <v-divider v-if="username && !widescreen"/>
 
               <div v-if="username">
+
                 <new-book/>
+
+                <v-list-tile to="/posts/create">
+                  <span class="navbar-menu-icon"><v-icon>create</v-icon></span>
+                  <v-list-tile-title>写博客</v-list-tile-title>
+                </v-list-tile>
+
+                <v-divider/>
+
                 <v-list-tile @click="onLogout">
                   <span class="navbar-menu-icon"><v-icon>exit_to_app</v-icon></span>
                   <v-list-tile-title>退出登录</v-list-tile-title>
                 </v-list-tile>
+
               </div>
             </v-list>
           </v-menu>
