@@ -3,6 +3,7 @@
     <v-form ref="form" class="login-form">
       <p class="title">登录吧</p>
       <v-text-field
+        autofocus
         label="用户名"
         :error-messages="validateErrors('form.username')"
         v-model="$v.form.username.$model"
