@@ -1,7 +1,7 @@
 import mock from '../mock'
 import router from '@/router'
 import Mock from 'mockjs'
-import detail from '../data/note_detail'
+import detail from '../data/post_detail'
 
 const Random = Mock.Random
 

@@ -6,3 +6,10 @@ export function getPosts() {
     method: 'get',
   })
 }
+
+export function getPost(postId) {
+  return axios({
+    url: `posts/${postId}`,
+    methods: 'get',
+  })
+}

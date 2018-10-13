@@ -2,7 +2,7 @@
 <template>
   <v-container grid-list-md class="content">
     <v-layout row wrap justify-center>
-      <v-flex md9 sm12>
+      <v-flex md10 sm12>
         <div v-if="pageDesc" class="page-desc">~~ {{ pageDesc }} ~~</div>
         <slot/>
       </v-flex>
