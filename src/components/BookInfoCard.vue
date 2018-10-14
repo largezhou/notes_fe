@@ -164,7 +164,7 @@ $add-note-btn-pos: 12px;
     color: $non-important-color;
   }
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 500px) {
     .book-info {
       font-size: 14px;
 

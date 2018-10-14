@@ -22,7 +22,7 @@
       <router-link :to="`/notes/${item.id}`">{{ item.desc }}</router-link>
     </v-card-text>
 
-    <tags :tags="item.tags" :outline="false"/>
+    <tags :tags="item.tags"/>
 
   </v-card>
 </template>

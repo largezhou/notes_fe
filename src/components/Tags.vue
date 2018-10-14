@@ -6,7 +6,6 @@
       class="tag"
       flat
       color="primary"
-      :outline="outline"
       :to="`/tags/${tag.id}`"
     >{{ tag.name }}
     </v-btn>
@@ -19,7 +18,7 @@
       @click="onShowMore"
       v-text="oneLine ? '更多' : '收起'"
       :absolute="oneLine"
-      :outline="!outline"
+      outline
     />
   </div>
 </template>
@@ -34,10 +33,6 @@ export default {
   }),
   props: {
     tags: Array,
-    outline: {
-      type: Boolean,
-      default: true,
-    },
   },
   computed: {
     ...mapState({
