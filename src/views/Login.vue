@@ -22,11 +22,11 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, minLength, maxLength } from 'vuelidate/lib/validators'
-import _ from 'lodash'
+import { validateErrorsMixins } from '@/validators'
 
 export default {
   name: 'Login',
-  mixins: [validationMixin],
+  mixins: [validationMixin, validateErrorsMixins],
   validations: {
     form: {
       username: {
@@ -65,21 +65,6 @@ export default {
     }
   },
   methods: {
-    validateErrors(key) {
-      const data = _.get(this.$v, key)
-      // 输入框没有输入过值时，不要显示错误消息
-      if (!data.$dirty) {
-        return
-      }
-
-      const validators = data.$params
-      for (const vt of Object.keys(validators)) {
-        if (!data[vt]) {
-          return _.get(this.attrs, key)[vt]
-        }
-      }
-    },
-
     onLogin() {
       this.$v.$touch()
 

@@ -83,7 +83,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, integer, minValue, maxValue } from 'vuelidate/lib/validators'
-import _ from 'lodash'
+import { validateErrorsMixins } from '@/validators'
 import MDEditor from '@/components/MDEditor'
 import { getBook } from '@/api/books'
 import BookInfoCard from '@/components/BookInfoCard'
@@ -93,7 +93,7 @@ import TagsSelector from '@/components/TagsSelector'
 export default {
   name: 'Create',
   components: { MDEditor, BookInfoCard, TagsSelector },
-  mixins: [validationMixin],
+  mixins: [validationMixin, validateErrorsMixins],
   validations() {
     return {
       form: {
@@ -184,20 +184,6 @@ export default {
         })
     },
 
-    validateErrors(key) {
-      const data = _.get(this.$v, key)
-      // 输入框没有输入过值时，不要显示错误消息
-      if (!data.$dirty) {
-        return
-      }
-
-      const validators = data.$params
-      for (const vt of Object.keys(validators)) {
-        if (!data[vt]) {
-          return _.get(this.attrs, key)[vt]
-        }
-      }
-    },
     onContentChange(content, html) {
       this.form.html_content = html
     },

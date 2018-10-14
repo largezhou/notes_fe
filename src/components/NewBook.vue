@@ -99,15 +99,14 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, integer, minValue, maxValue } from 'vuelidate/lib/validators'
-import _ from 'lodash'
 import { postCreateBook } from '@/api/books'
-import { vImage } from '@/validators'
+import { vImage, validateErrorsMixins } from '@/validators'
 import FilePicker from '@/components/FilePicker'
 
 export default {
   name: 'NewBook',
   components: { FilePicker },
-  mixins: [validationMixin],
+  mixins: [validationMixin, validateErrorsMixins],
   // 这里面的结构，一定要跟data中的form对应！！！！
   validations() {
     return {
@@ -202,20 +201,6 @@ export default {
       this.$refs.form.reset()
       this.$v.$reset()
       this.modal = false
-    },
-    validateErrors(key) {
-      const data = _.get(this.$v, key)
-      // 输入框没有输入过值时，不要显示错误消息
-      if (!data.$dirty) {
-        return
-      }
-
-      const validators = data.$params
-      for (const vt of Object.keys(validators)) {
-        if (!data[vt]) {
-          return _.get(this.attrs, key)[vt]
-        }
-      }
     },
   },
 }

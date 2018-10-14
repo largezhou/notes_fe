@@ -59,14 +59,14 @@
 import PageLayout from '@/components/PageLayout'
 import { validationMixin } from 'vuelidate'
 import { required, maxLength } from 'vuelidate/lib/validators'
+import { validateErrorsMixins } from '@/validators'
 import MDEditor from '@/components/MDEditor'
-import _ from 'lodash'
 import TagsSelector from '@/components/TagsSelector'
 
 export default {
   name: 'Create',
   components: { TagsSelector, PageLayout, MDEditor },
-  mixins: [validationMixin],
+  mixins: [validationMixin, validateErrorsMixins],
   validations() {
     return {
       form: {
@@ -111,21 +111,6 @@ export default {
     },
   }),
   methods: {
-    validateErrors(key) {
-      const data = _.get(this.$v, key)
-      // 输入框没有输入过值时，不要显示错误消息
-      if (!data.$dirty) {
-        return
-      }
-
-      const validators = data.$params
-      for (const vt of Object.keys(validators)) {
-        if (!data[vt]) {
-          return _.get(this.attrs, key)[vt]
-        }
-      }
-    },
-
     onSubmit() {
 
     },
