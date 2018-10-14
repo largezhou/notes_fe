@@ -36,23 +36,3 @@ export default {
 @import '~mavon-editor/dist/katex/katex.min.css';
 @import '~mavon-editor/dist/markdown/github-markdown.min.css';
 </style>
-
-<style lang="scss">
-.markdown-body {
-  code {
-    box-shadow: none;
-    color: inherit;
-    font-weight: inherit;
-    white-space: inherit;
-  }
-
-  /*有id的a标签应该是锚点，加一个padding，避免顶部固定状态栏遮拦*/
-  a[id] {
-    display: block;
-    height: 60px;
-    margin-top: -60px;
-    visibility: hidden;
-    float: left;
-  }
-}
-</style>
