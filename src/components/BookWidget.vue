@@ -44,7 +44,7 @@ export default {
       loading: true,
     }
   },
-  created() {
+  mounted() {
     this.getData()
   },
   methods: {

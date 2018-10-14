@@ -1,6 +1,6 @@
 import axios from '@/plugins/axios'
 
-export function getNotes() {
+export function getAllNotes() {
   return axios({
     url: 'notes',
     method: 'get',

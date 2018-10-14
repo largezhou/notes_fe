@@ -10,11 +10,7 @@ export default {
   activated() {
     this.$nextTick(() => {
       const meta = this.$route.meta
-      // 如果页面缓存了，且不是【不需要刷新】状态，则刷新
-      // needReload === undefined 表示页面首次进入，比如在当前页面按了浏览器刷新，此时肯定要获取数据
-      // needReload === true 表示页面是由其他页面点击链接跳转过来了的。该值是在路由的滚动行为函数中赋予的true，也需要重新获取数据
-      // needReload === false 表示页面是通过浏览器前进或后退进入的。赋值时机同上，表示不需要重新获取数据
-      if (meta.keepAlive && meta.needReload !== false) {
+      if (meta.keepAlive && meta.needReload) {
         log('in reload data mixin')
         // 清空旧数据
         Object.assign(this.$data, JSON.parse(this.oldData))

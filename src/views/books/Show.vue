@@ -111,7 +111,7 @@ export default {
   watch: {
     $route: {
       handler() {
-        if (this._inactive === false) {
+        if (!this._inactive) {
           this.initSort()
           this.getData()
         }
