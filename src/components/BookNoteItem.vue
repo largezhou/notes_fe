@@ -47,24 +47,11 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '~@/styles/variables';
 
 .note-item {
   margin-bottom: 10px;
-
-  .tags {
-    padding: 8px;
-
-    &.one-line {
-      height: 50px;
-
-      .more {
-        top: 8px;
-        right: 8px;
-      }
-    }
-  }
 
   .v-card__title {
     padding-bottom: 10px;

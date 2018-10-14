@@ -60,14 +60,15 @@ export default {
   margin-top: 10px;
 
   &.one-line {
-    height: 35px;
+    height: 50px;
     position: relative;
-    padding-right: 55px;
+    padding: 8px;
+    padding-right: 70px;
     overflow: hidden;
 
     .more {
-      top: 1px;
-      right: 0;
+      top: 8px;
+      right: 8px;
     }
   }
 

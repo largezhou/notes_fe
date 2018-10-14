@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tags" :class="{ collapsed }">
+    <div v-if="tags.length > 0" class="tags-banner" :class="{ collapsed }">
       <v-btn
         v-for="tag of tags"
         :key="tag.id"
@@ -76,14 +76,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.tags {
+.tags-banner {
   margin-top: 10px;
-}
 
-.tag {
-  min-width: 0;
-  height: 30px;
-  padding: 0 10px;
+  .tag {
+    min-width: 0;
+    height: 30px;
+    padding: 0 10px;
+  }
 }
 
 .collapsed {
