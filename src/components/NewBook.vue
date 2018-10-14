@@ -1,8 +1,6 @@
 <template>
-  <v-list-tile @click="onClick">
-    <span class="navbar-menu-icon"><v-icon>add</v-icon></span>
-    <v-list-tile-title>开始看书</v-list-tile-title>
-
+  <div @click="onClick">
+    <slot/>
     <v-dialog
       v-model="modal"
       max-width="500px"
@@ -95,7 +93,7 @@
         </v-card-text>
       </v-card>
     </v-dialog>
-  </v-list-tile>
+  </div>
 </template>
 
 <script>

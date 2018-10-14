@@ -12,6 +12,7 @@
 
     <back-to-top/>
     <global-snackbar/>
+    <slider-bar v-if="!widescreen"/>
   </div>
 </template>
 
@@ -20,10 +21,11 @@ import Navbar from '@/components/Navbar'
 import GlobalSnackbar from '@/components/GlobalSnackbar'
 import BackToTop from '@/components/BackToTop'
 import { mapState } from 'vuex'
+import SliderBar from '@/components/SliderBar'
 
 export default {
   name: 'App',
-  components: { Navbar, GlobalSnackbar, BackToTop },
+  components: { SliderBar, Navbar, GlobalSnackbar, BackToTop },
   computed: {
     ...mapState({
       widescreen: state => state.app.widescreen,
