@@ -64,9 +64,8 @@
     </v-btn>
 
     <!-- 编辑系列 -->
-    <div v-if="canEdit && vExpand" class="editable-warp" :style="{ top: canExpand ? '40px' : '3px' }">
-      <v-list dense>
-
+    <div v-if="canEdit" class="editable-warp" :style="{ top: canExpand ? '40px' : '3px' }">
+      <v-list dense v-show="vExpand && editMode">
         <v-list-tile @click="">
           <v-list-tile-action>
             <v-icon>visibility_off</v-icon>
@@ -132,7 +131,7 @@ export default {
       return this.vExpand ? 'expand_less' : 'expand_more'
     },
     canEdit() {
-      return this.editable && this.username && this.editMode
+      return this.editable && this.username
     },
   },
   created() {
