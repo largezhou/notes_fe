@@ -26,27 +26,27 @@
               <new-book>
                 <v-list-tile @click="">
                   <span class="navbar-menu-icon"><v-icon>add</v-icon></span>
-                  <v-list-tile-title>开始看书</v-list-tile-title>
+                  <v-list-tile-title>看 书</v-list-tile-title>
                 </v-list-tile>
               </new-book>
 
               <v-list-tile to="/posts/create">
                 <span class="navbar-menu-icon"><v-icon>create</v-icon></span>
-                <v-list-tile-title>写博客</v-list-tile-title>
+                <v-list-tile-title>博 客</v-list-tile-title>
               </v-list-tile>
 
               <v-divider/>
 
               <v-list-tile @click="onToggleEditMode">
                 <span class="navbar-menu-icon"><v-icon>{{ editMode ? 'done' : 'keyboard' }}</v-icon></span>
-                <v-list-tile-title>{{ editMode ? '退出编辑' : '编辑模式' }}</v-list-tile-title>
+                <v-list-tile-title>{{ editMode ? '完 成' : '编 辑' }}</v-list-tile-title>
               </v-list-tile>
 
               <v-divider/>
 
               <v-list-tile @click="onLogout">
                 <span class="navbar-menu-icon"><v-icon>exit_to_app</v-icon></span>
-                <v-list-tile-title>退出登录</v-list-tile-title>
+                <v-list-tile-title>退 出</v-list-tile-title>
               </v-list-tile>
 
             </v-list>
