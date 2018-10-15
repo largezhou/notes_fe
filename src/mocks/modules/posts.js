@@ -1,6 +1,7 @@
 import mock from '../mock'
 import detail from '../data/post_detail'
 
+// 博客列表
 mock('/posts', 'get', {
   'posts|15': [
     {
@@ -20,6 +21,7 @@ mock('/posts', 'get', {
   ],
 })
 
+// 博客详情
 mock(/\/posts\/\d+/, 'get', {
   post: {
     'id|+1': 1,
@@ -35,5 +37,11 @@ mock(/\/posts\/\d+/, 'get', {
         'name|3-5': '@cword',
       },
     ],
+  },
+})
+
+mock('/posts', 'post', {
+  post: {
+    'id|1-999': 1,
   },
 })

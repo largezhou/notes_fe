@@ -62,6 +62,7 @@ import { required, maxLength } from 'vuelidate/lib/validators'
 import { validateErrorsMixins } from '@/validators'
 import MDEditor from '@/components/MDEditor'
 import TagsSelector from '@/components/TagsSelector'
+import { postCreatePost } from '@/api/posts'
 
 export default {
   name: 'Create',
@@ -112,20 +113,44 @@ export default {
   }),
   methods: {
     onSubmit() {
+      this.$v.$touch()
 
+      if (this.$v.$invalid) {
+        return
+      }
+
+      postCreatePost(this.form)
+        .then(res => {
+          this.$router.push({
+            name: 'postShow',
+            params: {
+              postId: res.data.post.id,
+            },
+          })
+        })
     },
     onClear() {
       this.$refs.form.reset()
       this.$v.$reset()
     },
 
-    onContentChange() {
-
+    onContentChange(content, html) {
+      this.form.html_content = html
     },
   },
 }
 </script>
 
 <style lang="scss" scoped>
+/deep/ {
+  .v-note-wrapper {
+    &.widescreen {
+      height: 400px;
+    }
 
+    &.fullscreen {
+      height: auto;
+    }
+  }
+}
 </style>

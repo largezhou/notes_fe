@@ -10,6 +10,14 @@ export function getPosts() {
 export function getPost(postId) {
   return axios({
     url: `posts/${postId}`,
-    methods: 'get',
+    method: 'get',
+  })
+}
+
+export function postCreatePost(data) {
+  return axios({
+    url: 'posts',
+    method: 'post',
+    data,
   })
 }
