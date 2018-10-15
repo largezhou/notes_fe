@@ -59,3 +59,21 @@ utils.queryFromUrl = url => {
 
   return query
 }
+
+/**
+ * 安全的解析json，避免报错
+ *
+ * @param json
+ * @param defaultValue
+ * @returns {*}
+ */
+utils.safeJsonParse = (json, defaultValue = null) => {
+  let data = defaultValue
+  try {
+    data = JSON.parse(json)
+  } catch (e) {
+
+  }
+
+  return data
+}

@@ -68,7 +68,7 @@
       <div v-if="canEdit" class="editable-warp" :style="{ top: canExpand ? '40px' : '3px' }">
         <v-list dense v-show="vExpand && editMode">
           <!-- 隐藏与显示 -->
-          <v-list-tile @click="">
+          <v-list-tile @click="updateHidden">
             <v-list-tile-action>
               <v-icon>{{ book.hidden ? 'visibility' : 'visibility_off' }}</v-icon>
             </v-list-tile-action>
@@ -103,6 +103,7 @@
 <script>
 import HumanTime from '@/components/HumanTime'
 import { mapState } from 'vuex'
+import { updateBook } from '@/api/books'
 
 export default {
   name: 'BookInfoCard',
@@ -156,6 +157,14 @@ export default {
   methods: {
     onToggle() {
       this.vExpand = !this.vExpand
+    },
+    updateHidden() {
+      updateBook(this.book.id, {
+        hidden: !this.book.hidden,
+      })
+        .then(res => {
+          this.book.hidden = res.data.hidden
+        })
     },
   },
 }

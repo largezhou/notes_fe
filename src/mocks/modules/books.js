@@ -72,3 +72,12 @@ mock(/\/books\/\d+(\?.*)?$/, 'get', {
 mock('/books', 'post', {
   book: bookInfoTmpl,
 })
+
+// 更新
+mock(/\/books\/\d+/, 'put', {}, (tmpl, options) => {
+  const data = utils.safeJsonParse(options.body, {})
+
+  if (data.hidden !== undefined) {
+    tmpl.hidden = data.hidden
+  }
+})

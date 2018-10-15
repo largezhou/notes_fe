@@ -23,3 +23,11 @@ export function postCreateBook(data) {
     data,
   })
 }
+
+export function updateBook(bookId, data) {
+  return axios({
+    url: `books/${bookId}`,
+    method: 'put',
+    data,
+  })
+}
