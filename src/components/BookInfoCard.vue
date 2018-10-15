@@ -217,11 +217,6 @@ $add-note-btn-pos: 12px;
 
       .title {
         font-size: 16px;
-        margin-bottom: 10px;
-      }
-
-      .item {
-        margin-bottom: 5px;
       }
     }
   }
