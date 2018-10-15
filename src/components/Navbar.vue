@@ -80,7 +80,9 @@ export default {
         .then(() => {
           this.$snackbar('已退出')
           if (utils.needAuth(this.$route)) {
-            this.$router.push({ name: 'index' })
+            location.href = '/'
+          } else {
+            location.reload()
           }
         })
     },

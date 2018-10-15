@@ -92,6 +92,9 @@ const otherRouters = [
       {
         path: 'posts/create',
         name: 'postCreate',
+        meta: {
+          auth: true,
+        },
         component: () => import('@/views/posts/Create'),
       },
     ],

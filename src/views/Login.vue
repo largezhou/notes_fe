@@ -79,9 +79,9 @@ export default {
         .then(res => {
           this.$snackbar('登录成功')
           const r = this.$route.query._redirect
-          const to = r || { name: 'index' }
+          const to = r || '/'
 
-          this.$router.push(to)
+          location.href = to
         })
     },
   },
