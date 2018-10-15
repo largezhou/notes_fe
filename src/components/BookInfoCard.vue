@@ -75,7 +75,7 @@
           </v-list-tile>
 
           <!-- 编辑 -->
-          <v-list-tile @click="">
+          <v-list-tile @click="onEditBook">
             <v-list-tile-action>
               <v-icon>edit</v-icon>
             </v-list-tile-action>
@@ -168,6 +168,11 @@ export default {
   },
   created() {
     this.vExpand = this.expand
+
+    this.$root.$on('bookUpdated', this.onBookUpdated)
+  },
+  beforeDestroy() {
+    this.$root.$off('bookUpdated', this.onBookUpdated)
   },
   methods: {
     onToggle() {
@@ -220,6 +225,18 @@ export default {
             this.book.deleted_at = res.data.deleted_at
           }
         })
+    },
+
+    onEditBook() {
+      this.$root.$emit('editBook', this.book)
+    },
+
+    onBookUpdated(book) {
+      if (this.book.id == book.id) {
+        Object.keys(this.book).forEach(field => {
+          this.book[field] = book[field]
+        })
+      }
     },
   },
 }

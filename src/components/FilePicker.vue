@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { vImage } from '@/validators'
+import { vImage, vFile } from '@/validators'
 import vFormItem from '@/mixins/vform_item'
 
 export default {
@@ -55,16 +55,6 @@ export default {
 
       if (file) {
         this.$emit('input', file)
-        this.handleFilePreview(file)
-      }
-    },
-    handleFilePreview(file) {
-      this.filename = file.name
-
-      if (vImage(file)) {
-        this.src = URL.createObjectURL(file)
-      } else {
-        this.src = ''
       }
     },
     onClear() {
@@ -75,6 +65,23 @@ export default {
       this.filename = ''
       this.$refs.input.value = null
       this.$emit('input', null)
+    },
+  },
+  watch: {
+    value(newValue) {
+      if (vFile(newValue)) {
+        this.filename = newValue.name
+      } else {
+        this.filename = newValue
+      }
+
+      if (vImage(newValue)) {
+        this.src = URL.createObjectURL(newValue)
+      } else if (typeof newValue == 'string') {
+        this.src = newValue
+      } else {
+        this.src = ''
+      }
     },
   },
 }

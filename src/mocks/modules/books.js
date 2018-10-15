@@ -77,14 +77,19 @@ mock('/books', 'post', {
 
 // 更新
 mock(/\/books\/\d+/, 'put', {}, (tmpl, options) => {
-  const data = utils.safeJsonParse(options.body, {})
+  const data = typeof options.body == 'string'
+    ? utils.safeJsonParse(options.body, {})
+    : options.body
 
   if (data.hidden !== undefined) {
     tmpl.hidden = data.hidden
-  }
-
-  if (data.deleted_at === null) {
+  } else if (data.deleted_at === null) {
     tmpl.deleted_at = null
+  } else {
+    // 编辑书籍保存
+    // 获取书籍id
+    bookInfoTmpl.id = Number(options.url.match(/\/books\/(\d+)/)[1])
+    tmpl.book = bookInfoTmpl
   }
 })
 

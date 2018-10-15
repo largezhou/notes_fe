@@ -11,7 +11,7 @@
           <v-btn icon dark @click="onCancel">
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title>添加一本书</v-toolbar-title>
+          <v-toolbar-title>{{ this.book ? `编辑 ${this.book.title}` : '添加一本书' }}</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
             <v-btn dark flat @click="onSubmit">
@@ -99,7 +99,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, integer, minValue, maxValue } from 'vuelidate/lib/validators'
-import { postCreateBook } from '@/api/books'
+import { postCreateBook, updateBook } from '@/api/books'
 import { vImage, validateErrorsMixins } from '@/validators'
 import FilePicker from '@/components/FilePicker'
 
@@ -109,6 +109,16 @@ export default {
   mixins: [validationMixin, validateErrorsMixins],
   // 这里面的结构，一定要跟data中的form对应！！！！
   validations() {
+    const cover = {
+      required,
+    }
+
+    if (this.form.cover instanceof File) {
+      cover.vImage = vImage
+    } else {
+      delete cover.vImage
+    }
+
     return {
       form: {
         title: {
@@ -125,10 +135,7 @@ export default {
           integer,
           minValue: minValue(1),
         },
-        cover: {
-          required,
-          vImage,
-        },
+        cover,
       },
     }
   },
@@ -167,10 +174,19 @@ export default {
         },
       },
     },
+
+    book: null,
   }),
+  created() {
+    this.$root.$on('editBook', this.onEdit)
+  },
+  beforeDestroy() {
+    this.$root.$off('editBook', this.onEdit)
+  },
   methods: {
     onClick() {
       this.modal = true
+      this.book = null
     },
     onSubmit() {
       this.$v.$touch()
@@ -184,23 +200,42 @@ export default {
         fd.append(k, this.form[k])
       }
 
-      postCreateBook(fd)
-        .then(res => {
-          const book = res.data.book
-          this.onCancel()
-          this.$snackbar('已添加')
-          this.$router.push({
-            name: 'bookShow',
-            params: {
-              bookId: book.id,
-            },
+      if (this.book) {
+        updateBook(this.book.id, fd)
+          .then(res => {
+            this.$root.$emit('bookUpdated', res.data.book)
+            this.onCancel()
           })
-        })
+      } else {
+        postCreateBook(fd)
+          .then(res => {
+            const book = res.data.book
+            this.onCancel()
+            this.$snackbar('已添加')
+            this.$router.push({
+              name: 'bookShow',
+              params: {
+                bookId: book.id,
+              },
+            })
+          })
+      }
     },
     onCancel() {
       this.$refs.form.reset()
       this.$v.$reset()
       this.modal = false
+      this.book = null
+    },
+
+    onEdit(book) {
+      this.book = book
+
+      Object.keys(this.form).forEach(field => {
+        this.$set(this.form, field, this.book[field])
+      })
+
+      this.modal = true
     },
   },
 }
