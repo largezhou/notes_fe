@@ -95,4 +95,8 @@
 
 .v-note-wrapper {
   z-index: 1 !important;
+
+  &.fullscreen {
+    z-index: 9999 !important;;
+  }
 }
