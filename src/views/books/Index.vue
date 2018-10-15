@@ -1,6 +1,6 @@
 <template>
   <page-layout page-desc="看过的书啊">
-    <book-info-card v-for="book of books" :key="book.id" :book="book" :can-expand="false"/>
+    <book-info-card v-for="book of books" :key="book.id" :book="book" :can-expand="false" editable/>
   </page-layout>
 </template>
 

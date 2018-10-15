@@ -37,6 +37,13 @@
 
               <v-divider/>
 
+              <v-list-tile @click="onToggleEditMode">
+                <span class="navbar-menu-icon"><v-icon>{{ editMode ? 'done' : 'keyboard' }}</v-icon></span>
+                <v-list-tile-title>{{ editMode ? '退出编辑' : '编辑模式' }}</v-list-tile-title>
+              </v-list-tile>
+
+              <v-divider/>
+
               <v-list-tile @click="onLogout">
                 <span class="navbar-menu-icon"><v-icon>exit_to_app</v-icon></span>
                 <v-list-tile-title>退出登录</v-list-tile-title>
@@ -63,6 +70,7 @@ export default {
       username: state => state.user.name,
       widescreen: state => state.app.widescreen,
       sliderBar: state => state.app.sliderBar,
+      editMode: state => state.app.editMode,
     }),
   },
   methods: {
@@ -79,6 +87,10 @@ export default {
 
     onToggleSliderBar() {
       this.$store.commit('toggleSliderBar')
+    },
+
+    onToggleEditMode() {
+      this.$store.commit('toggleEditMode')
     },
   },
 }

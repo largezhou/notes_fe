@@ -1,10 +1,9 @@
-
-
 export default {
   state: {
     widescreen: true,
     sliderBar: false,
     device: navigator.userAgent.indexOf('Mobile') === -1 ? 'desktop' : 'mobile',
+    editMode: false,
   },
 
   mutations: {
@@ -16,6 +15,12 @@ export default {
     },
     toggleSliderBar(state) {
       state.sliderBar = !state.sliderBar
+    },
+    changeEditMode(state, editable) {
+      state.editMode = editable
+    },
+    toggleEditMode(state) {
+      state.editMode = !state.editMode
     },
   },
 }

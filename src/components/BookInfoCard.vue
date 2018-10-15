@@ -35,6 +35,7 @@
       </v-layout>
     </v-card-text>
 
+    <!--添加笔记按钮-->
     <v-btn
       v-show="vExpand"
       v-if="newNoteBtn && username"
@@ -49,6 +50,7 @@
       <v-icon>add</v-icon>
     </v-btn>
 
+    <!-- 展开收起按钮 -->
     <v-btn
       v-if="canExpand"
       class="toggle-btn"
@@ -60,6 +62,30 @@
     >
       <v-icon>{{ toggleIcon }}</v-icon>
     </v-btn>
+
+    <!-- 编辑系列 -->
+    <div v-if="canEdit && vExpand" class="editable-warp" :style="{ top: canExpand ? '40px' : '3px' }">
+      <v-list dense>
+
+        <v-list-tile @click="">
+          <v-list-tile-action>
+            <v-icon>visibility_off</v-icon>
+          </v-list-tile-action>
+        </v-list-tile>
+
+        <v-list-tile @click="">
+          <v-list-tile-action>
+            <v-icon>edit</v-icon>
+          </v-list-tile-action>
+        </v-list-tile>
+
+        <v-list-tile @click="">
+          <v-list-tile-action>
+            <v-icon>delete</v-icon>
+          </v-list-tile-action>
+        </v-list-tile>
+      </v-list>
+    </div>
   </v-card>
 </template>
 
@@ -84,6 +110,7 @@ export default {
       type: Boolean,
       default: true,
     },
+    editable: Boolean,
   },
   data: () => ({
     vExpand: true,
@@ -91,6 +118,7 @@ export default {
   computed: {
     ...mapState({
       username: state => state.user.name,
+      editMode: state => state.app.editMode,
     }),
     createNoteLink() {
       return {
@@ -102,6 +130,9 @@ export default {
     },
     toggleIcon() {
       return this.vExpand ? 'expand_less' : 'expand_more'
+    },
+    canEdit() {
+      return this.editable && this.username && this.editMode
     },
   },
   created() {
@@ -121,6 +152,7 @@ export default {
 $add-note-btn-pos: 12px;
 
 .book-info-card {
+  position: relative;
 
   + .book-info-card {
     margin-top: 10px;
@@ -206,5 +238,14 @@ $add-note-btn-pos: 12px;
       margin-left: 0;
     }
   }
+}
+</style>
+
+<style lang="scss" scoped>
+.editable-warp {
+  position: absolute;
+  right: 3px;
+
+  width: 55px;
 }
 </style>

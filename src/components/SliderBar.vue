@@ -71,6 +71,17 @@
 
         <v-divider/>
 
+        <v-list-tile @click="onToggleEditMode" active-class="non-active">
+          <v-list-tile-action>
+            <v-icon>{{ editMode ? 'done' : 'keyboard' }}</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>{{ editMode ? '完成' : '编辑' }}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+
+        <v-divider/>
+
         <v-list-tile @click="onLogout" active-class="non-active">
           <v-list-tile-action>
             <v-icon>exit_to_app</v-icon>
@@ -96,6 +107,7 @@ export default {
     ...mapState({
       sliderBar: state => state.app.sliderBar,
       username: state => state.user.name,
+      editMode: state => state.app.editMode,
     }),
   },
   methods: {
@@ -118,6 +130,10 @@ export default {
             this.$router.push({ name: 'index' })
           }
         })
+    },
+    onToggleEditMode() {
+      this.onClick()
+      this.$store.commit('toggleEditMode')
     },
   },
 }
