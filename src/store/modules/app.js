@@ -1,7 +1,10 @@
+
+
 export default {
   state: {
     widescreen: true,
     sliderBar: false,
+    device: navigator.userAgent.indexOf('Mobile') === -1 ? 'desktop' : 'mobile',
   },
 
   mutations: {

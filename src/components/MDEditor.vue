@@ -19,7 +19,7 @@
         @imgAdd="onImgAdd"
         @fullScreen="onFullscreen"
       />
-      <div class="resizer" ref="resizer" @mousedown="onDragStart"/>
+      <div v-if="device == 'desktop'" class="resizer" ref="resizer" @mousedown="onDragStart"/>
     </div>
     <div class="error-message">{{ errorMessages }}</div>
   </div>
@@ -74,6 +74,7 @@ export default {
   computed: {
     ...mapState({
       widescreen: state => state.app.widescreen,
+      device: state => state.app.device,
     }),
     toolbars() {
       const toolbarsInSmallScreen = {
