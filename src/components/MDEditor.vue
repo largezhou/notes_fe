@@ -1,21 +1,26 @@
 <template>
   <div class="v-form-item v-md-editor" :class="{ 'has-error': hasError }">
     <div class="label">{{ label }}</div>
-    <mavon-editor
-      ishljs
-      code-style="monokai-sublime"
-      :externalLink="externalLink"
-      :box-shadow="false"
-      :placeholder="placeholder"
-      :toolbars="toolbars"
-      :subfield="false"
-      defaultOpen="edit"
-      :class="{ widescreen: widescreen }"
-      :value="value"
-      @change="onChange"
-      ref="editor"
-      @imgAdd="onImgAdd"
-    />
+    <div style="position: relative">
+      <mavon-editor
+        :style="{ height: editorHeightCSS }"
+        ishljs
+        code-style="monokai-sublime"
+        :externalLink="externalLink"
+        :box-shadow="false"
+        :placeholder="placeholder"
+        :toolbars="toolbars"
+        :subfield="false"
+        defaultOpen="edit"
+        :class="{ widescreen: widescreen, resize: !!dragging }"
+        :value="value"
+        @change="onChange"
+        ref="editor"
+        @imgAdd="onImgAdd"
+        @fullScreen="onFullscreen"
+      />
+      <div class="resizer" ref="resizer" @mousedown="onDragStart"/>
+    </div>
     <div class="error-message">{{ errorMessages }}</div>
   </div>
 </template>
@@ -59,6 +64,12 @@ export default {
         return '/katex/katex.min.js'
       },
     },
+
+    fullscreen: false,
+
+    // 每次拖动更新该值，用来记录上一个鼠标位置，判断往上还是往下拖
+    dragging: 0,
+    editorHeight: 0,
   }),
   computed: {
     ...mapState({
@@ -105,6 +116,9 @@ export default {
         return toolbarsInSmallScreen
       }
     },
+    editorHeightCSS() {
+      return (this.editorHeight && !this.fullscreen) ? `${this.editorHeight}px !important` : null
+    },
   },
   mounted() {
     this.textarea = this.$refs.editor.$refs.vNoteEdit.querySelector('textarea')
@@ -125,6 +139,11 @@ export default {
       // 每次选完文件后，清空file input，这样就可以重复选择
       $fileInput.value = null
     }
+
+    // 初始化记录编辑器高度
+    this.$nextTick(() => {
+      this.editorHeight = this.$refs.editor.$el.offsetHeight
+    })
   },
   methods: {
     onChange(raw, html) {
@@ -171,6 +190,36 @@ export default {
           this.$refs.editor.$img2Url(pos, data.src)
         })
     },
+
+    onDragStart(e) {
+      if (this.fullscreen) {
+        return
+      }
+
+      this.dragging = e.y
+      document.addEventListener('mousemove', this.onDrag)
+      document.addEventListener('mouseup', this.stopDrag)
+    },
+
+    onDrag(e) {
+      if (!this.dragging || this.fullscreen) {
+        return
+      }
+
+      this.editorHeight += e.y - this.dragging
+
+      this.dragging = e.y
+    },
+
+    stopDrag() {
+      this.dragging = 0
+      document.removeEventListener('mousemove', this.onDrag)
+      document.removeEventListener('mouseup', this.stopDrag)
+    },
+
+    onFullscreen(full) {
+      this.fullscreen = full
+    },
   },
 }
 </script>
@@ -185,14 +234,18 @@ export default {
 
   .v-note-wrapper {
     min-width: initial;
-  }
 
-  .v-note-wrapper.widescreen {
-    height: 450px;
-  }
+    &.resize {
+      transition: height 1ms;
+    }
 
-  .v-note-wrapper.fullscreen {
-    height: auto;
+    &.widescreen {
+      height: 450px;
+    }
+
+    &.fullscreen {
+      height: auto !important;
+    }
   }
 }
 
@@ -210,5 +263,16 @@ export default {
   .v-note-wrapper {
     border-bottom: 2px solid $error-color;
   }
+}
+</style>
+
+<style lang="scss" scoped>
+.resizer {
+  width: 30px;
+  height: 7px;
+  cursor: row-resize;
+  border-bottom: 2px solid #1976d2;
+  margin: auto;
+  user-select: none;
 }
 </style>
