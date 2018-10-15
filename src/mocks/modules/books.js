@@ -20,11 +20,22 @@ const bookInfoTmpl = {
 
 // 获取所有书籍
 mock(/\/books(\?.*)?$/, 'get', {
-  'books|5': [
+  'books|10': [
     bookInfoTmpl,
   ],
 }, (tmpl, options) => {
   const q = utils.queryFromUrl(options.url)
+  if (q.edit_mode) {
+    bookInfoTmpl.deleted_at = () => {
+      return Math.random() > 0.5 ? Random.datetime() : null
+    }
+    bookInfoTmpl.hidden = () => {
+      return Math.random() > 0.5
+    }
+  } else {
+    delete bookInfoTmpl.deleted_at
+    delete bookInfoTmpl.hidden
+  }
 })
 
 // 获取书籍详情

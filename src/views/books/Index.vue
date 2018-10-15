@@ -7,6 +7,7 @@
 <script>
 import { getBooks } from '@/api/books'
 import BookInfoCard from '@/components/BookInfoCard'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Index',
@@ -14,12 +15,28 @@ export default {
   data: () => ({
     books: [],
   }),
+  computed: {
+    ...mapState({
+      editMode: state => state.app.editMode,
+    }),
+  },
   created() {
     this.getData()
+
+    // 使用这种方式，只监听一次 editMode 的开启
+    this.unWatchEditMode = this.$watch('editMode', newValue => {
+      if (newValue) {
+        this.getData({
+          edit_mode: newValue,
+        })
+
+        this.unWatchEditMode()
+      }
+    })
   },
   methods: {
-    getData() {
-      getBooks()
+    getData(query) {
+      getBooks(query)
         .then(res => {
           const data = res.data
           this.books = data.books
