@@ -1,6 +1,13 @@
 <template>
   <page-layout page-desc="看过的书啊">
-    <book-info-card v-for="book of books" :key="book.id" :book="book" :can-expand="false" editable/>
+    <book-info-card
+      v-for="(book, index) of books"
+      :key="book.id"
+      :book="book"
+      :can-expand="false"
+      editable
+      @force-deleted="onForceDelete(book, index)"
+    />
   </page-layout>
 </template>
 
@@ -30,6 +37,10 @@ export default {
           const data = res.data
           this.books = data.books
         })
+    },
+
+    onForceDelete(book, index) {
+      this.books.splice(index, 1)
     },
   },
   watch: {

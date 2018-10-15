@@ -31,3 +31,10 @@ export function updateBook(bookId, data) {
     data,
   })
 }
+
+export function deleteBook(bookId) {
+  return axios({
+    url: `books/${bookId}`,
+    method: 'delete',
+  })
+}

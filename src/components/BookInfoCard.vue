@@ -82,14 +82,14 @@
           </v-list-tile>
 
           <!-- 删除与恢复 -->
-          <v-list-tile @click="">
+          <v-list-tile @click="onDelete">
             <v-list-tile-action>
               <v-icon>{{ book.deleted_at ? 'restore' : 'delete' }}</v-icon>
             </v-list-tile-action>
           </v-list-tile>
 
           <!-- 彻底删除 -->
-          <v-list-tile @click="" v-if="book.deleted_at">
+          <v-list-tile @click="onForceDelete" v-if="book.deleted_at">
             <v-list-tile-action>
               <v-icon color="red">delete_forever</v-icon>
             </v-list-tile-action>
@@ -97,13 +97,25 @@
         </v-list>
       </div>
     </div>
+
+    <v-dialog v-if="canEdit" v-model="deleteConfirmModal" max-width="290">
+      <v-card>
+        <v-card-title class="headline">删除确认</v-card-title>
+        <v-card-text>{{ forceDelete ? '彻底删除后不可恢复！！！' : '删除之后还可以恢复' }}</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="grey" flat @click.native="deleteConfirmModal = false">取消</v-btn>
+          <v-btn color="red" flat @click.native="onDeleteConfirm">{{ forceDelete ? '彻底' : '' }}删除</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 
 <script>
 import HumanTime from '@/components/HumanTime'
 import { mapState } from 'vuex'
-import { updateBook } from '@/api/books'
+import { updateBook, deleteBook } from '@/api/books'
 
 export default {
   name: 'BookInfoCard',
@@ -126,6 +138,9 @@ export default {
   },
   data: () => ({
     vExpand: true,
+
+    deleteConfirmModal: false,
+    forceDelete: false,
   }),
   computed: {
     ...mapState({
@@ -164,6 +179,46 @@ export default {
       })
         .then(res => {
           this.book.hidden = res.data.hidden
+        })
+    },
+
+    onDelete() {
+      if (this.book.deleted_at) {
+        this.restore()
+      } else {
+        this.delete()
+      }
+    },
+
+    restore() {
+      updateBook(this.book.id, {
+        deleted_at: null,
+      })
+        .then(res => {
+          this.book.deleted_at = res.data.deleted_at
+        })
+    },
+
+    delete() {
+      this.deleteConfirmModal = true
+      this.forceDelete = false
+    },
+
+    onForceDelete() {
+      this.deleteConfirmModal = true
+      this.forceDelete = true
+    },
+
+    onDeleteConfirm() {
+      this.deleteConfirmModal = false
+
+      deleteBook(this.book.id, { force_delete: this.forceDelete })
+        .then(res => {
+          if (this.forceDelete) {
+            this.$emit('force-deleted', this.book)
+          } else {
+            this.book.deleted_at = res.data.deleted_at
+          }
         })
     },
   },

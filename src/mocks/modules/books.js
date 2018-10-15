@@ -10,6 +10,8 @@ const bookInfoTmpl = {
   title: '@ctitle',
   started_at: '@datetime',
   updated_at: '@datetime',
+  deleted_at: null,
+  hidden: false,
   cover: () => {
     return Random.image('245X344', Random.color(), Random.color(), Random.ctitle())
   },
@@ -33,8 +35,8 @@ mock(/\/books(\?.*)?$/, 'get', {
       return Math.random() > 0.5
     }
   } else {
-    delete bookInfoTmpl.deleted_at
-    delete bookInfoTmpl.hidden
+    bookInfoTmpl.deleted_at = null
+    bookInfoTmpl.hidden = false
   }
 })
 
@@ -80,4 +82,12 @@ mock(/\/books\/\d+/, 'put', {}, (tmpl, options) => {
   if (data.hidden !== undefined) {
     tmpl.hidden = data.hidden
   }
+
+  if (data.deleted_at === null) {
+    tmpl.deleted_at = null
+  }
+})
+
+mock(/\/books\/\d+/, 'delete', {
+  deleted_at: '@datetime',
 })
