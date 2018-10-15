@@ -61,31 +61,7 @@
                   </v-flex>
 
                   <v-flex xs12>
-                    <v-combobox
-                      v-model="$v.form.tags.$model"
-                      :items="tags"
-                      label="标签"
-                      multiple
-                      small-chips
-                      clearable
-                      deletable-chips
-                      :search-input.sync="search"
-                      ref="tags"
-                      item-text="name"
-                    >
-                      <template slot="no-data">
-                        <v-list-tile>
-                          <v-list-tile-content>
-                            <v-list-tile-title v-if="searching">
-                              搜索中...
-                            </v-list-tile-title>
-                            <v-list-tile-title v-else>
-                              没有与 "<strong>{{ search }}</strong>" 匹配的标签，按 <kbd>enter</kbd> 添加
-                            </v-list-tile-title>
-                          </v-list-tile-content>
-                        </v-list-tile>
-                      </template>
-                    </v-combobox>
+                    <tags-selector v-model="form.tags"/>
                   </v-flex>
 
                 </v-layout>
@@ -107,17 +83,17 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, integer, minValue, maxValue } from 'vuelidate/lib/validators'
-import _ from 'lodash'
-import { getTags } from '@/api/tags'
+import { validateErrorsMixins } from '@/validators'
 import MDEditor from '@/components/MDEditor'
 import { getBook } from '@/api/books'
 import BookInfoCard from '@/components/BookInfoCard'
 import { postCreateNote } from '@/api/notes'
+import TagsSelector from '@/components/TagsSelector'
 
 export default {
   name: 'Create',
-  components: { MDEditor, BookInfoCard },
-  mixins: [validationMixin],
+  components: { MDEditor, BookInfoCard, TagsSelector },
+  mixins: [validationMixin, validateErrorsMixins],
   validations() {
     return {
       form: {
@@ -138,16 +114,11 @@ export default {
           // 大概是mysql text类型的长度
           maxLength: maxLength(60000),
         },
-        tags: {},
       },
     }
   },
   data: () => ({
     book: null,
-
-    tags: [],
-    search: '',
-    searching: false,
 
     form: {
       page: '',
@@ -185,20 +156,16 @@ export default {
       return this.fieldsAnyError(['content', 'page'])
     },
     otherError() {
-      return this.fieldsAnyError(['title', 'desc', 'tags'])
+      return this.fieldsAnyError(['title', 'desc'])
     },
   },
   created() {
-    this.debounceSearchTags = _.debounce(this.searchTags, 500)
-
-    this.getTags()
     this.getBook()
   },
   methods: {
     onClear() {
       this.$refs.form.reset()
       this.$v.$reset()
-      this.form.mark_read = true
     },
 
     onSubmit() {
@@ -217,43 +184,8 @@ export default {
         })
     },
 
-    validateErrors(key) {
-      const data = _.get(this.$v, key)
-      // 输入框没有输入过值时，不要显示错误消息
-      if (!data.$dirty) {
-        return
-      }
-
-      const validators = data.$params
-      for (const vt of Object.keys(validators)) {
-        if (!data[vt]) {
-          return _.get(this.attrs, key)[vt]
-        }
-      }
-    },
-    searchTags() {
-      getTags({
-        q: this.search,
-      })
-        .then(res => {
-          const data = res.data
-          this.tags = _.unionBy(this.tags, data.tags, 'id')
-        })
-        .finally(() => {
-          this.searching = false
-        })
-    },
     onContentChange(content, html) {
       this.form.html_content = html
-    },
-    getTags() {
-      getTags({
-        scope: 'hot',
-      })
-        .then(res => {
-          const data = res.data
-          this.tags = data.tags
-        })
     },
     getBook() {
       getBook(this.$route.params.bookId)
@@ -268,21 +200,6 @@ export default {
       })
     },
   },
-  watch: {
-    search(newValue) {
-      // 如果有匹配项，则不搜索
-      if (this.$refs.tags.filteredItems.length > 0) {
-        return
-      }
-      // 首次的newValue值为null，避免出错，先判断下
-      if (typeof newValue != 'string') {
-        return
-      }
-
-      this.searching = true
-      this.debounceSearchTags()
-    },
-  },
 }
 </script>
 
@@ -290,10 +207,6 @@ export default {
 @import '~@/styles/variables';
 
 .note-create {
-  .v-note-wrapper {
-    z-index: 1;
-  }
-
   .has-error {
     .v-tabs__item {
       color: $error-color;

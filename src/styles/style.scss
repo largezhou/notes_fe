@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Monaco";
+  src: url('../assets/Monaco.woff2') format('woff');
+}
+
 .pull-right {
   float: right;
 }
@@ -61,4 +66,33 @@
 
 .application {
   background-color: #eee !important;
+}
+
+.markdown-body {
+  code {
+    font-family: Monaco !important;
+    box-shadow: none;
+    color: inherit;
+    font-weight: inherit;
+    white-space: inherit;
+  }
+
+  .hljs {
+    code {
+      font-size: 100%;
+    }
+  }
+
+  /*有id的a标签应该是锚点，加一个padding，避免顶部固定状态栏遮拦*/
+  a[id] {
+    display: block;
+    height: 60px;
+    margin-top: -60px;
+    visibility: hidden;
+    float: left;
+  }
+}
+
+.v-note-wrapper {
+  z-index: 1 !important;
 }

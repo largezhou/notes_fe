@@ -72,6 +72,28 @@ const otherRouters = [
         name: 'tagIndex',
         component: () => import('@/views/tags/Index'),
       },
+
+      // 博客列表
+      {
+        path: 'posts',
+        name: 'postIndex',
+        meta: {
+          keepAlive: true,
+        },
+        component: () => import('@/views/posts/Index'),
+      },
+
+      {
+        path: 'posts/:postId(\\d+)',
+        name: 'postShow',
+        component: () => import('@/views/posts/Show'),
+      },
+
+      {
+        path: 'posts/create',
+        name: 'postCreate',
+        component: () => import('@/views/posts/Create'),
+      },
     ],
   },
 ]

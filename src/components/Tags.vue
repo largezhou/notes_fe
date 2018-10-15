@@ -1,28 +1,25 @@
 <template>
   <div class="tags" :class="{ 'one-line': oneLine }">
-    <div>
-      <v-btn
-        v-for="tag of tags"
-        :key="tag.id"
-        class="tag"
-        flat
-        color="primary"
-        :outline="outline"
-        :to="`/tags/${tag.id}`"
-      >{{ tag.name }}
-      </v-btn>
-      <v-btn
-        :ripple="false"
-        class="tag more"
-        v-if="!widescreen"
-        flat
-        color="primary"
-        @click="onShowMore"
-        v-text="oneLine ? '更多' : '收起'"
-        :absolute="oneLine"
-        :outline="!outline"
-      />
-    </div>
+    <v-btn
+      v-for="tag of tags"
+      :key="tag.id"
+      class="tag"
+      flat
+      color="primary"
+      :to="`/tags/${tag.id}`"
+    >{{ tag.name }}
+    </v-btn>
+    <v-btn
+      :ripple="false"
+      class="tag more"
+      v-if="!widescreen"
+      flat
+      color="primary"
+      @click="onShowMore"
+      v-text="oneLine ? '更多' : '收起'"
+      :absolute="oneLine"
+      outline
+    />
   </div>
 </template>
 
@@ -36,10 +33,6 @@ export default {
   }),
   props: {
     tags: Array,
-    outline: {
-      type: Boolean,
-      default: true,
-    },
   },
   computed: {
     ...mapState({
@@ -57,23 +50,20 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .tags {
   margin-top: 10px;
 
   &.one-line {
-    height: 35px;
+    height: 50px;
     position: relative;
-
-    > div {
-      margin-right: 60px;
-      height: 100%;
-      overflow: hidden;
-    }
+    padding: 8px;
+    padding-right: 70px;
+    overflow: hidden;
 
     .more {
-      top: 0;
-      right: 0;
+      top: 8px;
+      right: 8px;
     }
   }
 
