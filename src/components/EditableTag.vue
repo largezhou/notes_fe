@@ -13,8 +13,13 @@
     </v-btn>
 
     <div class="actions" v-if="canEdit">
-      <div v-show="actionsOpened">
-        <v-btn flat small icon @click="nameEditing = true">
+      <v-input class="name-input" :style="nameInputStyle" v-show="nameEditing">
+        <input type="text" v-model="name" ref="input">
+        <v-icon @click="test">done</v-icon>
+        <v-icon @click="onCancelEditName">close</v-icon>
+      </v-input>
+      <div v-show="actionsOpened && !nameEditing">
+        <v-btn flat small icon @click="onNameEdit">
           <v-icon color="grey darken-1">edit</v-icon>
         </v-btn>
         <v-btn flat small icon @click="test">
@@ -43,7 +48,16 @@ export default {
   data: () => ({
     actionsOpened: false,
     nameEditing: false,
+    name: '',
+    // 标签是否太靠右
+    veryRight: false,
   }),
+  mounted() {
+    window.t = this.$el
+  },
+  created() {
+    this.name = this.tag.name
+  },
   computed: {
     ...mapState({
       canEdit: state => state.user.name,
@@ -57,12 +71,43 @@ export default {
 
       return this.widescreen ? '114px' : '96px'
     },
+
+    nameInputStyle() {
+      if (this.veryRight) {
+        return {
+          right: '0',
+        }
+      } else {
+        return {
+          left: this.widescreen ? '-112px' : '-94px',
+        }
+      }
+    },
   },
   methods: {
     test(e) {
       e.stopPropagation()
       log(111)
       return false
+    },
+
+    onCancelEditName() {
+      this.nameEditing = false
+      this.name = this.tag.name
+    },
+
+    onNameEdit() {
+      const left = this.$el.offsetLeft
+
+      // 如果标签的左侧加上 输入框的宽度 再加上输入框的 left 大于 body 的宽度
+      // 则表示标签太靠右，输入框要使用 right: 0 定位
+      // 否则输入框使用 left
+      this.veryRight = (left + 140 + 2) > document.body.offsetWidth
+      this.nameEditing = true
+
+      this.$nextTick(() => {
+        this.$refs.input.focus()
+      })
     },
   },
 }
@@ -110,6 +155,39 @@ export default {
 
 .settings {
   display: none;
+}
+
+.name-input {
+  z-index: 1;
+  border-radius: 2px;
+  border: 2px solid #bbb;
+  background: #eee;
+  position: absolute;
+  top: 0;
+  box-sizing: border-box;
+  height: 100%;
+
+  width: 140px;
+
+  /deep/ {
+    .v-input__control {
+      height: 100%;
+    }
+
+    .v-input__slot {
+      height: 100%;
+      margin: 0;
+    }
+
+    input {
+      padding-left: 10px;
+      width: calc(135px - 50px);
+    }
+
+    .v-messages {
+      display: none;
+    }
+  }
 }
 
 @media (max-width: 599px) {
