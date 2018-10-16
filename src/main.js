@@ -16,7 +16,14 @@ import '@/components'
 
 Vue.config.productionTip = false
 
+/**
+ * @see utils.snackbar
+ */
 Vue.prototype.$snackbar = utils.snackbar
+/**
+ * @see utils.confirm
+ */
+Vue.prototype.$confirm = utils.confirm
 
 new Vue({
   router,

@@ -1,9 +1,10 @@
 <template>
   <page-layout page-desc="所有的标签" class="tag-index">
     <editable-tag
-      v-for="tag of tags"
+      v-for="(tag, index) of tags"
       :key="tag.id"
       :tag="tag"
+      @deleted="onDeleted(tag, index)"
     />
   </page-layout>
 </template>
@@ -30,6 +31,9 @@ export default {
           const data = res.data
           this.tags = data.tags
         })
+    },
+    onDeleted(tag, index) {
+      this.tags.splice(index, 1)
     },
   },
 }

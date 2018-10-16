@@ -12,6 +12,7 @@
 
     <back-to-top/>
     <global-snackbar/>
+    <global-confirm/>
     <slider-bar v-if="!widescreen"/>
   </div>
 </template>
@@ -19,13 +20,14 @@
 <script>
 import Navbar from '@/components/Navbar'
 import GlobalSnackbar from '@/components/GlobalSnackbar'
+import GlobalConfirm from '@/components/GlobalConfirm'
 import BackToTop from '@/components/BackToTop'
 import { mapState } from 'vuex'
 import SliderBar from '@/components/SliderBar'
 
 export default {
   name: 'App',
-  components: { SliderBar, Navbar, GlobalSnackbar, BackToTop },
+  components: { SliderBar, Navbar, GlobalSnackbar, BackToTop, GlobalConfirm },
   computed: {
     ...mapState({
       widescreen: state => state.app.widescreen,

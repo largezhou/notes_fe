@@ -56,3 +56,5 @@ import _ from 'lodash'
 }
 
 mock(/\/tags\/\d+/, 'put', {})
+
+mock(/\/tags\/\d+/, 'delete', {})

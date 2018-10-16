@@ -22,7 +22,7 @@
         <v-btn flat small icon @click="onNameEdit">
           <v-icon color="grey darken-1">edit</v-icon>
         </v-btn>
-        <v-btn flat small icon @click="test">
+        <v-btn flat small icon @click="onDelete">
           <v-icon color="grey darken-1">delete</v-icon>
         </v-btn>
         <v-btn flat small icon @click="actionsOpened = false">
@@ -39,7 +39,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { updateTag } from '@/api/tags'
+import { updateTag, delTag } from '@/api/tags'
 
 export default {
   name: 'EditableTag',
@@ -83,10 +83,19 @@ export default {
     },
   },
   methods: {
-    test(e) {
-      e.stopPropagation()
-      log(111)
-      return false
+    onDelete() {
+      this.$confirm({
+        title: '删除确认',
+        okColor: 'red',
+        okText: '删除',
+        content: '删除后不可恢复！！！',
+      })
+        .then(() => {
+          delTag(this.tag.id)
+            .then(() => {
+              this.$emit('deleted', this.tag)
+            })
+        })
     },
 
     onCancelEditName() {

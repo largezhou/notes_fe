@@ -18,3 +18,10 @@ export function updateTag(tagId, data) {
     data,
   })
 }
+
+export function delTag(tagId) {
+  return axios({
+    url: `tags/${tagId}`,
+    method: 'delete',
+  })
+}

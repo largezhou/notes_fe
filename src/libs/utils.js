@@ -1,4 +1,5 @@
 import store from '@/store'
+import router from '@/router'
 
 const utils = {}
 
@@ -76,4 +77,33 @@ utils.safeJsonParse = (json, defaultValue = null) => {
   }
 
   return data
+}
+
+/**
+ * 确认消息框，返回一个 Promise， resolve 为确认， reject 为取消
+ *
+ * @param options
+ *
+ * {
+ *    okText: '确认',
+ *    okColor: 'primary',
+ *    cancelText: '取消',
+ *    cancelColor: 'grey',
+ *    title: '提示',
+ *    content: '确认？',
+ * }
+ * @returns {Promise<any>}
+ */
+utils.confirm = options => {
+  return new Promise((resolve, reject) => {
+    options.okCallback = () => {
+      resolve()
+    }
+
+    options.cancelCallback = () => {
+      reject()
+    }
+
+    router.app.$emit('globalConfirm', options)
+  })
 }
