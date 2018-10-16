@@ -14,8 +14,8 @@
 
     <div class="actions" v-if="canEdit">
       <v-input class="name-input" :style="nameInputStyle" v-show="nameEditing">
-        <input type="text" v-model="name" ref="input">
-        <v-icon @click="test">done</v-icon>
+        <input type="text" v-model="name" ref="input" @keyup.enter="onUpdateName">
+        <v-icon @click="onUpdateName">done</v-icon>
         <v-icon @click="onCancelEditName">close</v-icon>
       </v-input>
       <div v-show="actionsOpened && !nameEditing">
@@ -39,6 +39,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { updateTag } from '@/api/tags'
 
 export default {
   name: 'EditableTag',
@@ -52,9 +53,6 @@ export default {
     // 标签是否太靠右
     veryRight: false,
   }),
-  mounted() {
-    window.t = this.$el
-  },
   created() {
     this.name = this.tag.name
   },
@@ -109,6 +107,33 @@ export default {
         this.$refs.input.focus()
       })
     },
+    onUpdateName() {
+      const name = this.name.trim()
+
+      const error = msg => {
+        this.$snackbar(msg)
+        this.$refs.input.focus()
+      }
+
+      if (name === '') {
+        return error('标签名不能空空如也')
+      }
+
+      if (name.realLength() > 20) {
+        return error('太长了')
+      }
+
+      if (name === this.tag.name) {
+        this.$snackbar('啥也没改')
+        return this.onCancelEditName()
+      }
+
+      updateTag(this.tag.id, { name })
+        .then(res => {
+          this.tag.name = name
+          this.onCancelEditName()
+        })
+    },
   },
 }
 </script>
@@ -128,6 +153,7 @@ export default {
 
 .tag {
   margin: 0;
+  overflow: hidden;
 
   .count {
     margin-left: 10px;
@@ -137,7 +163,7 @@ export default {
 
 .actions {
   border-radius: 2px;
-  background: rgba(208, 208, 208, 0.8);
+  background: rgba(208, 208, 208, 0.4);
   position: absolute;
   right: 1px;
   top: 1px;

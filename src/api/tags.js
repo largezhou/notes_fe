@@ -10,3 +10,11 @@ export function getTags(params) {
     params,
   })
 }
+
+export function updateTag(tagId, data) {
+  return axios({
+    url: `tags/${tagId}`,
+    method: 'put',
+    data,
+  })
+}

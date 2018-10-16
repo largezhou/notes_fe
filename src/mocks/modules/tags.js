@@ -54,3 +54,5 @@ import _ from 'lodash'
     }
   })
 }
+
+mock(/\/tags\/\d+/, 'put', {})
