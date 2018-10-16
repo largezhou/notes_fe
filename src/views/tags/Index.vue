@@ -1,28 +1,22 @@
 <template>
   <page-layout page-desc="所有的标签" class="tag-index">
-    <v-btn
-      ref="tags"
-      class="tag"
+    <editable-tag
       v-for="tag of tags"
       :key="tag.id"
-      flat
-      color="primary"
-      outline
-      :to="`/tags/${tag.id}`"
-    >{{ tag.name }}
-      <span class="count">{{ tag.notes_count }}</span>
-    </v-btn>
+      :tag="tag"
+    />
   </page-layout>
 </template>
 
 <script>
 import PageLayout from '@/components/PageLayout'
+import EditableTag from '@/components/EditableTag'
 import { getTags } from '@/api/tags'
 import Tags from '@/components/Tags'
 
 export default {
   name: 'Index',
-  components: { Tags, PageLayout },
+  components: { Tags, PageLayout, EditableTag },
   data: () => ({
     tags: [],
   }),
@@ -37,33 +31,11 @@ export default {
           this.tags = data.tags
         })
     },
-
   },
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .tag-index {
-  .tag {
-    margin: 10px;
-
-    .count {
-      margin-left: 10px;
-      font-weight: 900;
-    }
-  }
-
-  @media (max-width: 599px) {
-    .tag {
-      height: 30px;
-      padding: 0 10px;
-      min-width: 0;
-      margin: 5px;
-
-      .count {
-        margin-left: 5px;
-      }
-    }
-  }
 }
 </style>
