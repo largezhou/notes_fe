@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0-rc.1",
+    "@mdi/font": "^2.8.94",
     "axios": "^0.18.0",
     "lodash": "^4.17.10",
-    "material-design-icons-iconfont": "^3.0.3",
     "mavon-editor": "^2.6.17",
     "moment": "^2.22.2",
     "normalize.css": "^8.0.0",

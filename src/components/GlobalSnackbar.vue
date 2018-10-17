@@ -9,16 +9,18 @@
       flat
       @click="shown = false"
     >
-      <i class="material-icons">close</i>
+      <mdi-icon icon="close"/>
     </v-btn>
   </v-snackbar>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import MdiIcon from '@/components/MdiIcon'
 
 export default {
   name: 'GlobalSnackbar',
+  components: { MdiIcon },
   data() {
     return {
       shown: false,

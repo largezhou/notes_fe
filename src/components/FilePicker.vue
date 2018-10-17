@@ -2,10 +2,10 @@
   <div class="v-form-item v-input-upload" :class="{ 'has-error': hasError }">
     <div class="label">{{ label }}</div>
     <div class="picker" @click="onClickPicker">
-      <v-icon v-if="!this.filename">cloud_upload</v-icon>
+      <mdi-icon v-if="!this.filename" icon="file-upload"/>
       <v-tooltip top v-else>
         <img v-if="src" :src="src" slot="activator"/>
-        <v-icon v-else slot="activator">insert_drive_file</v-icon>
+        <mdi-icon v-else slot="activator" icon="file"/>
         <span>{{ filename }}</span>
       </v-tooltip>
 
@@ -19,7 +19,7 @@
           class="clear"
           @click.stop="onClear"
         >
-          <v-icon>clear</v-icon>
+          <mdi-icon icon="close"/>
         </v-btn>
       </v-scale-transition>
     </div>
@@ -32,9 +32,11 @@
 <script>
 import { vImage, vFile } from '@/validators'
 import vFormItem from '@/mixins/vform_item'
+import MdiIcon from '@/components/MdiIcon'
 
 export default {
   name: 'FilePicker',
+  components: { MdiIcon },
   mixins: [vFormItem],
   data: () => ({
     src: '',

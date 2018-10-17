@@ -7,8 +7,8 @@
       <span class="progress-text">{{ readPercent }}%</span>
     </v-card>
     <div class="notes-sort-group">
-      <v-btn flat small @click="onChangeSort('page')">页数<i class="material-icons">{{ sortIcon('page') }}</i></v-btn>
-      <v-btn flat small @click="onChangeSort('created_at')">时间<i class="material-icons">{{ sortIcon('created_at') }}</i></v-btn>
+      <v-btn flat small @click="onChangeSort('page')">页数<mdi-icon :icon="sortIcon('page')"/></v-btn>
+      <v-btn flat small @click="onChangeSort('created_at')">时间<mdi-icon :icon="sortIcon('created_at')"/></v-btn>
     </div>
     <div v-if="book.notes.length > 0">
       <book-note-item
@@ -27,11 +27,12 @@ import BookNoteItem from '@/components/BookNoteItem'
 import { getBook } from '@/api/books'
 import reloadData from '@/mixins/reload_data'
 import BookInfoCard from '@/components/BookInfoCard'
+import MdiIcon from '@/components/MdiIcon'
 
 export default {
   name: 'Show',
   mixins: [reloadData],
-  components: { BookNoteItem, BookInfoCard },
+  components: { MdiIcon, BookNoteItem, BookInfoCard },
   data() {
     return {
       sortField: 'page',
@@ -77,7 +78,7 @@ export default {
         return ''
       }
 
-      return (this.sortType == 'asc') ? 'arrow_drop_up' : 'arrow_drop_down'
+      return (this.sortType == 'asc') ? 'menu-up' : 'menu-down'
     },
 
     getData() {

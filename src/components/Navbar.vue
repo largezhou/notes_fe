@@ -2,7 +2,9 @@
   <div class="navbar-wrapper v-toolbar primary">
     <div class="container">
       <v-toolbar dark color="primary" ref="toolbar">
-        <v-toolbar-side-icon v-if="!widescreen" @click="onToggleSliderBar"/>
+        <v-btn flat icon v-if="!widescreen" @click="onToggleSliderBar">
+          <mdi-icon icon="menu"/>
+        </v-btn>
 
         <v-toolbar-items class="brand-icon" v-if="widescreen">
           <v-btn to="/" flat>
@@ -19,33 +21,33 @@
         <v-toolbar-items v-if="widescreen && username">
           <v-menu left offset-y>
             <v-btn slot="activator" flat class="more-menu">
-              <v-icon>more_horiz</v-icon>
+              <mdi-icon icon="dots-horizontal"/>
             </v-btn>
             <v-list>
 
               <new-book>
                 <v-list-tile @click="">
-                  <span class="navbar-menu-icon"><v-icon>add</v-icon></span>
+                  <span class="navbar-menu-icon"><mdi-icon icon="book-plus"/></span>
                   <v-list-tile-title>看 书</v-list-tile-title>
                 </v-list-tile>
               </new-book>
 
               <v-list-tile to="/posts/create">
-                <span class="navbar-menu-icon"><v-icon>create</v-icon></span>
+                <span class="navbar-menu-icon"><mdi-icon icon="square-edit-outline"/></span>
                 <v-list-tile-title>博 客</v-list-tile-title>
               </v-list-tile>
 
               <v-divider/>
 
               <v-list-tile @click="onToggleEditMode">
-                <span class="navbar-menu-icon"><v-icon>{{ editMode ? 'done' : 'keyboard' }}</v-icon></span>
+                <span class="navbar-menu-icon"><mdi-icon :icon="editMode ? 'check' : 'keyboard'"/></span>
                 <v-list-tile-title>{{ editMode ? '完 成' : '编 辑' }}</v-list-tile-title>
               </v-list-tile>
 
               <v-divider/>
 
               <v-list-tile @click="onLogout">
-                <span class="navbar-menu-icon"><v-icon>exit_to_app</v-icon></span>
+                <span class="navbar-menu-icon"><mdi-icon icon="exit-to-app"/></span>
                 <v-list-tile-title>退 出</v-list-tile-title>
               </v-list-tile>
 
@@ -61,10 +63,11 @@
 import { mapState } from 'vuex'
 import utils from '@/libs/utils'
 import NewBook from '@/components/NewBook'
+import MdiIcon from '@/components/MdiIcon'
 
 export default {
   name: 'Navbar',
-  components: { NewBook },
+  components: { MdiIcon, NewBook },
   computed: {
     ...mapState({
       username: state => state.user.name,

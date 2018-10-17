@@ -48,7 +48,7 @@
         absolute
         :to="createNoteLink"
       >
-        <v-icon>add</v-icon>
+        <mdi-icon icon="plus"/>
       </v-btn>
 
       <!-- 展开收起按钮 -->
@@ -61,7 +61,7 @@
         absolute
         @click="onToggle"
       >
-        <v-icon>{{ toggleIcon }}</v-icon>
+        <mdi-icon :icon="toggleIcon"/>
       </v-btn>
 
       <!-- 编辑系列 -->
@@ -70,28 +70,28 @@
           <!-- 隐藏与显示 -->
           <v-list-tile @click="updateHidden">
             <v-list-tile-action>
-              <v-icon>{{ book.hidden ? 'visibility' : 'visibility_off' }}</v-icon>
+              <mdi-icon :icon="book.hidden ? 'eye' : 'eye-off'"/>
             </v-list-tile-action>
           </v-list-tile>
 
           <!-- 编辑 -->
           <v-list-tile @click="onEditBook">
             <v-list-tile-action>
-              <v-icon>edit</v-icon>
+              <mdi-icon icon="pencil"/>
             </v-list-tile-action>
           </v-list-tile>
 
           <!-- 删除与恢复 -->
           <v-list-tile @click="onDelete">
             <v-list-tile-action>
-              <v-icon>{{ book.deleted_at ? 'restore' : 'delete' }}</v-icon>
+              <mdi-icon :icon="book.deleted_at ? 'delete-restore' : 'delete'"/>
             </v-list-tile-action>
           </v-list-tile>
 
           <!-- 彻底删除 -->
           <v-list-tile @click="onForceDelete" v-if="book.deleted_at">
             <v-list-tile-action>
-              <v-icon color="red">delete_forever</v-icon>
+              <mdi-icon color="red" icon="book-remove"/>
             </v-list-tile-action>
           </v-list-tile>
         </v-list>
@@ -104,10 +104,11 @@
 import HumanTime from '@/components/HumanTime'
 import { mapState } from 'vuex'
 import { updateBook, deleteBook } from '@/api/books'
+import MdiIcon from '@/components/MdiIcon'
 
 export default {
   name: 'BookInfoCard',
-  components: { HumanTime },
+  components: { MdiIcon, HumanTime },
   props: {
     book: Object,
     newNoteBtn: {
@@ -142,7 +143,7 @@ export default {
       }
     },
     toggleIcon() {
-      return this.vExpand ? 'expand_less' : 'expand_more'
+      return this.vExpand ? 'chevron-up' : 'chevron-down'
     },
     canEdit() {
       return this.editable && this.username

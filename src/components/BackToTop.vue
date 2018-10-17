@@ -12,7 +12,7 @@
         color="red"
         @click="onGoTop"
       >
-        <v-icon>keyboard_arrow_up</v-icon>
+        <mdi-icon icon="arrow-collapse-up"/>
       </v-btn>
     </v-scale-transition>
   </div>

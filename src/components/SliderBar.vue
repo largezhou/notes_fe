@@ -21,7 +21,7 @@
 
       <v-list-tile @click="onClick" to="/books" active-class="non-active">
         <v-list-tile-action>
-          <v-icon>library_books</v-icon>
+          <mdi-icon icon="book-multiple"/>
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title>看过</v-list-tile-title>
@@ -30,7 +30,7 @@
 
       <v-list-tile @click="onClick" to="/tags" active-class="non-active">
         <v-list-tile-action>
-          <v-icon>text_fields</v-icon>
+          <mdi-icon icon="tag-multiple"/>
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title>标签</v-list-tile-title>
@@ -39,7 +39,7 @@
 
       <v-list-tile @click="onClick" to="/posts" active-class="non-active">
         <v-list-tile-action>
-          <v-icon>insert_drive_file</v-icon>
+          <mdi-icon icon="blogger"/>
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title>博客</v-list-tile-title>
@@ -52,7 +52,7 @@
         <new-book>
           <v-list-tile @click="onClick" active-class="non-active">
             <v-list-tile-action>
-              <v-icon>add</v-icon>
+              <mdi-icon icon="book-plus"/>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>看书</v-list-tile-title>
@@ -62,7 +62,7 @@
 
         <v-list-tile @click="onClick" to="/posts/create" active-class="non-active">
           <v-list-tile-action>
-            <v-icon>create</v-icon>
+            <mdi-icon icon="square-edit-outline"/>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>博客</v-list-tile-title>
@@ -73,7 +73,7 @@
 
         <v-list-tile @click="onToggleEditMode" active-class="non-active">
           <v-list-tile-action>
-            <v-icon>{{ editMode ? 'done' : 'keyboard' }}</v-icon>
+            <mdi-icon :icon="editMode ? 'check' : 'keyboard'"/>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>{{ editMode ? '完成' : '编辑' }}</v-list-tile-title>
@@ -84,7 +84,7 @@
 
         <v-list-tile @click="onLogout" active-class="non-active">
           <v-list-tile-action>
-            <v-icon>exit_to_app</v-icon>
+            <mdi-icon icon="exit-to-app"/>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>退出</v-list-tile-title>
@@ -99,10 +99,11 @@
 import { mapState } from 'vuex'
 import utils from '@/libs/utils'
 import NewBook from '@/components/NewBook'
+import MdiIcon from '@/components/MdiIcon'
 
 export default {
   name: 'SliderBar',
-  components: { NewBook },
+  components: { MdiIcon, NewBook },
   computed: {
     ...mapState({
       sliderBar: state => state.app.sliderBar,

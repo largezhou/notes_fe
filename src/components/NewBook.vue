@@ -9,13 +9,13 @@
       <v-card>
         <v-toolbar card dark color="primary">
           <v-btn icon dark @click="onCancel">
-            <v-icon>close</v-icon>
+            <mdi-icon icon="close"/>
           </v-btn>
           <v-toolbar-title>{{ this.book ? `编辑 ${this.book.title}` : '添加一本书' }}</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
             <v-btn dark flat @click="onSubmit">
-              <v-icon>save</v-icon>
+              <mdi-icon icon="content-save"/>
             </v-btn>
           </v-toolbar-items>
         </v-toolbar>
@@ -102,10 +102,11 @@ import { required, maxLength, integer, minValue, maxValue } from 'vuelidate/lib/
 import { postCreateBook, updateBook } from '@/api/books'
 import { vImage, validateErrorsMixins } from '@/validators'
 import FilePicker from '@/components/FilePicker'
+import MdiIcon from '@/components/MdiIcon'
 
 export default {
   name: 'NewBook',
-  components: { FilePicker },
+  components: { MdiIcon, FilePicker },
   mixins: [validationMixin, validateErrorsMixins],
   // 这里面的结构，一定要跟data中的form对应！！！！
   validations() {

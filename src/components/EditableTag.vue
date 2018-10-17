@@ -15,23 +15,23 @@
     <div class="actions" v-if="canEdit">
       <v-input class="name-input" :style="nameInputStyle" v-show="nameEditing">
         <input type="text" v-model="name" ref="input" @keyup.enter="onUpdateName">
-        <v-icon @click="onUpdateName">done</v-icon>
-        <v-icon @click="onCancelEditName">close</v-icon>
+        <mdi-icon @click="onUpdateName" icon="check"/>
+        <mdi-icon @click="onCancelEditName" icon="close"/>
       </v-input>
       <div v-show="actionsOpened && !nameEditing">
         <v-btn flat small icon @click="onNameEdit">
-          <v-icon color="grey darken-1">edit</v-icon>
+          <mdi-icon color="grey darken-1" icon="pencil"/>
         </v-btn>
         <v-btn flat small icon @click="onDelete">
-          <v-icon color="grey darken-1">delete</v-icon>
+          <mdi-icon color="grey darken-1" icon="delete"/>
         </v-btn>
         <v-btn flat small icon @click="actionsOpened = false">
-          <v-icon color="grey darken-1">close</v-icon>
+          <mdi-icon color="grey darken-1" icon="close"/>
         </v-btn>
       </div>
 
       <v-btn class="settings" v-show="!actionsOpened" flat small icon @click="actionsOpened = true">
-        <v-icon color="grey darken-1">settings</v-icon>
+        <mdi-icon color="grey darken-1" icon="settings"/>
       </v-btn>
     </div>
   </div>
@@ -40,9 +40,11 @@
 <script>
 import { mapState } from 'vuex'
 import { updateTag, delTag } from '@/api/tags'
+import MdiIcon from '@/components/MdiIcon'
 
 export default {
   name: 'EditableTag',
+  components: { MdiIcon },
   props: {
     tag: Object,
   },
