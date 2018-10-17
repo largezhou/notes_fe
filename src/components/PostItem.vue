@@ -8,38 +8,16 @@
 
     <tags :tags="post.tags"/>
 
-    <div class="actions" v-if="username" v-show="editMode">
-      <v-list dense>
-
-        <!-- 彻底删除 -->
-        <v-list-tile @click="onForceDelete" v-if="post.deleted_at">
-          <v-list-tile-action>
-            <mdi-icon color="red" icon="book-remove"/>
-          </v-list-tile-action>
-        </v-list-tile>
-
-        <!-- 隐藏与显示 -->
-        <v-list-tile @click="updateHidden">
-          <v-list-tile-action>
-            <mdi-icon :icon="post.hidden ? 'eye' : 'eye-off'"/>
-          </v-list-tile-action>
-        </v-list-tile>
-
-        <!-- 编辑 -->
-        <v-list-tile :to="`/posts/${post.id}/edit`">
-          <v-list-tile-action>
-            <mdi-icon icon="pencil"/>
-          </v-list-tile-action>
-        </v-list-tile>
-
-        <!-- 删除与恢复 -->
-        <v-list-tile @click="onDeleteOrRestore">
-          <v-list-tile-action>
-            <mdi-icon :icon="post.deleted_at ? 'delete-restore' : 'delete'"/>
-          </v-list-tile-action>
-        </v-list-tile>
-      </v-list>
-    </div>
+    <item-actions
+      class="actions"
+      v-if="username"
+      v-show="editMode"
+      :item="post"
+      :update-handler="updatePost"
+      :delete-handler="deletePost"
+      :edit-handler="editPost"
+      @force-deleted="item => { $emit('force-deleted', item) }"
+    />
   </v-card>
 </template>
 
@@ -47,10 +25,11 @@
 import Tags from '@/components/Tags'
 import { mapState } from 'vuex'
 import { deletePost, updatePost } from '@/api/posts'
+import ItemActions from '@/components/ItemActions'
 
 export default {
   name: 'PostItem',
-  components: { Tags },
+  components: { Tags, ItemActions },
   computed: {
     ...mapState({
       username: state => state.user.name,
@@ -60,67 +39,12 @@ export default {
   props: {
     post: Object,
   },
-  methods: {
-    updateHidden() {
-      updatePost(this.post.id, {
-        hidden: !this.post.hidden,
-      })
-        .then(res => {
-          this.post.hidden = res.data.hidden
-        })
-    },
-
-    onDeleteOrRestore() {
-      if (this.post.deleted_at) {
-        this.restore()
-      } else {
-        this.delete()
-      }
-    },
-
-    restore() {
-      updatePost(this.post.id, {
-        deleted_at: null,
-      })
-        .then(res => {
-          this.post.deleted_at = res.data.deleted_at
-        })
-    },
-
-    delete() {
-      this.$confirm({
-        title: '删除确认',
-        content: '删除后还可以恢复的，别慌',
-        okText: '删除',
-        okColor: 'red',
-      })
-        .then(() => {
-          this.onDeleteConfirm()
-        })
-    },
-
-    onForceDelete() {
-      this.$confirm({
-        title: '删除确认',
-        content: '彻底删除后不可恢复！！！',
-        okText: '彻底删除',
-        okColor: 'red',
-      })
-        .then(() => {
-          this.onDeleteConfirm(true)
-        })
-    },
-
-    onDeleteConfirm(force = false) {
-      deletePost(this.post.id, { force_delete: force })
-        .then(res => {
-          if (force) {
-            this.$emit('force-deleted', this.post)
-          } else {
-            this.post.deleted_at = res.data.deleted_at
-          }
-        })
-    },
+  created() {
+    this.deletePost = deletePost
+    this.updatePost = updatePost
+    this.editPost = () => {
+      this.$router.push(`/posts/${this.post.id}/edit`)
+    }
   },
 }
 </script>
@@ -138,7 +62,7 @@ export default {
   top: 0;
 }
 
-.v-list {
+/deep/ .v-list {
   > div {
     display: inline-block;
   }
