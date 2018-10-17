@@ -2,6 +2,7 @@ import mock from '../mock'
 import router from '@/router'
 import Mock from 'mockjs'
 import detail from '../data/post_detail'
+import utils from '@/libs/utils'
 
 const Random = Mock.Random
 
@@ -81,4 +82,23 @@ mock(/\/notes\/\d+/, 'get', { note: noteTmpl }, (tmpl, options) => {
   tmpl.note.id = router.currentRoute.params.noteId
   tmpl.note.html_content = detail
   tmpl.note.book = fullBook
+})
+
+mock(/\/notes\/\d+/, 'delete', {
+  deleted_at: '@datetime',
+})
+
+// 更新
+mock(/\/notes\/\d+/, 'put', {}, (tmpl, options) => {
+  const data = typeof options.body == 'string'
+    ? utils.safeJsonParse(options.body, {})
+    : options.body
+
+  if (data.hidden !== undefined) {
+    tmpl.hidden = data.hidden
+  } else if (data.deleted_at === null) {
+    tmpl.deleted_at = null
+  } else {
+    //
+  }
 })

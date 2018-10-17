@@ -24,20 +24,47 @@
 
     <tags :tags="item.tags"/>
 
+    <item-action
+      class="actions"
+      :item="item"
+      v-if="username"
+      v-show="editMode"
+      :update-handler="updateNote"
+      :delete-handler="deleteNote"
+      :edit-handler="editNode"
+      @force-deleted="item => { $emit('force-deleted', item) }"
+    />
+
   </v-card>
 </template>
 
 <script>
 import HumanTime from '@/components/HumanTime'
 import Tags from '@/components/Tags'
+import ItemAction from '@/components/ItemActions'
+import { mapState } from 'vuex'
+import { updateNote, deleteNote } from '@/api/notes'
 
 export default {
   name: 'BookNoteItem',
-  components: { HumanTime, Tags },
+  components: { HumanTime, Tags, ItemAction },
   props: {
     item: Object,
     disableBook: Boolean,
     book: Object,
+  },
+  created() {
+    this.updateNote = updateNote
+    this.deleteNote = deleteNote
+    this.editNode = () => {
+      this.$router.push(`/notes/${this.item.id}/edit`)
+    }
+  },
+  computed: {
+    ...mapState({
+      username: state => state.user.name,
+      editMode: state => state.app.editMode,
+    }),
   },
   methods: {
     pageLink(book, page) {
@@ -72,6 +99,22 @@ export default {
     font-size: 14px;
     padding-top: 5px;
     padding-bottom: 5px;
+  }
+}
+
+.actions {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+/deep/ .v-list {
+  > div {
+    display: inline-block;
+  }
+
+  .v-list__tile {
+    padding: 0 10px;
   }
 }
 </style>

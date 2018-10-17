@@ -21,3 +21,18 @@ export function getNote(noteId) {
     method: 'get',
   })
 }
+
+export function deleteNote(noteId) {
+  return axios({
+    url: `notes/${noteId}`,
+    method: 'delete',
+  })
+}
+
+export function updateNote(noteId, data) {
+  return axios({
+    url: `notes/${noteId}`,
+    method: 'put',
+    data,
+  })
+}

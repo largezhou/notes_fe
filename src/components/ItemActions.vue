@@ -45,7 +45,7 @@ export default {
         hidden: !this.item.hidden,
       })
         .then(res => {
-          this.item.hidden = res.data.hidden
+          this.$set(this.item, 'hidden', res.data.hidden)
         })
     },
     onEdit() {
@@ -65,7 +65,7 @@ export default {
         deleted_at: null,
       })
         .then(res => {
-          this.item.deleted_at = res.data.deleted_at
+          this.$set(this.item, 'deleted_at', res.data.deleted_at)
         })
     },
 
@@ -99,7 +99,7 @@ export default {
           if (force) {
             this.$emit('force-deleted', this.item)
           } else {
-            this.item.deleted_at = res.data.deleted_at
+            this.$set(this.item, 'deleted_at', res.data.deleted_at)
           }
         })
     },

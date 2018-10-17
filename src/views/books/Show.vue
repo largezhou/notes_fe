@@ -16,11 +16,12 @@
     </div>
     <div v-if="book.notes.length > 0">
       <book-note-item
-        v-for="item of book.notes"
+        v-for="(item, index) of book.notes"
         :key="item.id"
         :item="item"
         :book="book"
         disable-book
+        @force-deleted="onForceDelete(item, index)"
       />
     </div>
   </page-layout>
@@ -32,6 +33,7 @@ import { getBook } from '@/api/books'
 import reloadData from '@/mixins/reload_data'
 import BookInfoCard from '@/components/BookInfoCard'
 import MdiIcon from '@/components/MdiIcon'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Show',
@@ -46,6 +48,9 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      editMode: state => state.app.editMode,
+    }),
     readPercent() {
       if (this.book.read > this.book.total) {
         return 100
@@ -85,9 +90,12 @@ export default {
       return (this.sortType == 'asc') ? 'menu-up' : 'menu-down'
     },
 
-    getData() {
+    getData(query) {
       const r = this.$route
-      getBook(r.params.bookId, r.query)
+      getBook(r.params.bookId, {
+        ...r.query,
+        ...query,
+      })
         .then(res => {
           const data = res.data
           this.book = data.book
@@ -112,6 +120,9 @@ export default {
         this.sortType = query._sort_type
       }
     },
+    onForceDelete(item, index) {
+      this.book.notes.splice(index, 1)
+    },
   },
   watch: {
     $route: {
@@ -122,6 +133,11 @@ export default {
         }
       },
       immediate: true,
+    },
+    editMode(newValue) {
+      !this._inactive && this.getData({
+        edit_mode: newValue || null,
+      })
     },
   },
 }
