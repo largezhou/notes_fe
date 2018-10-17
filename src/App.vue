@@ -4,7 +4,7 @@
       <navbar ref="navbar"/>
       <v-content>
         <keep-alive>
-          <router-view v-if="$route.meta.keepAlive"/>
+          <router-view v-if="$route.meta.keepAlive" :key="$route.name"/>
         </keep-alive>
         <router-view v-if="!$route.meta.keepAlive"/>
       </v-content>

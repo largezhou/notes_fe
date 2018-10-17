@@ -56,9 +56,6 @@ export default {
 
     collapsed: true,
   }),
-  created() {
-    this.getData()
-  },
   methods: {
     getData() {
       this.getPosts()

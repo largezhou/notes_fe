@@ -7,8 +7,12 @@
       <span class="progress-text">{{ readPercent }}%</span>
     </v-card>
     <div class="notes-sort-group">
-      <v-btn flat small @click="onChangeSort('page')">页数<mdi-icon :icon="sortIcon('page')"/></v-btn>
-      <v-btn flat small @click="onChangeSort('created_at')">时间<mdi-icon :icon="sortIcon('created_at')"/></v-btn>
+      <v-btn flat small @click="onChangeSort('page')">页数
+        <mdi-icon :icon="sortIcon('page')"/>
+      </v-btn>
+      <v-btn flat small @click="onChangeSort('created_at')">时间
+        <mdi-icon :icon="sortIcon('created_at')"/>
+      </v-btn>
     </div>
     <div v-if="book.notes.length > 0">
       <book-note-item
@@ -112,7 +116,7 @@ export default {
   watch: {
     $route: {
       handler() {
-        if (!this._inactive) {
+        if (this._inactive === false) {
           this.initSort()
           this.getData()
         }

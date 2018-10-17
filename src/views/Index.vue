@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { getAllNotes } from '../api/notes'
+import { getNotes } from '../api/notes'
 import BookWidget from '@/components/BookWidget'
 import BookNoteItem from '@/components/BookNoteItem'
 import reloadData from '@/mixins/reload_data'
@@ -30,12 +30,9 @@ export default {
       notes: [],
     }
   },
-  created() {
-    this.getData()
-  },
   methods: {
     getData() {
-      getAllNotes()
+      getNotes()
         .then(res => {
           const data = res.data
           this.notes = data.notes
