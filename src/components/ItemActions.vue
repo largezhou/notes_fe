@@ -106,3 +106,9 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.v-list__tile__action {
+  min-width: initial;
+}
+</style>

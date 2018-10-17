@@ -65,37 +65,17 @@
       </v-btn>
 
       <!-- 编辑系列 -->
-      <div v-if="canEdit" class="editable-warp" :style="{ top: canExpand ? '40px' : '3px' }">
-        <v-list dense v-show="vExpand && editMode">
-          <!-- 隐藏与显示 -->
-          <v-list-tile @click="updateHidden">
-            <v-list-tile-action>
-              <mdi-icon :icon="book.hidden ? 'eye' : 'eye-off'"/>
-            </v-list-tile-action>
-          </v-list-tile>
-
-          <!-- 编辑 -->
-          <v-list-tile @click="onEditBook">
-            <v-list-tile-action>
-              <mdi-icon icon="pencil"/>
-            </v-list-tile-action>
-          </v-list-tile>
-
-          <!-- 删除与恢复 -->
-          <v-list-tile @click="onDeleteOrRestore">
-            <v-list-tile-action>
-              <mdi-icon :icon="book.deleted_at ? 'delete-restore' : 'delete'"/>
-            </v-list-tile-action>
-          </v-list-tile>
-
-          <!-- 彻底删除 -->
-          <v-list-tile @click="onForceDelete" v-if="book.deleted_at">
-            <v-list-tile-action>
-              <mdi-icon color="red" icon="book-remove"/>
-            </v-list-tile-action>
-          </v-list-tile>
-        </v-list>
-      </div>
+      <item-actions
+        class="editable-warp"
+        :style="{ top: canExpand ? '40px' : '3px' }"
+        v-if="canEdit"
+        v-show="vExpand && editMode"
+        :item="book"
+        :update-handler="updateBook"
+        :delete-handler="deleteBook"
+        :edit-handler="editBook"
+        @force-deleted="item => { $emit('force-deleted', item) }"
+      />
     </div>
   </v-card>
 </template>
@@ -105,10 +85,11 @@ import HumanTime from '@/components/HumanTime'
 import { mapState } from 'vuex'
 import { updateBook, deleteBook } from '@/api/books'
 import MdiIcon from '@/components/MdiIcon'
+import ItemActions from '@/components/ItemActions'
 
 export default {
   name: 'BookInfoCard',
-  components: { MdiIcon, HumanTime },
+  components: { MdiIcon, HumanTime, ItemActions },
   props: {
     book: Object,
     newNoteBtn: {
@@ -157,6 +138,12 @@ export default {
     this.vExpand = this.expand
 
     this.$root.$on('bookUpdated', this.onBookUpdated)
+
+    this.deleteBook = deleteBook
+    this.updateBook = updateBook
+    this.editBook = () => {
+      this.$root.$emit('editBook', this.book)
+    }
   },
   beforeDestroy() {
     this.$root.$off('bookUpdated', this.onBookUpdated)
@@ -164,70 +151,6 @@ export default {
   methods: {
     onToggle() {
       this.vExpand = !this.vExpand
-    },
-    updateHidden() {
-      updateBook(this.book.id, {
-        hidden: !this.book.hidden,
-      })
-        .then(res => {
-          this.book.hidden = res.data.hidden
-        })
-    },
-
-    onDeleteOrRestore() {
-      if (this.book.deleted_at) {
-        this.restore()
-      } else {
-        this.delete()
-      }
-    },
-
-    restore() {
-      updateBook(this.book.id, {
-        deleted_at: null,
-      })
-        .then(res => {
-          this.book.deleted_at = res.data.deleted_at
-        })
-    },
-
-    delete() {
-      this.$confirm({
-        title: '删除确认',
-        content: '删除后还可以恢复的，别慌',
-        okText: '删除',
-        okColor: 'red',
-      })
-        .then(() => {
-          this.onDeleteConfirm()
-        })
-    },
-
-    onForceDelete() {
-      this.$confirm({
-        title: '删除确认',
-        content: '彻底删除后不可恢复！！！',
-        okText: '彻底删除',
-        okColor: 'red',
-      })
-        .then(() => {
-          this.onDeleteConfirm(true)
-        })
-    },
-
-    onDeleteConfirm(force = false) {
-      deleteBook(this.book.id, { force_delete: force })
-        .then(res => {
-          if (force) {
-            this.$emit('force-deleted', this.book)
-          } else {
-            this.book.deleted_at = res.data.deleted_at
-          }
-        })
-    },
-
-    onEditBook() {
-      this.$root.$emit('editBook', this.book)
     },
 
     onBookUpdated(book) {

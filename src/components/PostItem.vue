@@ -70,9 +70,5 @@ export default {
   /deep/ .v-list__tile {
     padding: 0 10px;
   }
-
-  .v-list__tile__action {
-    min-width: initial;
-  }
 }
 </style>
