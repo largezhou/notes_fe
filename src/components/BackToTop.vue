@@ -2,7 +2,7 @@
   <div v-scroll="handleScrollTop">
     <v-scale-transition>
       <v-btn
-        v-if="topBtnShown && !goTopScrolling"
+        v-show="topBtnShown && !goTopScrolling"
         fab
         dark
         small
