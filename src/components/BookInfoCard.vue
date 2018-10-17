@@ -97,18 +97,6 @@
         </v-list>
       </div>
     </div>
-
-    <v-dialog v-if="canEdit" v-model="deleteConfirmModal" max-width="290">
-      <v-card>
-        <v-card-title class="headline">删除确认</v-card-title>
-        <v-card-text>{{ forceDelete ? '彻底删除后不可恢复！！！' : '删除之后还可以恢复' }}</v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="grey" flat @click.native="deleteConfirmModal = false">取消</v-btn>
-          <v-btn color="red" flat @click.native="onDeleteConfirm">{{ forceDelete ? '彻底' : '' }}删除</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </v-card>
 </template>
 
@@ -138,9 +126,7 @@ export default {
   },
   data: () => ({
     vExpand: true,
-
     deleteConfirmModal: false,
-    forceDelete: false,
   }),
   computed: {
     ...mapState({
@@ -205,21 +191,33 @@ export default {
     },
 
     delete() {
-      this.deleteConfirmModal = true
-      this.forceDelete = false
+      this.$confirm({
+        title: '删除确认',
+        content: '删除后还可以恢复的，别慌',
+        okText: '删除',
+        okColor: 'red',
+      })
+        .then(() => {
+          this.onDeleteConfirm()
+        })
     },
 
     onForceDelete() {
-      this.deleteConfirmModal = true
-      this.forceDelete = true
+      this.$confirm({
+        title: '删除确认',
+        content: '彻底删除后不可恢复！！！',
+        okText: '彻底删除',
+        okColor: 'red',
+      })
+        .then(() => {
+          this.onDeleteConfirm(true)
+        })
     },
 
-    onDeleteConfirm() {
-      this.deleteConfirmModal = false
-
-      deleteBook(this.book.id, { force_delete: this.forceDelete })
+    onDeleteConfirm(force = false) {
+      deleteBook(this.book.id, { force_delete: force })
         .then(res => {
-          if (this.forceDelete) {
+          if (force) {
             this.$emit('force-deleted', this.book)
           } else {
             this.book.deleted_at = res.data.deleted_at
