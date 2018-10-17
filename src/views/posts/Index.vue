@@ -57,10 +57,13 @@ export default {
     collapsed: true,
   }),
   created() {
-    this.getPosts()
-    this.getTags()
+    this.getData()
   },
   methods: {
+    getData() {
+      this.getPosts()
+      this.getTags()
+    },
     getTags() {
       getTags()
         .then(res => {

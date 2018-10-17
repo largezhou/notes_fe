@@ -15,7 +15,7 @@ export default {
         // 清空旧数据
         Object.assign(this.$data, JSON.parse(this.oldData))
         // 重新获取数据
-        this.getData && this.getData()
+        this.getData()
       }
     })
   },
