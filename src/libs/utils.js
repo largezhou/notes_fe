@@ -1,7 +1,10 @@
-import store from '@/store'
 import router from '@/router'
 
 const utils = {}
+
+if (process.env.VUE_APP_USE_LOG) {
+  window.utils = utils
+}
 
 export default utils
 
@@ -9,8 +12,14 @@ utils.needAuth = route => {
   return route.matched.some(r => (r.meta && r.meta.auth))
 }
 
-utils.snackbar = msg => {
-  store.commit('showSnackbar', msg)
+utils.snackbar = (msg) => {
+  return new Promise(resolve => {
+    const callback = () => {
+      resolve()
+    }
+
+    router.app.$emit('globalSnackbar', msg, callback)
+  })
 }
 
 /**

@@ -22,23 +22,39 @@ export default {
   data() {
     return {
       shown: false,
+      text: '',
+      callback: null,
     }
+  },
+  mounted() {
+    this.$root.$on('globalSnackbar', this.onOpen)
+  },
+  beforeDestroy() {
+    this.$root.$off('globalSnackbar', this.onOpen)
   },
   computed: {
     ...mapState({
-      snackbarShown: state => state.snackbar.shown,
-      text: state => state.snackbar.text,
       widescreen: state => state.app.widescreen,
     }),
   },
-  watch: {
-    snackbarShown(newValue) {
-      this.shown = newValue
-    },
+  methods: {
+    onOpen(msg, callback = null) {
+      // 如果不这样操作的话，连续的 snackbar 不会重新计算打开时间
+      this.shown = false
+      this.$nextTick(() => {
+        this.shown = true
 
+        this.text = msg
+        this.callback = callback
+      })
+    },
+  },
+  watch: {
     shown(newValue) {
       if (!newValue) {
-        this.$store.commit('closeSnackbar')
+        if (typeof this.callback == 'function') {
+          this.callback()
+        }
       }
     },
   },
