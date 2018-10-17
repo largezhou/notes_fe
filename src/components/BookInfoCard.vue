@@ -82,7 +82,7 @@
           </v-list-tile>
 
           <!-- 删除与恢复 -->
-          <v-list-tile @click="onDelete">
+          <v-list-tile @click="onDeleteOrRestore">
             <v-list-tile-action>
               <mdi-icon :icon="book.deleted_at ? 'delete-restore' : 'delete'"/>
             </v-list-tile-action>
@@ -174,7 +174,7 @@ export default {
         })
     },
 
-    onDelete() {
+    onDeleteOrRestore() {
       if (this.book.deleted_at) {
         this.restore()
       } else {

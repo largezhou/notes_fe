@@ -23,16 +23,12 @@
       />
     </div>
     <page-layout page-desc="这里是博客">
-      <v-card class="post" v-for="post of posts" :key="post.id">
-        <v-card-title class="title">
-          <router-link :to="`/posts/${post.id}`">{{ post.title }}</router-link>
-        </v-card-title>
-
-        <v-card-text class="desc">{{ post.desc }}</v-card-text>
-
-        <tags :tags="post.tags" :outline="false"/>
-
-      </v-card>
+      <post-item
+        v-for="(post, index) of posts"
+        :key="post.id"
+        :post="post"
+        @force-deleted="onForceDeleted(post, index)"
+      />
     </page-layout>
   </div>
 </template>
@@ -42,12 +38,18 @@ import PageLayout from '@/components/PageLayout'
 import reloadData from '@/mixins/reload_data'
 import { getTags } from '@/api/tags'
 import { getPosts } from '@/api/posts'
-import Tags from '@/components/Tags'
+import PostItem from '@/components/PostItem'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Index',
   mixins: [reloadData],
-  components: { PageLayout, Tags },
+  components: { PageLayout, PostItem },
+  computed: {
+    ...mapState({
+      editMode: state => state.app.editMode,
+    }),
+  },
   data: () => ({
     tags: [],
     posts: [],
@@ -55,21 +57,33 @@ export default {
     collapsed: true,
   }),
   created() {
-    this.getData()
+    this.getPosts()
+    this.getTags()
   },
   methods: {
-    getData() {
+    getTags() {
       getTags()
         .then(res => {
           const data = res.data
           this.tags = data.tags
         })
-
-      getPosts()
+    },
+    getPosts(query) {
+      getPosts(query)
         .then(res => {
           const data = res.data
           this.posts = data.posts
         })
+    },
+    onForceDeleted(post, index) {
+      this.posts.splice(index, 1)
+    },
+  },
+  watch: {
+    editMode(newValue) {
+      this.getPosts({
+        edit_mode: newValue || null,
+      })
     },
   },
 }
@@ -100,11 +114,5 @@ export default {
 
 .count {
   margin-left: 5px
-}
-
-.post {
-  + .post {
-    margin-top: 10px;
-  }
 }
 </style>
