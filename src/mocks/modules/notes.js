@@ -60,7 +60,7 @@ const noteTmpl = {
 }
 
 // 获取所有笔记
-mock('/notes', 'get', {
+mock(/\/notes\/?(\?.*)?$/, 'get', {
   'notes|20': [
     noteTmpl,
   ],

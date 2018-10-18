@@ -25,8 +25,8 @@ export default {
     this.getData()
   },
   methods: {
-    getData(query) {
-      getBooks(query)
+    getData() {
+      getBooks()
         .then(res => {
           const data = res.data
           this.books = data.books
@@ -39,9 +39,7 @@ export default {
   },
   watch: {
     editMode(newValue) {
-      this.getData({
-        edit_mode: newValue || null,
-      })
+      this.getData()
     },
   },
 }

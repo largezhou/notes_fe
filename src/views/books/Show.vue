@@ -126,9 +126,9 @@ export default {
       },
       immediate: true,
     },
-    editMode(newValue) {
-      !this._inactive && this.getData()
-    },
+    // editMode(newValue) {
+    //   !this._inactive && this.getData()
+    // },
   },
 }
 </script>

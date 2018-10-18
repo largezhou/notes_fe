@@ -43,5 +43,10 @@ export default {
       this.notes.splice(index, 1)
     },
   },
+  watch: {
+    editMode() {
+      !this._inactive && this.getData()
+    },
+  },
 }
 </script>
