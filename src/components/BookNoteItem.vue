@@ -31,7 +31,7 @@
       v-show="editMode"
       :update-handler="updateNote"
       :delete-handler="deleteNote"
-      :edit-handler="editNode"
+      :edit-handler="editNote"
       @force-deleted="item => { $emit('force-deleted', item) }"
     />
 
@@ -56,7 +56,7 @@ export default {
   created() {
     this.updateNote = updateNote
     this.deleteNote = deleteNote
-    this.editNode = () => {
+    this.editNote = () => {
       this.$router.push(`/notes/${this.item.id}/edit`)
     }
   },
