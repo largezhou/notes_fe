@@ -16,11 +16,9 @@
 
 <script>
 import { mapState } from 'vuex'
-import MdiIcon from '@/components/MdiIcon'
 
 export default {
   name: 'GlobalSnackbar',
-  components: { MdiIcon },
   data() {
     return {
       shown: false,

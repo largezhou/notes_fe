@@ -84,12 +84,11 @@
 import HumanTime from '@/components/HumanTime'
 import { mapState } from 'vuex'
 import { updateBook, deleteBook } from '@/api/books'
-import MdiIcon from '@/components/MdiIcon'
 import ItemActions from '@/components/ItemActions'
 
 export default {
   name: 'BookInfoCard',
-  components: { MdiIcon, HumanTime, ItemActions },
+  components: { HumanTime, ItemActions },
   props: {
     book: Object,
     newNoteBtn: {

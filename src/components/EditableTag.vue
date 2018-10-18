@@ -40,11 +40,9 @@
 <script>
 import { mapState } from 'vuex'
 import { updateTag, delTag } from '@/api/tags'
-import MdiIcon from '@/components/MdiIcon'
 
 export default {
   name: 'EditableTag',
-  components: { MdiIcon },
   props: {
     tag: Object,
   },

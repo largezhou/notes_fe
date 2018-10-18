@@ -32,13 +32,12 @@ import BookNoteItem from '@/components/BookNoteItem'
 import { getBook } from '@/api/books'
 import reloadData from '@/mixins/reload_data'
 import BookInfoCard from '@/components/BookInfoCard'
-import MdiIcon from '@/components/MdiIcon'
 import { mapState } from 'vuex'
 
 export default {
   name: 'Show',
   mixins: [reloadData],
-  components: { MdiIcon, BookNoteItem, BookInfoCard },
+  components: { BookNoteItem, BookInfoCard },
   data() {
     return {
       sortField: 'page',

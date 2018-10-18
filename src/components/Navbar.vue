@@ -63,11 +63,10 @@
 import { mapState } from 'vuex'
 import utils from '@/libs/utils'
 import NewBook from '@/components/NewBook'
-import MdiIcon from '@/components/MdiIcon'
 
 export default {
   name: 'Navbar',
-  components: { MdiIcon, NewBook },
+  components: { NewBook },
   computed: {
     ...mapState({
       username: state => state.user.name,

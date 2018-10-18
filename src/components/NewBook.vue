@@ -102,11 +102,10 @@ import { required, maxLength, integer, minValue, maxValue } from 'vuelidate/lib/
 import { postCreateBook, updateBook } from '@/api/books'
 import { vImage, validateErrorsMixins } from '@/validators'
 import FilePicker from '@/components/FilePicker'
-import MdiIcon from '@/components/MdiIcon'
 
 export default {
   name: 'NewBook',
-  components: { MdiIcon, FilePicker },
+  components: { FilePicker },
   mixins: [validationMixin, validateErrorsMixins],
   // 这里面的结构，一定要跟data中的form对应！！！！
   validations() {

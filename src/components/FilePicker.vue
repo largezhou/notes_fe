@@ -32,11 +32,9 @@
 <script>
 import { vImage, vFile } from '@/validators'
 import vFormItem from '@/mixins/vform_item'
-import MdiIcon from '@/components/MdiIcon'
 
 export default {
   name: 'FilePicker',
-  components: { MdiIcon },
   mixins: [vFormItem],
   data: () => ({
     src: '',
