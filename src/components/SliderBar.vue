@@ -100,12 +100,10 @@ import { mapState } from 'vuex'
 import utils from '@/libs/utils'
 import NewBook from '@/components/NewBook'
 import MdiIcon from '@/components/MdiIcon'
-import editMode from '@/mixins/edit_mode'
 
 export default {
   name: 'SliderBar',
   components: { MdiIcon, NewBook },
-  mixins: [editMode],
   computed: {
     ...mapState({
       sliderBar: state => state.app.sliderBar,

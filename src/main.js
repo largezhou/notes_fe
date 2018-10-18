@@ -13,6 +13,9 @@ import '@/styles/index.scss'
 import '@/router/permission'
 import utils from '@/libs/utils'
 import '@/components'
+import editMode from '@/mixins/edit_mode'
+
+Vue.mixin(editMode)
 
 Vue.config.productionTip = false
 

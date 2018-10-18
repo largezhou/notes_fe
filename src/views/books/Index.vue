@@ -14,7 +14,6 @@
 <script>
 import { getBooks } from '@/api/books'
 import BookInfoCard from '@/components/BookInfoCard'
-import { mapState } from 'vuex'
 
 export default {
   name: 'Index',
@@ -22,11 +21,6 @@ export default {
   data: () => ({
     books: [],
   }),
-  computed: {
-    ...mapState({
-      editMode: state => state.app.editMode,
-    }),
-  },
   created() {
     this.getData()
   },

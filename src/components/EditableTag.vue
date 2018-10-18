@@ -41,12 +41,10 @@
 import { mapState } from 'vuex'
 import { updateTag, delTag } from '@/api/tags'
 import MdiIcon from '@/components/MdiIcon'
-import editMode from '@/mixins/edit_mode'
 
 export default {
   name: 'EditableTag',
   components: { MdiIcon },
-  mixins: [editMode],
   props: {
     tag: Object,
   },
