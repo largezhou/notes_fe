@@ -85,12 +85,9 @@ export default {
       return (this.sortType == 'asc') ? 'menu-up' : 'menu-down'
     },
 
-    getData(query) {
+    getData() {
       const r = this.$route
-      getBook(r.params.bookId, {
-        ...r.query,
-        ...query,
-      })
+      getBook(r.params.bookId)
         .then(res => {
           const data = res.data
           this.book = data.book
@@ -130,9 +127,7 @@ export default {
       immediate: true,
     },
     editMode(newValue) {
-      !this._inactive && this.getData({
-        edit_mode: newValue || null,
-      })
+      !this._inactive && this.getData()
     },
   },
 }

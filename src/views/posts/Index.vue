@@ -62,8 +62,8 @@ export default {
           this.tags = data.tags
         })
     },
-    getPosts(query) {
-      getPosts(query)
+    getPosts() {
+      getPosts()
         .then(res => {
           const data = res.data
           this.posts = data.posts
@@ -75,9 +75,7 @@ export default {
   },
   watch: {
     editMode(newValue) {
-      this.getPosts({
-        edit_mode: newValue || null,
-      })
+      this.getPosts()
     },
   },
 }

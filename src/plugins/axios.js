@@ -3,6 +3,7 @@
 import axios from 'axios'
 import { getToken } from '../libs/token'
 import utils from '@/libs/utils'
+import router from '@/router'
 
 const Qs = require('qs')
 
@@ -28,6 +29,11 @@ _axios.interceptors.request.use(
   config => {
     config.headers.Authorization = getToken()
 
+    // 默认把 url 中的 query string 加到 params 中
+    const urlQS = router.currentRoute.query
+    const configQS = config.params
+
+    config.params = Object.assign({}, urlQS, configQS)
     // Do something before request is sent
     return config
   },
