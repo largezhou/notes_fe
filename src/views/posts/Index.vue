@@ -39,17 +39,11 @@ import reloadData from '@/mixins/reload_data'
 import { getTags } from '@/api/tags'
 import { getPosts } from '@/api/posts'
 import PostItem from '@/components/PostItem'
-import { mapState } from 'vuex'
 
 export default {
   name: 'Index',
   mixins: [reloadData],
   components: { PageLayout, PostItem },
-  computed: {
-    ...mapState({
-      editMode: state => state.app.editMode,
-    }),
-  },
   data: () => ({
     tags: [],
     posts: [],

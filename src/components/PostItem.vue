@@ -33,7 +33,6 @@ export default {
   computed: {
     ...mapState({
       username: state => state.user.name,
-      editMode: state => state.app.editMode,
     }),
   },
   props: {
