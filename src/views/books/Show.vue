@@ -32,7 +32,6 @@ import BookNoteItem from '@/components/BookNoteItem'
 import { getBook } from '@/api/books'
 import reloadData from '@/mixins/reload_data'
 import BookInfoCard from '@/components/BookInfoCard'
-import { mapState } from 'vuex'
 
 export default {
   name: 'Show',
@@ -47,9 +46,6 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      editMode: state => state.app.editMode,
-    }),
     readPercent() {
       if (this.book.read > this.book.total) {
         return 100

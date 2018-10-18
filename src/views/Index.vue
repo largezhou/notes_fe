@@ -6,9 +6,10 @@
       </v-flex>
       <v-flex md9 sm12>
         <book-note-item
-          v-for="item of notes"
+          v-for="(item, index) of notes"
           :key="item.id"
           :item="item"
+          @force-deleted="onForceDelete(item, index)"
         />
       </v-flex>
     </v-layout>
@@ -37,6 +38,9 @@ export default {
           const data = res.data
           this.notes = data.notes
         })
+    },
+    onForceDelete(item, index) {
+      this.notes.splice(index, 1)
     },
   },
 }
