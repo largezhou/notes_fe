@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-resize="onWindowResize">
+  <div id="app" v-resize="onWindowResize" :class="{ 'edit-mode': editMode }">
     <v-app>
       <navbar ref="navbar"/>
       <v-content>
@@ -24,10 +24,12 @@ import GlobalConfirm from '@/components/GlobalConfirm'
 import BackToTop from '@/components/BackToTop'
 import { mapState } from 'vuex'
 import SliderBar from '@/components/SliderBar'
+import editMode from '@/mixins/edit_mode'
 
 export default {
   name: 'App',
   components: { SliderBar, Navbar, GlobalSnackbar, BackToTop, GlobalConfirm },
+  mixins: [editMode],
   computed: {
     ...mapState({
       widescreen: state => state.app.widescreen,

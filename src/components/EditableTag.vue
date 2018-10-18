@@ -41,10 +41,12 @@
 import { mapState } from 'vuex'
 import { updateTag, delTag } from '@/api/tags'
 import MdiIcon from '@/components/MdiIcon'
+import editMode from '@/mixins/edit_mode'
 
 export default {
   name: 'EditableTag',
   components: { MdiIcon },
+  mixins: [editMode],
   props: {
     tag: Object,
   },
@@ -61,7 +63,6 @@ export default {
   computed: {
     ...mapState({
       canEdit: state => state.user.name,
-      editMode: state => state.app.editMode,
       widescreen: state => state.app.widescreen,
     }),
     tagWidth() {
@@ -154,12 +155,10 @@ export default {
   position: relative;
   display: inline-block;
   margin: 10px;
+}
 
-  &:hover {
-    .settings {
-      display: inline-block;
-    }
-  }
+.edit-mode .tag-wrap:hover .settings {
+  display: inline-block;
 }
 
 .tag {

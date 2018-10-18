@@ -6,8 +6,6 @@ import utils from '@/libs/utils'
 const guestPage = 'index'
 
 router.beforeEach((to, from, next) => {
-  // 切换路由时，取消编辑模式
-  store.commit('changeEditMode', false)
   const needAuth = utils.needAuth(to)
 
   // 本地有token，表示已登录

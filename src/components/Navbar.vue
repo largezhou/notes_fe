@@ -64,16 +64,17 @@ import { mapState } from 'vuex'
 import utils from '@/libs/utils'
 import NewBook from '@/components/NewBook'
 import MdiIcon from '@/components/MdiIcon'
+import editMode from '@/mixins/edit_mode'
 
 export default {
   name: 'Navbar',
   components: { MdiIcon, NewBook },
+  mixins: [editMode],
   computed: {
     ...mapState({
       username: state => state.user.name,
       widescreen: state => state.app.widescreen,
       sliderBar: state => state.app.sliderBar,
-      editMode: state => state.app.editMode,
     }),
   },
   methods: {
@@ -95,7 +96,7 @@ export default {
     },
 
     onToggleEditMode() {
-      this.$store.commit('toggleEditMode')
+      this.toggleEditMode()
     },
   },
 }
