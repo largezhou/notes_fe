@@ -97,6 +97,12 @@ const otherRouters = [
         },
         component: () => import('@/views/posts/Create'),
       },
+
+      {
+        path: 'posts/:postId(\\d+)/edit',
+        name: 'postEdit',
+        component: () => import('@/views/posts/Edit'),
+      },
     ],
   },
 ]
