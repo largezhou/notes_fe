@@ -143,6 +143,14 @@ export default {
         })
     },
   },
+  watch: {
+    editMode(newValue) {
+      if (!newValue) {
+        this.onCancelEditName()
+        this.actionsOpened = false
+      }
+    },
+  },
 }
 </script>
 
