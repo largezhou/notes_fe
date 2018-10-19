@@ -129,7 +129,7 @@ export default {
             required: '必须填写页数',
             integer: '必须是整数',
             minValue: '不能小于1',
-            maxValue: `不能超${this.book.total}页`,
+            maxValue: `不能超过${this.book ? this.book.total : ''}页`,
           },
           title: {
             maxLength: '标题长度不能大于255个字',
