@@ -4,12 +4,12 @@
       <div class="belong">
         <div v-if="!item.book && !disableBook">书不见啦~</div>
         <div v-else-if="disableBook">
-          <router-link :to="pageLink(book.id, item.page)">第{{ item.page }}页</router-link>
+          <span>第{{ item.page }}页</span>
         </div>
         <div v-else>
           <router-link :to="`/books/${item.book.id}`">{{ item.book.title }}</router-link>
           <span> • </span>
-          <router-link :to="pageLink(item.book.id, item.page)">第{{ item.page }}页</router-link>
+          <span>第{{ item.page }}页</span>
         </div>
       </div>
     </v-card-title>
