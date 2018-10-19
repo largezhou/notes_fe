@@ -75,7 +75,7 @@ export default {
   },
   watch: {
     editMode(newValue) {
-      !this._inactive && this.getPosts()
+      this.$active && this.getPosts()
     },
   },
 }

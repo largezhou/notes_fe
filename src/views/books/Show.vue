@@ -119,16 +119,13 @@ export default {
   watch: {
     $route: {
       handler() {
-        if (this._inactive === false) {
+        if (this.$active) {
           this.initSort()
           this.getData()
         }
       },
       immediate: true,
     },
-    // editMode(newValue) {
-    //   !this._inactive && this.getData()
-    // },
   },
 }
 </script>

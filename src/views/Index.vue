@@ -45,7 +45,7 @@ export default {
   },
   watch: {
     editMode() {
-      !this._inactive && this.getData()
+      this.$active && this.getData()
     },
   },
 }
