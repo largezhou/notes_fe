@@ -2,7 +2,7 @@
   <v-card>
     <v-card-text>
       <v-container grid-list-md>
-        <v-form ref="form">
+        <v-form ref="form" v-if="book">
           <v-tabs slider-color="primary" grow>
             <v-tab :class="{ 'has-error': contentError }" ripple>内容</v-tab>
             <v-tab :class="{ 'has-error': otherError }" ripple>其他</v-tab>
@@ -68,8 +68,9 @@
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn depressed color="primary" @click="onSubmit">添加笔记</v-btn>
-      <v-btn depressed @click="onClear">清空</v-btn>
+      <v-btn depressed color="primary" @click="onSubmit">{{ this.note ? '更新' : '添加笔记' }}</v-btn>
+      <v-btn depressed @click="onReset" v-if="this.note">重置</v-btn>
+      <v-btn depressed @click="onClear" v-else>清空</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -79,7 +80,7 @@ import { validationMixin } from 'vuelidate'
 import { required, maxLength, integer, minValue, maxValue } from 'vuelidate/lib/validators'
 import { validateErrorsMixins } from '@/validators'
 import MDEditor from '@/components/MDEditor'
-import { postCreateNote } from '@/api/notes'
+import { postCreateNote, updateNote } from '@/api/notes'
 import TagsSelector from '@/components/TagsSelector'
 
 export default {
@@ -110,38 +111,40 @@ export default {
       },
     }
   },
-  data: () => ({
-    form: {
-      page: '',
-      title: '',
-      desc: '',
-      content: '',
-      tags: [],
-      html_content: '',
-      mark_read: true,
-    },
-
-    attrs: {
+  data() {
+    return {
       form: {
-        page: {
-          required: '必须填写页数',
-          integer: '页数必须是整数',
-          minValue: '页数不能小于1',
-          maxValue: '页数不能超过书的总页数',
-        },
-        title: {
-          maxLength: '标题长度不能大于255个字',
-        },
-        desc: {
-          maxLength: '描述长度不能大于255个字',
-        },
-        content: {
-          required: '必须填写内容',
-          maxLength: '内容太多了',
+        page: '',
+        title: '',
+        desc: '',
+        content: '',
+        tags: [],
+        html_content: '',
+        mark_read: true,
+      },
+
+      attrs: {
+        form: {
+          page: {
+            required: '必须填写页数',
+            integer: '必须是整数',
+            minValue: '不能小于1',
+            maxValue: `不能超${this.book.total}页`,
+          },
+          title: {
+            maxLength: '标题长度不能大于255个字',
+          },
+          desc: {
+            maxLength: '描述长度不能大于255个字',
+          },
+          content: {
+            required: '必须填写内容',
+            maxLength: '内容太多了',
+          },
         },
       },
-    },
-  }),
+    }
+  },
   props: {
     book: Object,
     note: Object,
@@ -167,13 +170,32 @@ export default {
         return
       }
 
-      postCreateNote(this.book.id, this.form)
-        .then(res => {
-          this.$router.push({
-            name: 'bookShow',
-            bookId: this.book.id,
+      if (this.note) {
+        // 更新
+        updateNote(this.note.id, this.form)
+          .then(res => {
+            this.$router.back()
           })
-        })
+      } else {
+        // 创建
+        postCreateNote(this.book.id, this.form)
+          .then(res => {
+            this.$router.push({
+              name: 'noteShow',
+              params: {
+                noteId: res.data.note.id,
+              },
+            })
+          })
+      }
+    },
+
+    onReset() {
+      Object.keys(this.form).forEach(k => {
+        this.form[k] = this.note[k]
+      })
+
+      this.form.mark_read = true
     },
 
     onContentChange(content, html) {
@@ -183,6 +205,11 @@ export default {
       return fields.some(f => {
         return this.$v.form[f].$anyError
       })
+    },
+  },
+  watch: {
+    note(newValue) {
+      newValue && this.onReset()
     },
   },
 }
