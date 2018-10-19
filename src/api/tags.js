@@ -25,3 +25,10 @@ export function delTag(tagId) {
     method: 'delete',
   })
 }
+
+export function getTag(tagId) {
+  return axios({
+    url: `tags/${tagId}`,
+    method: 'get',
+  })
+}

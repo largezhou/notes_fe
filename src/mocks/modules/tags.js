@@ -2,16 +2,20 @@ import mock from '../mock'
 import utils from '@/libs/utils'
 import _ from 'lodash'
 
+const tagTmpl = {
+  'id|+1': 1,
+  'name|2-5': '@cword',
+  'count|2-20': 1,
+}
+
+mock(/\/tags\/\d+/, 'get', {
+  tag: tagTmpl,
+})
+
 // 获取所有标签，可搜索
 {
   let key = 'tags|20'
   // 保持模板为同一个对象,这样id才会持续增加
-  const tagTmpl = {
-    'id|+1': 1,
-    'name|2-5': '@cword',
-    'notes_count|1-10': 1,
-    'posts_count|1-10': 1,
-  }
   const template = {}
   template[key] = [
     tagTmpl,

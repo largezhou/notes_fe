@@ -9,7 +9,7 @@
       outline
       :to="`/tags/${tag.id}`"
     >{{ tag.name }}
-      <span class="count">{{ tag.notes_count }}</span>
+      <span class="count">{{ tag.count }}</span>
     </v-btn>
 
     <div class="actions" v-if="canEdit">

@@ -80,6 +80,13 @@ const otherRouters = [
         component: () => import('@/views/tags/Index'),
       },
 
+      // 标签下的笔记博客页
+      {
+        path: 'tags/:tagId(\\d+)',
+        name: 'tagShow',
+        component: () => import('@/views/tags/Show'),
+      },
+
       // 博客列表
       {
         path: 'posts',
