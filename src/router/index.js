@@ -66,6 +66,13 @@ const otherRouters = [
         component: () => import('@/views/notes/Show'),
       },
 
+      // 笔记编辑
+      {
+        path: 'notes/:noteId(\\d+)/edit',
+        name: 'noteEdit',
+        component: () => import('@/views/notes/Edit'),
+      },
+
       // 所有标签
       {
         path: 'tags',
