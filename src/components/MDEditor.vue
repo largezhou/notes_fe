@@ -235,6 +235,7 @@ export default {
 
   .v-note-wrapper {
     min-width: initial;
+    transition: none;
 
     &.resize {
       transition: height 1ms;
