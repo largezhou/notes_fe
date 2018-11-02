@@ -70,6 +70,9 @@ const otherRouters = [
       {
         path: 'notes/:noteId(\\d+)/edit',
         name: 'noteEdit',
+        meta: {
+          auth: true,
+        },
         component: () => import('@/views/notes/Edit'),
       },
 
@@ -115,6 +118,9 @@ const otherRouters = [
       {
         path: 'posts/:postId(\\d+)/edit',
         name: 'postEdit',
+        meta: {
+          auth: true,
+        },
         component: () => import('@/views/posts/Edit'),
       },
     ],
