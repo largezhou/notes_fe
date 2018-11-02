@@ -25,15 +25,26 @@ let config = {
 
 const _axios = axios.create(config)
 
+// 请求时，不要自动加上url中的 query string 的请求地址
+const autoQueryBlackList = [
+  'auth/login',
+  'auth/logout',
+]
+
+const inBlackList = url => {
+  return autoQueryBlackList.indexOf(url) !== -1
+}
+
 _axios.interceptors.request.use(
   config => {
     config.headers.Authorization = getToken()
 
     // 默认把 url 中的 query string 加到 params 中
-    const urlQS = router.currentRoute.query
-    const configQS = config.params
-
-    config.params = Object.assign({}, urlQS, configQS)
+    if (!inBlackList(config.url)) {
+      const urlQS = router.currentRoute.query
+      const configQS = config.params
+      config.params = Object.assign({}, urlQS, configQS)
+    }
     // Do something before request is sent
     return config
   },
