@@ -49,10 +49,9 @@ export default {
   },
   methods: {
     getData() {
-      getBooks({ limit: 5 })
+      getBooks({ recent: 1 })
         .then(res => {
-          const data = res.data
-          this.books = data
+          this.books = res.data
           this.loading = false
         })
         .catch(() => {
