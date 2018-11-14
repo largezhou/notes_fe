@@ -22,7 +22,7 @@ const bookInfoTmpl = {
 
 // 获取所有书籍
 mock(/\/books(\?.*)?$/, 'get', {
-  'books|10': [
+  'data|10': [
     bookInfoTmpl,
   ],
 }, (tmpl, options) => {

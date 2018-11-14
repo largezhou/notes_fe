@@ -29,6 +29,7 @@ export default {
   data() {
     return {
       notes: [],
+      page: null,
     }
   },
   methods: {
@@ -36,7 +37,8 @@ export default {
       getNotes()
         .then(res => {
           const data = res.data
-          this.notes = data.notes
+          this.notes = data.data
+          this.page = data.meta
         })
     },
     onForceDelete(item, index) {

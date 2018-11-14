@@ -61,11 +61,21 @@ const noteTmpl = {
 
 // 获取所有笔记
 mock(/\/notes\/?(\?.*)?$/, 'get', {
-  'notes|20': [
-    noteTmpl,
-  ],
+  data: {
+    'data|20': [
+      noteTmpl,
+    ],
+    meta: {
+      'current_page': 1,
+      'from': 1,
+      'last_page': 7,
+      'per_page': 15,
+      'to': 15,
+      'total': 100,
+    },
+  },
 }, (tmpl, options) => {
-  const t = tmpl['notes|20'][0]
+  const t = tmpl.data['data|20'][0]
   delete t.id
   delete t.html_content
   t.book = briefBook

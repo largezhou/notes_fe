@@ -29,7 +29,7 @@ export default {
       getBooks()
         .then(res => {
           const data = res.data
-          this.books = data.books
+          this.books = data
         })
     },
 

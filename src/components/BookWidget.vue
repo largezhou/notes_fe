@@ -52,7 +52,7 @@ export default {
       getBooks({ limit: 5 })
         .then(res => {
           const data = res.data
-          this.books = data.books
+          this.books = data
           this.loading = false
         })
         .catch(() => {

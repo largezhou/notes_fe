@@ -22,6 +22,8 @@ export default (path, method, template = {}, callback) => {
     if (typeof callback == 'function') {
       callback(template, options)
     }
-    return Mock.mock(template)
+
+    const res = Mock.mock(template)
+    return res.data
   })
 }
