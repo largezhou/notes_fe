@@ -37,6 +37,7 @@ export default {
     item: Object,
     updateHandler: Function,
     deleteHandler: Function,
+    forceDeleteHandler: Function,
     editHandler: Function,
   },
   methods: {
@@ -65,7 +66,7 @@ export default {
         deleted_at: null,
       })
         .then(res => {
-          this.$set(this.item, 'deleted_at', res.data.deleted_at)
+          this.$set(this.item, 'deleted_at', null)
         })
     },
 
@@ -89,18 +90,21 @@ export default {
         okColor: 'red',
       })
         .then(() => {
-          this.onDeleteConfirm(true)
+          this.onForceDeleteConfirm()
         })
     },
 
-    onDeleteConfirm(force = false) {
-      this.deleteHandler(this.item.id, { force_delete: force })
+    onForceDeleteConfirm() {
+      this.forceDeleteHandler(this.item.id)
         .then(res => {
-          if (force) {
-            this.$emit('force-deleted', this.item)
-          } else {
-            this.$set(this.item, 'deleted_at', res.data.deleted_at)
-          }
+          this.$emit('force-deleted', this.item)
+        })
+    },
+
+    onDeleteConfirm() {
+      this.deleteHandler(this.item.id)
+        .then(res => {
+          this.$set(this.item, 'deleted_at', true)
         })
     },
   },

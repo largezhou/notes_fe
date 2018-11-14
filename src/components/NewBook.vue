@@ -203,19 +203,19 @@ export default {
       if (this.book) {
         updateBook(this.book.id, fd)
           .then(res => {
-            this.$root.$emit('bookUpdated', res.data.book)
+            this.$root.$emit('bookUpdated', res.data)
             this.onCancel()
           })
       } else {
         postCreateBook(fd)
           .then(res => {
-            const book = res.data.book
+            const data = res.data
             this.onCancel()
             this.$snackbar('已添加')
             this.$router.push({
               name: 'bookShow',
               params: {
-                bookId: book.id,
+                bookId: data.id,
               },
             })
           })

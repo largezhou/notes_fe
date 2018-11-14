@@ -74,27 +74,27 @@ mock(/\/books\/\d+(\?.*)?$/, 'get', {
 
 // 添加书籍
 mock('/books', 'post', {
-  book: bookInfoTmpl,
+  data: bookInfoTmpl,
 })
 
 // 更新
-mock(/\/books\/\d+/, 'put', {}, (tmpl, options) => {
+mock(/\/books\/\d+/, 'put', { data: {} }, (tmpl, options) => {
   const data = typeof options.body == 'string'
     ? utils.safeJsonParse(options.body, {})
     : options.body
 
+  bookInfoTmpl.id = Number(options.url.match(/\/books\/(\d+)/)[1])
+  tmpl.data = bookInfoTmpl
+
   if (data.hidden !== undefined) {
-    tmpl.hidden = data.hidden
+    tmpl.data.hidden = data.hidden
   } else if (data.deleted_at === null) {
-    tmpl.deleted_at = null
-  } else {
-    // 编辑书籍保存
-    // 获取书籍id
-    bookInfoTmpl.id = Number(options.url.match(/\/books\/(\d+)/)[1])
-    tmpl.book = bookInfoTmpl
+    tmpl.data.deleted_at = null
   }
 })
 
-mock(/\/books\/\d+/, 'delete', {
-  deleted_at: '@datetime',
-})
+// 软删除
+mock(/\/books\/\d+/, 'delete')
+
+// 彻底删除
+mock(/\/deleted-books\/\d+/, 'delete')

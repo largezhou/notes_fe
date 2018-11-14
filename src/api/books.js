@@ -38,3 +38,10 @@ export function deleteBook(bookId) {
     method: 'delete',
   })
 }
+
+export function forceDeleteBook(bookId) {
+  return axios({
+    url: `deleted-books/${bookId}`,
+    method: 'delete',
+  })
+}

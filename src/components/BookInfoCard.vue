@@ -73,6 +73,7 @@
         :item="book"
         :update-handler="updateBook"
         :delete-handler="deleteBook"
+        :force-delete-handler="forceDeleteBook"
         :edit-handler="editBook"
         @force-deleted="item => { $emit('force-deleted', item) }"
       />
@@ -83,7 +84,7 @@
 <script>
 import HumanTime from '@/components/HumanTime'
 import { mapState } from 'vuex'
-import { updateBook, deleteBook } from '@/api/books'
+import { updateBook, deleteBook, forceDeleteBook } from '@/api/books'
 import ItemActions from '@/components/ItemActions'
 
 export default {
@@ -142,6 +143,7 @@ export default {
     this.editBook = () => {
       this.$root.$emit('editBook', this.book)
     }
+    this.forceDeleteBook = forceDeleteBook
   },
   beforeDestroy() {
     this.$root.$off('bookUpdated', this.onBookUpdated)
