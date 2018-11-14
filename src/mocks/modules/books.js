@@ -42,14 +42,16 @@ mock(/\/books(\?.*)?$/, 'get', {
 
 // 获取书籍详情
 mock(/\/books\/\d+(\?.*)?$/, 'get', {
-  book: {
-    title: '@ctitle',
-    started_at: '@datetime',
-    updated_at: '@datetime',
-    cover: Random.image('245X344', Random.color(), Random.color(), Random.ctitle()),
-    'read|1-900': 1,
-    'total|100-900': 1,
-    'notes_count|0-20': 1,
+  data: {
+    book: {
+      title: '@ctitle',
+      started_at: '@datetime',
+      updated_at: '@datetime',
+      cover: Random.image('245X344', Random.color(), Random.color(), Random.ctitle()),
+      'read|1-900': 1,
+      'total|100-900': 1,
+      'notes_count|0-20': 1,
+    },
     'notes|5': [
       {
         'id|+1': 1,
@@ -67,7 +69,7 @@ mock(/\/books\/\d+(\?.*)?$/, 'get', {
     ],
   },
 }, (tmpl, options) => {
-  tmpl.book.id = router.currentRoute.params.bookId
+  tmpl.data.book.id = router.currentRoute.params.bookId
 })
 
 // 添加书籍

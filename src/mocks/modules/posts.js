@@ -7,7 +7,7 @@ const Random = Mock.Random
 
 // 博客列表
 mock(/\/posts(\?.*)?$/, 'get', {
-  'posts|15': [
+  'data|15': [
     {
       'id|+1': 1,
       title: '@ctitle',
@@ -24,7 +24,7 @@ mock(/\/posts(\?.*)?$/, 'get', {
     },
   ],
 }, (tmpl, options) => {
-  const postInfoTmpl = tmpl['posts|15'][0]
+  const postInfoTmpl = tmpl['data|15'][0]
   const q = utils.queryFromUrl(options.url)
 
   if (q.edit_mode) {
@@ -42,7 +42,7 @@ mock(/\/posts(\?.*)?$/, 'get', {
 
 // 博客详情
 mock(/\/posts\/\d+/, 'get', {
-  post: {
+  data: {
     'id|+1': 1,
     title: '@ctitle',
     desc: '@cparagraph',

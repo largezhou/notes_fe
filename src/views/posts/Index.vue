@@ -30,7 +30,7 @@ export default {
       getPosts()
         .then(res => {
           const data = res.data
-          this.posts = data.posts
+          this.posts = data
         })
     },
     onForceDeleted(post, index) {

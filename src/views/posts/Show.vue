@@ -21,7 +21,7 @@ export default {
     getData(postId = this.$route.params.postId) {
       getPost(postId)
         .then(res => {
-          this.post = res.data.post
+          this.post = res.data
         })
     },
   },

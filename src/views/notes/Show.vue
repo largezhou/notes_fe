@@ -1,7 +1,7 @@
 <template>
   <page-layout v-if="note">
 
-    <book-info-card :book="note.book" :expand="false"/>
+    <book-info-card :book="book" :expand="false"/>
 
     <post-detail-card :post="note"/>
 
@@ -22,6 +22,7 @@ export default {
   mixins: [seo, ignoreHashChange],
   data: () => ({
     note: null,
+    book: null,
   }),
   computed: {
     pageTitle() {
@@ -46,6 +47,7 @@ export default {
         .then(res => {
           const data = res.data
           this.note = data.note
+          this.book = data.book
         })
     },
   },

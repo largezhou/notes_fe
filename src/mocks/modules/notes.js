@@ -88,10 +88,14 @@ mock(/\/books\/\d+\/notes/, 'post', { note: noteTmpl }, (tmpl, options) => {
 })
 
 // 获取笔记详情
-mock(/\/notes\/\d+/, 'get', { note: noteTmpl }, (tmpl, options) => {
-  tmpl.note.id = router.currentRoute.params.noteId
-  tmpl.note.html_content = detail
-  tmpl.note.book = fullBook
+mock(/\/notes\/\d+/, 'get', {
+  data: {
+    note: noteTmpl,
+  },
+}, (tmpl, options) => {
+  tmpl.data.note.id = router.currentRoute.params.noteId
+  tmpl.data.note.html_content = detail
+  tmpl.data.book = fullBook
 })
 
 mock(/\/notes\/\d+/, 'delete', {

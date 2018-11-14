@@ -29,7 +29,7 @@ export default {
       getTags()
         .then(res => {
           const data = res.data
-          this.tags = data.tags
+          this.tags = data
         })
     },
     onDeleted(tag, index) {

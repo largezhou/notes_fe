@@ -14,14 +14,14 @@ mock(/\/tags\/\d+/, 'get', {
 
 // 获取所有标签，可搜索
 {
-  let key = 'tags|20'
+  let key = 'data|20'
   // 保持模板为同一个对象,这样id才会持续增加
   const template = {}
   template[key] = [
     tagTmpl,
   ]
 
-  mock(/\/tags(\?.*)?/, 'get', template, (tmpl, options) => {
+  mock(/\/tags(\?.*)?/, 'get', { data: template }, (tmpl, options) => {
     const q = utils.queryFromUrl(options.url)
     if (typeof q.q == 'string') {
       // 模拟搜索，只能搜到1-3个，并且有几率搜不到
@@ -29,7 +29,7 @@ mock(/\/tags\/\d+/, 'get', {
       // 如果搜到了，先去掉默认的20个的模板，之后如果不是搜索，则恢复
       if (Math.random() > 0.7) {
         delete tmpl[key]
-        key = 'tags|1-3'
+        key = 'data|1-3'
 
         tagTmpl.name = _.trimStart(q.q) + '@cword'
 
@@ -44,7 +44,7 @@ mock(/\/tags\/\d+/, 'get', {
       delete tmpl[key]
       delete tagTmpl.name
 
-      key = 'tags|10'
+      key = 'data|10'
       tagTmpl['name|2-5'] = '@cword'
       tmpl[key] = [tagTmpl]
     } else {
@@ -52,7 +52,7 @@ mock(/\/tags\/\d+/, 'get', {
       delete tmpl[key]
       delete tagTmpl.name
 
-      key = 'tags|50-100'
+      key = 'data|50-100'
       tagTmpl['name|2-5'] = '@cword'
       tmpl[key] = [tagTmpl]
     }

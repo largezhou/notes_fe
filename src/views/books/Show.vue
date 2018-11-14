@@ -14,9 +14,9 @@
         <mdi-icon :icon="sortIcon('created_at')"/>
       </v-btn>
     </div>
-    <div v-if="book.notes.length > 0">
+    <div v-if="notes.length > 0">
       <book-note-item
-        v-for="(item, index) of book.notes"
+        v-for="(item, index) of notes"
         :key="item.id"
         :item="item"
         :book="book"
@@ -43,6 +43,7 @@ export default {
       sortType: 'desc',
 
       book: null,
+      notes: [],
     }
   },
   computed: {
@@ -91,6 +92,7 @@ export default {
         .then(res => {
           const data = res.data
           this.book = data.book
+          this.notes = data.notes
         })
     },
 
