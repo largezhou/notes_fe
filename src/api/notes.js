@@ -36,3 +36,10 @@ export function updateNote(noteId, data) {
     data,
   })
 }
+
+export function forceDeleteNote(noteId) {
+  return axios({
+    url: `deleted-notes/${noteId}`,
+    method: 'delete',
+  })
+}

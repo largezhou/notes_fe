@@ -31,6 +31,7 @@
       v-show="editMode"
       :update-handler="updateNote"
       :delete-handler="deleteNote"
+      :force-delete-handler="forceDeleteNote"
       :edit-handler="editNote"
       @force-deleted="item => { $emit('force-deleted', item) }"
     />
@@ -43,7 +44,7 @@ import HumanTime from '@/components/HumanTime'
 import Tags from '@/components/Tags'
 import ItemAction from '@/components/ItemActions'
 import { mapState } from 'vuex'
-import { updateNote, deleteNote } from '@/api/notes'
+import { updateNote, deleteNote, forceDeleteNote } from '@/api/notes'
 
 export default {
   name: 'BookNoteItem',
@@ -56,6 +57,7 @@ export default {
   created() {
     this.updateNote = updateNote
     this.deleteNote = deleteNote
+    this.forceDeleteNote = forceDeleteNote
     this.editNote = () => {
       this.$router.push(`/notes/${this.item.id}/edit`)
     }

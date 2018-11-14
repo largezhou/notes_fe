@@ -98,20 +98,22 @@ mock(/\/notes\/\d+/, 'get', {
   tmpl.data.book = fullBook
 })
 
-mock(/\/notes\/\d+/, 'delete', {
-  deleted_at: '@datetime',
-})
+// 删除
+mock(/\/notes\/\d+/, 'delete')
+
+// 彻底删除
+mock(/\/deleted-notes\/\d+/, 'delete')
 
 // 更新
-mock(/\/notes\/\d+/, 'put', {}, (tmpl, options) => {
+mock(/\/notes\/\d+/, 'put', { data: {} }, (tmpl, options) => {
   const data = typeof options.body == 'string'
     ? utils.safeJsonParse(options.body, {})
     : options.body
 
   if (data.hidden !== undefined) {
-    tmpl.hidden = data.hidden
+    tmpl.data.hidden = data.hidden
   } else if (data.deleted_at === null) {
-    tmpl.deleted_at = null
+    tmpl.data.deleted_at = null
   } else {
     //
   }

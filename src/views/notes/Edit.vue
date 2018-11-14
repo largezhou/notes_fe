@@ -26,7 +26,7 @@ export default {
       getNote(this.$route.params.noteId)
         .then(res => {
           const data = res.data
-          this.book = data.note.book
+          this.book = data.book
           this.note = data.note
         })
     },
