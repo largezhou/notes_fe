@@ -15,6 +15,7 @@
       :item="post"
       :update-handler="updatePost"
       :delete-handler="deletePost"
+      :force-delete-handler="forceDeletePost"
       :edit-handler="editPost"
       @force-deleted="item => { $emit('force-deleted', item) }"
     />
@@ -24,7 +25,7 @@
 <script>
 import Tags from '@/components/Tags'
 import { mapState } from 'vuex'
-import { deletePost, updatePost } from '@/api/posts'
+import { deletePost, forceDeletePost, updatePost } from '@/api/posts'
 import ItemActions from '@/components/ItemActions'
 
 export default {
@@ -41,6 +42,7 @@ export default {
   created() {
     this.deletePost = deletePost
     this.updatePost = updatePost
+    this.forceDeletePost = forceDeletePost
     this.editPost = () => {
       this.$router.push(`/posts/${this.post.id}/edit`)
     }

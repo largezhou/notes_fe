@@ -131,7 +131,7 @@ export default {
             this.$router.push({
               name: 'postShow',
               params: {
-                postId: res.data.post.id,
+                postId: res.data.id,
               },
             })
           })

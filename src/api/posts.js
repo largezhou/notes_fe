@@ -37,3 +37,10 @@ export function updatePost(postId, data) {
     data,
   })
 }
+
+export function forceDeletePost(postId) {
+  return axios({
+    url: `deleted-posts/${postId}`,
+    method: 'delete',
+  })
+}

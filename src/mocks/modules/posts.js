@@ -59,26 +59,27 @@ mock(/\/posts\/\d+/, 'get', {
   },
 })
 
+// 添加
 mock('/posts', 'post', {
-  post: {
+  data: {
     'id|1-999': 1,
   },
 })
 
-mock(/\/posts\/\d+/, 'delete', {
-  deleted_at: '@datetime',
-})
+// 删除
+mock(/\/posts\/\d+/, 'delete')
+mock(/\/deleted-posts\/\d+/, 'delete')
 
 // 更新
-mock(/\/posts\/\d+/, 'put', {}, (tmpl, options) => {
+mock(/\/posts\/\d+/, 'put', { data: {} }, (tmpl, options) => {
   const data = typeof options.body == 'string'
     ? utils.safeJsonParse(options.body, {})
     : options.body
 
   if (data.hidden !== undefined) {
-    tmpl.hidden = data.hidden
+    tmpl.data.hidden = data.hidden
   } else if (data.deleted_at === null) {
-    tmpl.deleted_at = null
+    tmpl.data.deleted_at = null
   } else {
     // 编辑保存
     // 获取id
