@@ -21,7 +21,7 @@ export default {
     getData() {
       getTag(this.$route.params.tagId)
         .then(res => {
-          this.tag = res.data.tag
+          this.tag = res.data
         })
     },
   },

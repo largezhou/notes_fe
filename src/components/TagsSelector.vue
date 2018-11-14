@@ -59,7 +59,7 @@ export default {
           scope: 'hot',
         })
           .then(res => {
-            this.tags = res.data.tags
+            this.tags = res.data
           })
       }
     },
@@ -69,7 +69,7 @@ export default {
       })
         .then(res => {
           const data = res.data
-          this.tags = _.unionBy(this.tags, data.tags, 'id')
+          this.tags = _.unionBy(this.tags, data, 'id')
         })
         .finally(() => {
           this.searching = false
