@@ -115,7 +115,7 @@ export default {
       }
     },
     onForceDelete(item, index) {
-      this.book.notes.splice(index, 1)
+      this.notes.splice(index, 1)
     },
   },
   watch: {
