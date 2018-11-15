@@ -82,9 +82,9 @@ mock(/\/notes\/?(\?.*)?$/, 'get', {
 })
 
 // 在某本书下添加笔记
-mock(/\/books\/\d+\/notes/, 'post', { note: noteTmpl }, (tmpl, options) => {
-  delete tmpl.note.id
-  delete tmpl.note.book
+mock(/\/books\/\d+\/notes/, 'post', { data: noteTmpl }, (tmpl, options) => {
+  delete tmpl.data.id
+  delete tmpl.data.book
 })
 
 // 获取笔记详情

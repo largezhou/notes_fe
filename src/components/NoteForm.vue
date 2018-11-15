@@ -183,7 +183,7 @@ export default {
             this.$router.push({
               name: 'noteShow',
               params: {
-                noteId: res.data.note.id,
+                noteId: res.data.id,
               },
             })
           })
