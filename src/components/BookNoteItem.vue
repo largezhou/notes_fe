@@ -4,23 +4,19 @@
       <div class="belong">
         <div v-if="!item.book && !disableBook">书不见啦~</div>
         <div v-else-if="disableBook">
-          <span>第{{ item.page }}页</span>
+          <router-link class="page-link" :to="`/notes/${item.id}`">第{{ item.page }}页</router-link>
         </div>
         <div v-else>
           <router-link :to="`/books/${item.book.id}`">{{ item.book.title }}</router-link>
           <span> • </span>
-          <span>第{{ item.page }}页</span>
+          <router-link class="page-link" :to="`/notes/${item.id}`">第{{ item.page }}页</router-link>
         </div>
       </div>
     </v-card-title>
 
-    <v-card-text class="note-title" v-if="item.title">
-      <router-link :to="`/notes/${item.id}`">{{ item.title }}</router-link>
-    </v-card-text>
+    <v-card-text v-if="item.title" class="note-title">{{ item.title }}</v-card-text>
 
-    <v-card-text class="desc">
-      <router-link :to="`/notes/${item.id}`">{{ item.desc }}</router-link>
-    </v-card-text>
+    <v-card-text v-if="item.desc" class="desc">{{ item.desc }}</v-card-text>
 
     <tags :tags="item.tags"/>
 
@@ -100,6 +96,10 @@ export default {
     font-size: 14px;
     padding-top: 5px;
     padding-bottom: 5px;
+  }
+
+  .page-link {
+    border-bottom: 2px solid #1976d2;
   }
 }
 
