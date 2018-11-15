@@ -13,7 +13,8 @@
             <div v-show="vExpand">
               <div class="item">
                 <span class="label">开始阅读</span>
-                <human-time :time="book.started_at" prefix="开始于："/>
+                <human-time v-if="book.started_at" :time="book.started_at" prefix="开始于："/>
+                <span v-else>未读</span>
               </div>
               <div class="item">
                 <span class="label">更新</span>

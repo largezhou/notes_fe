@@ -25,9 +25,14 @@ export function postCreateBook(data) {
 }
 
 export function updateBook(bookId, data) {
+  if (data instanceof FormData) {
+    data.append('_method', 'put')
+  } else {
+    data._method = 'put'
+  }
   return axios({
     url: `books/${bookId}`,
-    method: 'put',
+    method: 'post',
     data,
   })
 }

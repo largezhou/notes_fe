@@ -197,10 +197,18 @@ export default {
 
       const fd = new FormData()
       for (const k of Object.keys(this.form)) {
-        fd.append(k, this.form[k])
+        let val = this.form[k]
+        if (val === null) {
+          val = ''
+        }
+        fd.append(k, val)
       }
 
       if (this.book) {
+        if (!(fd.get('cover') instanceof File)) {
+          fd.delete('cover')
+        }
+
         updateBook(this.book.id, fd)
           .then(res => {
             this.$root.$emit('bookUpdated', res.data)
