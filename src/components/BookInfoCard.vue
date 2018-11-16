@@ -77,6 +77,8 @@
       :edit-handler="editBook"
       @force-deleted="item => { $emit('force-deleted', item) }"
     />
+
+    <div v-show="vExpand && book.hidden" class="hidden-mark">HIDDEN</div>
   </v-card>
 </template>
 
@@ -166,6 +168,7 @@ $add-note-btn-pos: 12px;
 
 .book-info-card {
   position: relative;
+  overflow: hidden;
 
   + .book-info-card {
     margin-top: 10px;
@@ -245,6 +248,20 @@ $add-note-btn-pos: 12px;
     .book-info {
       margin-left: 0;
     }
+  }
+
+  .hidden-mark {
+    width: 157px;
+    display: inline-block;
+    position: absolute;
+    right: -36px;
+    top: 24px;
+    font-size: 25px;
+    font-weight: 900;
+    text-align: center;
+    color: white;
+    background-color: rgba(25, 118, 210, .5);
+    transform: rotate(45deg);
   }
 }
 </style>
