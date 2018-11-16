@@ -1,84 +1,82 @@
 <template>
   <v-card class="book-info-card" :class="{ collapsed: !vExpand }" v-if="book">
-    <div v-show="canShow">
-      <v-card-text>
-        <v-layout row wrap>
-          <v-flex xs4 class="cover" v-show="vExpand">
-            <img :src="book.cover">
-          </v-flex>
-          <v-flex :xs6="vExpand" :sm8="vExpand" :xs10="!vExpand" class="book-info">
-            <div class="title text-ellipsis" :class="{ collapsed: !vExpand }">
-              <router-link :to="`/books/${book.id}`">{{ book.title }}</router-link>
+    <v-card-text>
+      <v-layout row wrap>
+        <v-flex xs4 class="cover" v-show="vExpand">
+          <img :src="book.cover">
+        </v-flex>
+        <v-flex :xs6="vExpand" :sm8="vExpand" :xs10="!vExpand" class="book-info">
+          <div class="title text-ellipsis" :class="{ collapsed: !vExpand }">
+            <router-link :to="`/books/${book.id}`">{{ book.title }}</router-link>
+          </div>
+          <div v-show="vExpand">
+            <div class="item">
+              <span class="label">开始阅读</span>
+              <human-time v-if="book.started_at" :time="book.started_at" prefix="开始于："/>
+              <span v-else>未读</span>
             </div>
-            <div v-show="vExpand">
-              <div class="item">
-                <span class="label">开始阅读</span>
-                <human-time v-if="book.started_at" :time="book.started_at" prefix="开始于："/>
-                <span v-else>未读</span>
-              </div>
-              <div class="item">
-                <span class="label">更新</span>
-                <human-time :time="book.updated_at" prefix="最近更新："/>
-              </div>
-              <div class="item">
-                <span class="label">已读</span>
-                <span>{{ book.read }}</span> 页
-              </div>
-              <div class="item">
-                <span class="label">总页数</span>
-                <span>{{ book.total }}</span> 页
-              </div>
-              <div class="item">
-                <span class="label">笔记</span>
-                <span>{{ book.notes_count }}</span> 条
-              </div>
+            <div class="item">
+              <span class="label">更新</span>
+              <human-time :time="book.updated_at" prefix="最近更新："/>
             </div>
-          </v-flex>
-        </v-layout>
-      </v-card-text>
+            <div class="item">
+              <span class="label">已读</span>
+              <span>{{ book.read }}</span> 页
+            </div>
+            <div class="item">
+              <span class="label">总页数</span>
+              <span>{{ book.total }}</span> 页
+            </div>
+            <div class="item">
+              <span class="label">笔记</span>
+              <span>{{ book.notes_count }}</span> 条
+            </div>
+          </div>
+        </v-flex>
+      </v-layout>
+    </v-card-text>
 
-      <!--添加笔记按钮-->
-      <v-btn
-        v-show="vExpand"
-        v-if="newNoteBtn && username"
-        class="add-note-btn"
-        color="pink"
-        fab
-        dark
-        small
-        absolute
-        :to="createNoteLink"
-      >
-        <mdi-icon icon="plus"/>
-      </v-btn>
+    <!--添加笔记按钮-->
+    <v-btn
+      v-show="vExpand"
+      v-if="newNoteBtn && username"
+      class="add-note-btn"
+      color="pink"
+      fab
+      dark
+      small
+      absolute
+      :to="createNoteLink"
+    >
+      <mdi-icon icon="plus"/>
+    </v-btn>
 
-      <!-- 展开收起按钮 -->
-      <v-btn
-        v-if="canExpand"
-        class="toggle-btn"
-        flat
-        icon
-        small
-        absolute
-        @click="onToggle"
-      >
-        <mdi-icon :icon="toggleIcon"/>
-      </v-btn>
+    <!-- 展开收起按钮 -->
+    <v-btn
+      v-if="canExpand"
+      class="toggle-btn"
+      flat
+      icon
+      small
+      absolute
+      @click="onToggle"
+    >
+      <mdi-icon :icon="toggleIcon"/>
+    </v-btn>
 
-      <!-- 编辑系列 -->
-      <item-actions
-        class="editable-warp"
-        :style="{ top: canExpand ? '40px' : '3px' }"
-        v-if="canEdit"
-        v-show="vExpand && editMode"
-        :item="book"
-        :update-handler="updateBook"
-        :delete-handler="deleteBook"
-        :force-delete-handler="forceDeleteBook"
-        :edit-handler="editBook"
-        @force-deleted="item => { $emit('force-deleted', item) }"
-      />
-    </div>
+    <!-- 编辑系列 -->
+    <item-actions
+      class="editable-warp"
+      :style="{ top: canExpand ? '40px' : '3px' }"
+      v-if="canEdit"
+      v-show="vExpand && editMode"
+      :item="book"
+      :update-handler="updateBook"
+      :delete-handler="deleteBook"
+      :force-delete-handler="forceDeleteBook"
+      :edit-handler="editBook"
+      @force-deleted="item => { $emit('force-deleted', item) }"
+    />
   </v-card>
 </template>
 
@@ -128,10 +126,6 @@ export default {
     },
     canEdit() {
       return this.editable && this.username
-    },
-    canShow() {
-      return (!this.book.hidden && !this.book.deleted_at) ||
-        (this.canEdit && this.editMode)
     },
   },
   created() {
