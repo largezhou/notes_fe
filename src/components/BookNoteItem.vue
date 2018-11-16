@@ -4,7 +4,7 @@
       <div class="belong">
         <div v-if="!item.book && !disableBook">书不见啦~</div>
         <div v-else-if="disableBook">
-          <router-link class="page-link" :to="`/notes/${item.id}`">第{{ item.page }}页</router-link>
+          <router-link class="page-link" :to="`/notes/${item.id}`">第{{ item.page }}页<small v-if="item.hidden" class="note-hidden-mark"> HIDDEN</small></router-link>
         </div>
         <div v-else>
           <span v-if="item.book.deleted_at" :class="{ hidden: item.book.hidden, deleted: item.book.deleted_at }">{{ item.book.title }}</span>
