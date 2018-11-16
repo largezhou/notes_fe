@@ -1,5 +1,5 @@
 <template>
-  <v-card style="margin-top: 10px;" v-if="post">
+  <v-card class="post-info-card" v-if="post">
     <v-card-text class="post-content-card">
       <h1 style="text-align: center">{{ post.title || '-- UNDEFINED TITLE --'}}</h1>
       <div class="time">
@@ -19,16 +19,19 @@
       <markdown-body :content="post.html_content"/>
 
     </v-card-text>
+
+    <hidden-mark v-show="post.hidden"/>
   </v-card>
 </template>
 
 <script>
 import Tags from '@/components/Tags'
 import MarkdownBody from '@/components/MarkdownBody'
+import HiddenMark from '@/components/HiddenMark'
 
 export default {
   name: 'PostDetailCard',
-  components: { Tags, MarkdownBody },
+  components: { Tags, MarkdownBody, HiddenMark },
   props: {
     post: Object,
   },
@@ -37,6 +40,12 @@ export default {
 
 <style scoped lang="scss">
 @import '~@/styles/variables';
+
+.post-info-card {
+  margin-top: 10px;
+  position: relative;
+  overflow: hidden;
+}
 
 .time {
   color: $non-important-color;

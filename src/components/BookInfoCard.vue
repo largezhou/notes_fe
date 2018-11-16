@@ -78,7 +78,7 @@
       @force-deleted="item => { $emit('force-deleted', item) }"
     />
 
-    <div v-show="vExpand && book.hidden && !editMode" class="hidden-mark">HIDDEN</div>
+    <hidden-mark v-show="vExpand && book.hidden && !editMode"/>
   </v-card>
 </template>
 
@@ -87,10 +87,11 @@ import HumanTime from '@/components/HumanTime'
 import { mapState } from 'vuex'
 import { updateBook, deleteBook, forceDeleteBook } from '@/api/books'
 import ItemActions from '@/components/ItemActions'
+import HiddenMark from '@/components/HiddenMark'
 
 export default {
   name: 'BookInfoCard',
-  components: { HumanTime, ItemActions },
+  components: { HumanTime, ItemActions, HiddenMark },
   props: {
     book: Object,
     newNoteBtn: {
@@ -248,20 +249,6 @@ $add-note-btn-pos: 12px;
     .book-info {
       margin-left: 0;
     }
-  }
-
-  .hidden-mark {
-    width: 157px;
-    display: inline-block;
-    position: absolute;
-    right: -36px;
-    top: 24px;
-    font-size: 25px;
-    font-weight: 900;
-    text-align: center;
-    color: white;
-    background-color: rgba(25, 118, 210, .5);
-    transform: rotate(45deg);
   }
 }
 </style>

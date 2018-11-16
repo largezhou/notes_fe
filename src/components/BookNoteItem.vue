@@ -11,7 +11,7 @@
           <router-link v-else :class="{ hidden: item.book.hidden, deleted: item.book.deleted_at }" :to="`/books/${item.book.id}`">{{ item.book.title }}</router-link>
           <span> • </span>
           <span v-if="item.book.deleted_at">第{{ item.page }}页</span>
-          <router-link v-else class="page-link" :to="`/notes/${item.id}`">第{{ item.page }}页</router-link>
+          <router-link v-else class="page-link" :to="`/notes/${item.id}`">第{{ item.page }}页<small v-if="item.hidden" class="note-hidden-mark"> HIDDEN</small></router-link>
         </div>
       </div>
     </v-card-title>
@@ -110,6 +110,10 @@ export default {
 
   .deleted {
     text-decoration: line-through;
+  }
+
+  .note-hidden-mark {
+    color: #ccc;
   }
 }
 
