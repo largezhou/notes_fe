@@ -1,5 +1,5 @@
 <template>
-  <div class="tags" :class="{ 'one-line': oneLine }">
+  <div v-if="tags.length > 0" class="tags" :class="{ 'one-line': oneLine }">
     <v-btn
       v-for="tag of tags"
       :key="tag.id"
