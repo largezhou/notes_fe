@@ -7,7 +7,11 @@
         </v-flex>
         <v-flex :xs6="vExpand" :sm8="vExpand" :xs10="!vExpand" class="book-info">
           <div class="title text-ellipsis" :class="{ collapsed: !vExpand }">
-            <router-link :to="`/books/${book.id}`">{{ book.title }}</router-link>
+            <router-link v-if="widescreen" :to="`/books/${book.id}`">{{ book.title }}</router-link>
+            <v-tooltip v-else left>
+              <span slot="activator">{{ book.title }}</span>
+              <router-link :to="`/books/${book.id}`">{{ book.title }}</router-link>
+            </v-tooltip>
           </div>
           <div v-show="vExpand">
             <div class="item">
@@ -115,6 +119,7 @@ export default {
   computed: {
     ...mapState({
       username: state => state.user.name,
+      widescreen: state => state.app.widescreen,
     }),
     createNoteLink() {
       return {
