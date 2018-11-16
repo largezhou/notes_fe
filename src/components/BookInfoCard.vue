@@ -78,7 +78,7 @@
       @force-deleted="item => { $emit('force-deleted', item) }"
     />
 
-    <div v-show="vExpand && book.hidden" class="hidden-mark">HIDDEN</div>
+    <div v-show="vExpand && book.hidden && !editMode" class="hidden-mark">HIDDEN</div>
   </v-card>
 </template>
 
