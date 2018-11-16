@@ -51,5 +51,15 @@ export default {
         })
     },
   },
+  watch: {
+    editMode() {
+      if (this.editMode) {
+        this.$router.push({
+          name: 'noteEdit',
+          noteId: this.note.id,
+        })
+      }
+    },
+  },
 }
 </script>
