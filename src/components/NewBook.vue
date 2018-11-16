@@ -198,8 +198,10 @@ export default {
       const fd = new FormData()
       for (const k of Object.keys(this.form)) {
         let val = this.form[k]
-        if (val === null) {
-          val = ''
+
+        // FormData 会把数据转为字符串，，所以 null 和 undefined 要去掉
+        if (val === null || val === undefined) {
+          continue
         }
         fd.append(k, val)
       }
