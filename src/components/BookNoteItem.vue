@@ -2,8 +2,7 @@
   <v-card class="note-item">
     <v-card-title>
       <div class="belong">
-        <div v-if="!item.book && !disableBook">书不见啦~</div>
-        <div v-else-if="disableBook">
+        <div v-if="disableBook">
           <router-link class="page-link" :to="`/notes/${item.id}`">第{{ item.page }}页<small v-if="item.hidden" class="note-hidden-mark"> HIDDEN</small></router-link>
         </div>
         <div v-else>
@@ -23,7 +22,7 @@
     <item-action
       class="actions"
       :item="item"
-      v-if="username && item.book && !item.book.deleted_at"
+      v-if="username"
       v-show="editMode"
       :update-handler="updateNote"
       :delete-handler="deleteNote"
