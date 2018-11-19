@@ -4,6 +4,7 @@ import axios from 'axios'
 import { getToken } from '../libs/token'
 import utils from '@/libs/utils'
 import router from '@/router'
+import store from '@/store'
 
 const Qs = require('qs')
 
@@ -44,6 +45,10 @@ _axios.interceptors.request.use(
       const urlQS = router.currentRoute.query
       const configQS = config.params
       config.params = Object.assign({}, urlQS, configQS)
+
+      if (store.state.app.editMode) {
+        config.headers['Edit-Mode'] = 1
+      }
     }
     // Do something before request is sent
     return config
