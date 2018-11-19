@@ -128,6 +128,9 @@ export default {
       },
       immediate: true,
     },
+    editMode() {
+      this.$active && this.getData()
+    },
   },
 }
 </script>

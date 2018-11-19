@@ -37,7 +37,7 @@ export default {
     },
   },
   watch: {
-    editMode(newValue) {
+    editMode() {
       this.getData()
     },
   },
