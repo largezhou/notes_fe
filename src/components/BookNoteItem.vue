@@ -3,12 +3,12 @@
     <v-card-title>
       <div class="belong">
         <div v-if="disableBook">
-          <router-link class="page-link" :to="`/notes/${item.id}`">第{{ item.page }}页<small v-if="item.hidden" class="note-hidden-mark"> HIDDEN</small></router-link>
+          <router-link class="page-link" :to="`/notes/${item.id}`">第{{ item.page }}页</router-link>
         </div>
         <div v-else>
           <router-link :class="{ hidden: item.book.hidden, deleted: item.book.deleted_at }" :to="`/books/${item.book.id}`">{{ item.book.title }}</router-link>
           <span> • </span>
-          <router-link class="page-link" :to="`/notes/${item.id}`">第{{ item.page }}页<small v-if="item.hidden" class="note-hidden-mark"> HIDDEN</small></router-link>
+          <router-link class="page-link" :to="`/notes/${item.id}`">第{{ item.page }}页</router-link>
         </div>
       </div>
     </v-card-title>
@@ -31,19 +31,21 @@
       @force-deleted="item => { $emit('force-deleted', item) }"
     />
 
+    <hidden-mark v-show="item.hidden && !editMode"/>
   </v-card>
 </template>
 
 <script>
 import HumanTime from '@/components/HumanTime'
 import Tags from '@/components/Tags'
+import HiddenMark from '@/components/HiddenMark'
 import ItemAction from '@/components/ItemActions'
 import { mapState } from 'vuex'
 import { updateNote, deleteNote, forceDeleteNote } from '@/api/notes'
 
 export default {
   name: 'BookNoteItem',
-  components: { HumanTime, Tags, ItemAction },
+  components: { HumanTime, Tags, ItemAction, HiddenMark },
   props: {
     item: Object,
     disableBook: Boolean,
@@ -75,6 +77,7 @@ export default {
 
 .note-item {
   margin-bottom: 10px;
+  overflow: hidden;
 
   .v-card__title {
     padding-bottom: 10px;
