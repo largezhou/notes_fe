@@ -42,7 +42,7 @@
 
     <!--添加笔记按钮-->
     <v-btn
-      v-show="vExpand"
+      v-show="vExpand && !editMode"
       v-if="newNoteBtn && username"
       class="add-note-btn"
       color="pink"
@@ -111,7 +111,6 @@ export default {
       type: Boolean,
       default: true,
     },
-    editable: Boolean,
   },
   data: () => ({
     vExpand: true,
@@ -134,7 +133,7 @@ export default {
       return this.vExpand ? 'chevron-up' : 'chevron-down'
     },
     canEdit() {
-      return this.editable && this.username
+      return !!this.username
     },
   },
   created() {

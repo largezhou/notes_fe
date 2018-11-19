@@ -7,11 +7,9 @@
           <router-link class="page-link" :to="`/notes/${item.id}`">第{{ item.page }}页<small v-if="item.hidden" class="note-hidden-mark"> HIDDEN</small></router-link>
         </div>
         <div v-else>
-          <span v-if="item.book.deleted_at" :class="{ hidden: item.book.hidden, deleted: item.book.deleted_at }">{{ item.book.title }}</span>
-          <router-link v-else :class="{ hidden: item.book.hidden, deleted: item.book.deleted_at }" :to="`/books/${item.book.id}`">{{ item.book.title }}</router-link>
+          <router-link :class="{ hidden: item.book.hidden, deleted: item.book.deleted_at }" :to="`/books/${item.book.id}`">{{ item.book.title }}</router-link>
           <span> • </span>
-          <span v-if="item.book.deleted_at">第{{ item.page }}页</span>
-          <router-link v-else class="page-link" :to="`/notes/${item.id}`">第{{ item.page }}页<small v-if="item.hidden" class="note-hidden-mark"> HIDDEN</small></router-link>
+          <router-link class="page-link" :to="`/notes/${item.id}`">第{{ item.page }}页<small v-if="item.hidden" class="note-hidden-mark"> HIDDEN</small></router-link>
         </div>
       </div>
     </v-card-title>

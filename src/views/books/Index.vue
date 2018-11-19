@@ -5,7 +5,6 @@
       :key="book.id"
       :book="book"
       :can-expand="false"
-      editable
       @force-deleted="onForceDelete(book, index)"
     />
   </page-layout>
