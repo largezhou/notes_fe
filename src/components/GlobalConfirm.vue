@@ -2,7 +2,7 @@
   <v-dialog v-model="shown" max-width="290">
     <v-card>
       <v-card-title class="headline">{{ options.title }}</v-card-title>
-      <v-card-text>{{ options.content }}</v-card-text>
+      <v-card-text v-html="options.content"/>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn :color="options.cancelColor" flat @click.native="onCancel">{{ options.cancelText }}</v-btn>

@@ -78,6 +78,7 @@
       :update-handler="updateBook"
       :delete-handler="deleteBook"
       :force-delete-handler="forceDeleteBook"
+      force-delete-msg="彻底删除后不可恢复！<br>彻底删除后书中的笔记也会彻底删除！"
       :edit-handler="editBook"
       @force-deleted="item => { $emit('force-deleted', item) }"
     />

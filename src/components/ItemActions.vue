@@ -38,6 +38,7 @@ export default {
     updateHandler: Function,
     deleteHandler: Function,
     forceDeleteHandler: Function,
+    forceDeleteMsg: String,
     editHandler: Function,
   },
   methods: {
@@ -85,7 +86,7 @@ export default {
     onForceDelete() {
       this.$confirm({
         title: '删除确认',
-        content: '彻底删除后不可恢复！！！',
+        content: this.forceDeleteMsg ? this.forceDeleteMsg : '彻底删除后不可恢复！！！',
         okText: '彻底删除',
         okColor: 'red',
       })
