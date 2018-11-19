@@ -3,7 +3,7 @@ export default {
     widescreen: true,
     sliderBar: false,
     device: navigator.userAgent.indexOf('Mobile') === -1 ? 'desktop' : 'mobile',
-    editMode: false,
+    editMode: !!sessionStorage.getItem('editMode'),
   },
 
   mutations: {
@@ -18,6 +18,7 @@ export default {
     },
     changeEditMode(state, editMode) {
       state.editMode = editMode
+      sessionStorage.setItem('editMode', editMode ? 1 : '')
     },
   },
 }
