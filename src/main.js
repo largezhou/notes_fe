@@ -14,6 +14,7 @@ import '@/router/permission'
 import utils from '@/libs/utils'
 import '@/components'
 import editMode from '@/mixins/edit_mode'
+import '@/libs/global_shortcuts'
 
 Vue.mixin(editMode)
 
