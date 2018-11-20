@@ -17,7 +17,7 @@
           <v-btn to="/tags" flat>标签</v-btn>
           <v-btn to="/posts" flat>博客</v-btn>
         </v-toolbar-items>
-        <v-spacer></v-spacer>
+        <v-spacer @click="onGoLogin" style="height: 60px"/>
         <v-toolbar-items v-if="widescreen && username">
           <v-menu left offset-y>
             <v-btn slot="activator" flat class="more-menu">
@@ -94,6 +94,35 @@ export default {
 
     onToggleEditMode() {
       this.toggleEditMode()
+    },
+
+    onGoLogin() {
+      if (this.username) {
+        return
+      }
+
+      if (this.goLoginPressed === undefined) {
+        this.goLoginPressed = 0
+        this.goLoginLastTime = 0
+      }
+
+      if ((Date.now() - this.goLoginLastTime) < 500) {
+        this.goLoginPressed++
+
+        if (this.goLoginPressed >= 2) {
+          this.goLoginPressed = 0
+          this.$router.push({
+            name: 'login',
+            query: {
+              _redirect: this.$route.fullPath,
+            },
+          })
+        }
+      } else {
+        this.goLoginPressed = 0
+      }
+
+      this.goLoginLastTime = Date.now()
     },
   },
 }

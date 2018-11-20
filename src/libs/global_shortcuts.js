@@ -59,6 +59,9 @@ register('KeyA', e => {
 
   router.push({
     name: 'login',
+    query: {
+      _redirect: router.currentRoute.fullPath,
+    },
   })
 })
 
