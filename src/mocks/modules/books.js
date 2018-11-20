@@ -78,7 +78,7 @@ mock('/books', 'post', {
 })
 
 // 更新
-mock(/\/books\/\d+/, 'put', { data: {} }, (tmpl, options) => {
+mock(/\/books\/\d+/, 'post', { data: {} }, (tmpl, options) => {
   const data = typeof options.body == 'string'
     ? utils.safeJsonParse(options.body, {})
     : options.body
