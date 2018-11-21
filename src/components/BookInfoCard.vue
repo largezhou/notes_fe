@@ -7,8 +7,7 @@
         </v-flex>
         <v-flex :xs6="vExpand" :sm8="vExpand" :xs10="!vExpand" class="book-info">
           <div class="title text-ellipsis" :class="{ collapsed: !vExpand }">
-            <router-link v-if="widescreen" :to="`/books/${book.id}`">{{ book.title }}</router-link>
-            <v-tooltip v-else left>
+            <v-tooltip :bottom="widescreen" :left="!widescreen">
               <span slot="activator">{{ book.title }}</span>
               <router-link :to="`/books/${book.id}`">{{ book.title }}</router-link>
             </v-tooltip>
@@ -71,7 +70,7 @@
     <!-- 编辑系列 -->
     <item-actions
       class="editable-warp"
-      :style="{ top: canExpand ? '40px' : '3px' }"
+      :style="{ top: canExpand ? '40px' : '0' }"
       v-if="canEdit"
       v-show="vExpand && editMode"
       :item="book"
@@ -261,7 +260,7 @@ $add-note-btn-pos: 12px;
 <style lang="scss" scoped>
 .editable-warp {
   position: absolute;
-  right: 3px;
+  right: 0;
 
   width: 55px;
 }

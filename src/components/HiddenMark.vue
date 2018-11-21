@@ -21,5 +21,6 @@ export default {
   color: white;
   background-color: rgba(25, 118, 210, .5);
   transform: rotate(45deg);
+  pointer-events: none;
 }
 </style>
