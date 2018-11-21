@@ -6,6 +6,8 @@
       :post="post"
       @force-deleted="onForceDeleted(post, index)"
     />
+
+    <paginator :page="page"/>
   </page-layout>
 </template>
 
@@ -14,11 +16,12 @@ import PageLayout from '@/components/PageLayout'
 import reloadData from '@/mixins/reload_data'
 import { getPosts } from '@/api/posts'
 import PostItem from '@/components/PostItem'
+import Paginator from '@/components/Paginator'
 
 export default {
   name: 'Index',
   mixins: [reloadData],
-  components: { PageLayout, PostItem },
+  components: { PageLayout, PostItem, Paginator },
   data: () => ({
     posts: [],
     page: null,
@@ -42,6 +45,9 @@ export default {
   watch: {
     editMode(newValue) {
       this.$active && this.getPosts()
+    },
+    $route() {
+      this.$active && this.getData()
     },
   },
 }
