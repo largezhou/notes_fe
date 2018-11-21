@@ -19,6 +19,8 @@
       :edit-handler="editPost"
       @force-deleted="item => { $emit('force-deleted', item) }"
     />
+
+    <hidden-mark v-show="post.hidden && !editMode"/>
   </v-card>
 </template>
 
@@ -27,10 +29,11 @@ import Tags from '@/components/Tags'
 import { mapState } from 'vuex'
 import { deletePost, forceDeletePost, updatePost } from '@/api/posts'
 import ItemActions from '@/components/ItemActions'
+import HiddenMark from '@/components/HiddenMark'
 
 export default {
   name: 'PostItem',
-  components: { Tags, ItemActions },
+  components: { Tags, ItemActions, HiddenMark },
   computed: {
     ...mapState({
       username: state => state.user.name,
@@ -52,6 +55,8 @@ export default {
 
 <style scoped lang="scss">
 .post {
+  overflow: hidden;
+
   + .post {
     margin-top: 10px;
   }
