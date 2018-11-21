@@ -7,24 +7,34 @@ const Random = Mock.Random
 
 // 博客列表
 mock(/\/posts(\?.*)?$/, 'get', {
-  'data|15': [
-    {
-      'id|+1': 1,
-      title: '@ctitle',
-      desc: '@cparagraph',
-      content: '@cparagraph',
-      created_at: '@datetime',
-      updated_at: '@datetime',
-      'tags|5-15': [
-        {
-          'id|+1': 1,
-          'name|3-5': '@cword',
-        },
-      ],
+  data: {
+    'data|15': [
+      {
+        'id|+1': 1,
+        title: '@ctitle',
+        desc: '@cparagraph',
+        content: '@cparagraph',
+        created_at: '@datetime',
+        updated_at: '@datetime',
+        'tags|5-15': [
+          {
+            'id|+1': 1,
+            'name|3-5': '@cword',
+          },
+        ],
+      },
+    ],
+    meta: {
+      'current_page': 1,
+      'from': 1,
+      'last_page': 7,
+      'per_page': 15,
+      'to': 15,
+      'total': 100,
     },
-  ],
+  },
 }, (tmpl, options) => {
-  const postInfoTmpl = tmpl['data|15'][0]
+  const postInfoTmpl = tmpl.data['data|15'][0]
   const q = utils.queryFromUrl(options.url)
 
   if (q.edit_mode) {

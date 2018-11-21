@@ -21,6 +21,7 @@ export default {
   components: { PageLayout, PostItem },
   data: () => ({
     posts: [],
+    page: null,
   }),
   methods: {
     getData() {
@@ -30,7 +31,8 @@ export default {
       getPosts()
         .then(res => {
           const data = res.data
-          this.posts = data
+          this.posts = data.data
+          this.page = data.meta
         })
     },
     onForceDeleted(post, index) {
