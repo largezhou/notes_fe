@@ -8,7 +8,15 @@
         <v-flex :xs6="vExpand" :sm8="vExpand" :xs10="!vExpand" class="book-info">
           <div class="title text-ellipsis" :class="{ collapsed: !vExpand }">
             <v-tooltip :bottom="widescreen" :left="!widescreen">
-              <span slot="activator">{{ book.title }}</span>
+
+              <router-link
+                v-if="widescreen"
+                slot="activator"
+                :to="`/books/${book.id}`"
+              >{{ book.title }}
+              </router-link>
+              <span v-else slot="activator">{{ book.title }}</span>
+
               <router-link :to="`/books/${book.id}`">{{ book.title }}</router-link>
             </v-tooltip>
           </div>
