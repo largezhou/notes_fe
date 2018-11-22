@@ -118,24 +118,24 @@ export default {
         return
       }
 
+      let res
       if (this.post) {
         // 更新
-        updatePost(this.post.id, this.form)
-          .then(res => {
-            this.$router.back()
-          })
+        res = updatePost(this.post.id, this.form)
       } else {
         // 创建
-        postCreatePost(this.form)
-          .then(res => {
-            this.$router.push({
-              name: 'postShow',
-              params: {
-                postId: res.data.id,
-              },
-            })
-          })
+        res = postCreatePost(this.form)
       }
+
+      res.then(res => {
+        this.$router.push({
+          name: 'postShow',
+          params: {
+            postId: res.data.id,
+          },
+        })
+        this.$store.commit('changeEditMode', false)
+      })
     },
     onClear() {
       this.$refs.form.reset()

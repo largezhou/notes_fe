@@ -25,5 +25,15 @@ export default {
         })
     },
   },
+  watch: {
+    editMode() {
+      if (this.editMode) {
+        this.$router.push({
+          name: 'postEdit',
+          noteId: this.post.id,
+        })
+      }
+    },
+  },
 }
 </script>

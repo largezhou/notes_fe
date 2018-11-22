@@ -186,6 +186,7 @@ export default {
             noteId: res.data.id,
           },
         })
+        this.$store.commit('changeEditMode', false)
       })
     },
 
