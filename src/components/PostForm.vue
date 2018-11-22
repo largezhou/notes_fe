@@ -45,7 +45,7 @@
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn depressed color="primary" @click="onSubmit">{{ this.post ? '更新' : '添加博客' }}</v-btn>
+      <v-btn depressed color="primary" @click="onSubmit" :loading="submitting" :disabled="$v.$anyError">{{ this.post ? '更新' : '添加博客' }}</v-btn>
       <v-btn depressed @click="onReset" v-if="this.post">重置</v-btn>
       <v-btn depressed @click="onClear" v-else>清空</v-btn>
     </v-card-actions>
@@ -109,14 +109,23 @@ export default {
         },
       },
     },
+
+    submitting: false,
   }),
   methods: {
     onSubmit() {
+      if (this.submitting) {
+        this.$snackbar('不要急啊')
+        return
+      }
+
       this.$v.$touch()
 
       if (this.$v.$invalid) {
         return
       }
+
+      this.submitting = true
 
       let res
       if (this.post) {
@@ -127,15 +136,19 @@ export default {
         res = postCreatePost(this.form)
       }
 
-      res.then(res => {
-        this.$router.push({
-          name: 'postShow',
-          params: {
-            postId: res.data.id,
-          },
+      res
+        .then(res => {
+          this.$router.push({
+            name: 'postShow',
+            params: {
+              postId: res.data.id,
+            },
+          })
+          this.$store.commit('changeEditMode', false)
         })
-        this.$store.commit('changeEditMode', false)
-      })
+        .catch(() => {
+          this.submitting = false
+        })
     },
     onClear() {
       this.$refs.form.reset()
