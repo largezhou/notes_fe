@@ -14,15 +14,8 @@
           <v-toolbar-title>{{ this.book ? `编辑 ${this.book.title}` : '添加一本书' }}</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat @click="onSubmit" :disabled="submitting">
-              <v-progress-circular
-                v-if="submitting"
-                :size="30"
-                :width="3"
-                color="white"
-                indeterminate
-              />
-              <mdi-icon v-else icon="content-save"/>
+            <v-btn dark flat @click="onSubmit" :loading="submitting" :disabled="$v.$anyError">
+              <mdi-icon icon="content-save"/>
             </v-btn>
           </v-toolbar-items>
         </v-toolbar>
@@ -203,8 +196,6 @@ export default {
         return
       }
 
-      this.submitting = true
-
       this.$v.$touch()
 
       if (this.$v.$invalid) {
@@ -221,6 +212,8 @@ export default {
         }
         fd.append(k, val)
       }
+
+      this.submitting = true
 
       let res
       if (this.book) {
