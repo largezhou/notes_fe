@@ -14,8 +14,15 @@
           <v-toolbar-title>{{ this.book ? `编辑 ${this.book.title}` : '添加一本书' }}</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat @click="onSubmit">
-              <mdi-icon icon="content-save"/>
+            <v-btn dark flat @click="onSubmit" :disabled="submitting">
+              <v-progress-circular
+                v-if="submitting"
+                :size="30"
+                :width="3"
+                color="white"
+                indeterminate
+              />
+              <mdi-icon v-else icon="content-save"/>
             </v-btn>
           </v-toolbar-items>
         </v-toolbar>
@@ -176,6 +183,8 @@ export default {
     },
 
     book: null,
+
+    submitting: false,
   }),
   created() {
     this.$root.$on('editBook', this.onEdit)
@@ -189,6 +198,13 @@ export default {
       this.book = null
     },
     onSubmit() {
+      if (this.submitting) {
+        this.$snackbar('别急')
+        return
+      }
+
+      this.submitting = true
+
       this.$v.$touch()
 
       if (this.$v.$invalid) {
@@ -206,18 +222,19 @@ export default {
         fd.append(k, val)
       }
 
+      let res
       if (this.book) {
         if (!(fd.get('cover') instanceof File)) {
           fd.delete('cover')
         }
 
-        updateBook(this.book.id, fd)
+        res = updateBook(this.book.id, fd)
           .then(res => {
             this.$root.$emit('bookUpdated', res.data)
             this.onCancel()
           })
       } else {
-        postCreateBook(fd)
+        res = postCreateBook(fd)
           .then(res => {
             const data = res.data
             this.onCancel()
@@ -230,6 +247,10 @@ export default {
             })
           })
       }
+
+      res.finally(() => {
+        this.submitting = false
+      })
     },
     onCancel() {
       this.$refs.form.reset()
