@@ -68,7 +68,7 @@
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn depressed color="primary" @click="onSubmit">{{ this.note ? '更新' : '添加笔记' }}</v-btn>
+      <v-btn depressed color="primary" @click="onSubmit" :loading="submitting" :disabled="$v.$anyError">{{ this.note ? '更新' : '添加笔记' }}</v-btn>
       <v-btn depressed @click="onReset" v-if="this.note">重置</v-btn>
       <v-btn depressed @click="onClear" v-else>清空</v-btn>
     </v-card-actions>
@@ -95,7 +95,7 @@ export default {
           required,
           integer,
           minValue: minValue(1),
-          maxValue: maxValue(this.book.total),
+          maxValue: maxValue(this.book ? this.book.total : 0),
         },
         title: {
           maxLength: maxLength(255),
@@ -143,6 +143,8 @@ export default {
           },
         },
       },
+
+      submitting: false,
     }
   },
   props: {
@@ -164,11 +166,18 @@ export default {
     },
 
     onSubmit() {
+      if (this.submitting) {
+        this.$snackbar('等一下啊')
+        return
+      }
+
       this.$v.$touch()
 
       if (this.$v.$invalid) {
         return
       }
+
+      this.submitting = true
 
       let res
       if (this.note) {
@@ -179,15 +188,19 @@ export default {
         res = postCreateNote(this.book.id, this.form)
       }
 
-      res.then(res => {
-        this.$router.push({
-          name: 'noteShow',
-          params: {
-            noteId: res.data.id,
-          },
+      res
+        .then(res => {
+          this.$router.push({
+            name: 'noteShow',
+            params: {
+              noteId: res.data.id,
+            },
+          })
+          this.$store.commit('changeEditMode', false)
         })
-        this.$store.commit('changeEditMode', false)
-      })
+        .catch(() => {
+          this.submitting = false
+        })
     },
 
     onReset() {
@@ -211,8 +224,11 @@ export default {
     note(newValue) {
       newValue && this.onReset()
     },
-    book() {
-      this.book && (this.attrs.form.page.maxValue = `不能超过${this.book ? this.book.total : ''}页`)
+    book: {
+      handler(newValue) {
+        newValue && (this.attrs.form.page.maxValue = `不能超过${newValue.total}页`)
+      },
+      immediate: true,
     },
   },
 }
