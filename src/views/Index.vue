@@ -5,14 +5,26 @@
         <book-widget/>
       </v-flex>
       <v-flex md9 sm12>
-        <book-note-item
-          v-for="(item, index) of notes"
-          :key="item.id"
-          :item="item"
-          @force-deleted="onForceDelete(item, index)"
-        />
 
-        <paginator :page="page"/>
+        <div v-if="loading" class="text-xs-center">
+          <v-progress-circular
+            :size="40"
+            :width="2"
+            color="primary"
+            indeterminate
+          />
+        </div>
+
+        <template v-else>
+          <book-note-item
+            v-for="(item, index) of notes"
+            :key="item.id"
+            :item="item"
+            @force-deleted="onForceDelete(item, index)"
+          />
+        </template>
+
+        <paginator v-show="!loading" :page="page"/>
       </v-flex>
     </v-layout>
   </v-container>
@@ -27,16 +39,27 @@ import Paginator from '@/components/Paginator'
 
 export default {
   name: 'Index',
-  mixins: [reloadData],
-  components: { BookWidget, BookNoteItem, Paginator },
+  mixins: [
+    reloadData,
+  ],
+  components: {
+    BookWidget,
+    BookNoteItem,
+    Paginator,
+  },
   data() {
     return {
       notes: [],
       page: null,
+
+      loading: false,
+
+      show: [],
     }
   },
   methods: {
     getData() {
+      this.loading = true
       getNotes()
         .then(res => {
           const data = res.data
@@ -45,6 +68,9 @@ export default {
 
           this.currentPage = this.page.current_page
           this.totalPage = this.page.last_page
+        })
+        .finally(() => {
+          this.loading = false
         })
     },
     onForceDelete(item, index) {
