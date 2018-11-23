@@ -1,10 +1,7 @@
 import router from '@/router'
+import GlobalDialog from '@/components/GlobalDialog.vue'
 
 const utils = {}
-
-if (process.env.VUE_APP_USE_LOG) {
-  window.utils = utils
-}
 
 export default utils
 
@@ -115,4 +112,38 @@ utils.confirm = options => {
 
     router.app.$emit('globalConfirm', options)
   })
+}
+
+/**
+ * 全局弹框组件
+ *
+ * @param options
+ *
+ * {
+ *    title: '提醒',
+ *    msg: '确定？',
+ *    h: h => { return h('span', 'hello') } // 优先级比 msg 高
+ *    maxWidth: '290,
+ * }
+ */
+utils.dialog = options => {
+  let propsData
+
+  if (typeof options == 'object') {
+    propsData = options
+  } else { // 如果不是对象，应该是字符串或者渲染函数
+    propsData = {
+      content: options,
+    }
+  }
+
+  const ins = new GlobalDialog({
+    propsData,
+  })
+
+  ins.$mount()
+  document.body.appendChild(ins.$el)
+  ins.shown = true
+
+  return ins
 }

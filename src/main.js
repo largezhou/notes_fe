@@ -29,8 +29,21 @@ Vue.prototype.$snackbar = utils.snackbar
  */
 Vue.prototype.$confirm = utils.confirm
 
-new Vue({
+/**
+ * @see utils.dialog
+ */
+Vue.prototype.$dialog = utils.dialog
+
+const $root = new Vue({
   router,
   store,
   render: h => h(App),
 }).$mount('#app')
+
+export default $root
+
+if (process.env.NODE_ENV == 'development') {
+  window.$root = $root
+  window.Vue = Vue
+  window.utils = utils
+}
