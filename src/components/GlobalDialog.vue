@@ -51,6 +51,9 @@ export default Vue.extend({
     },
     html: Boolean,
   },
+  mounted() {
+    this.shown = true
+  },
   watch: {
     shown(newValue) {
       if (!newValue) {

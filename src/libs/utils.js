@@ -1,5 +1,7 @@
 import router from '@/router'
 import GlobalDialog from '@/components/GlobalDialog.vue'
+import GlobalSnackbar from '@/components/GlobalSnackbar'
+import store from '@/store'
 
 const utils = {}
 
@@ -9,13 +11,21 @@ utils.needAuth = route => {
   return route.matched.some(r => (r.meta && r.meta.auth))
 }
 
-utils.snackbar = (msg) => {
+utils.snackbar = msg => {
   return new Promise(resolve => {
     const callback = () => {
       resolve()
     }
 
-    router.app.$emit('globalSnackbar', msg, callback)
+    const ins = new GlobalSnackbar({
+      propsData: {
+        callback,
+        text: msg,
+      },
+      store,
+    })
+
+    document.body.appendChild(ins.$mount().$el)
   })
 }
 
@@ -139,11 +149,10 @@ utils.dialog = options => {
 
   const ins = new GlobalDialog({
     propsData,
+    store,
   })
 
-  ins.$mount()
-  document.body.appendChild(ins.$el)
-  ins.shown = true
+  document.body.appendChild(ins.$mount().$el)
 
   return ins
 }
