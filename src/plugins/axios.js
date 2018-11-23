@@ -81,6 +81,21 @@ _axios.interceptors.response.use(
           store.commit('changeEditMode', false)
           utils.snackbar('已登出')
           break
+        case 422:
+          const errorsBag = res.data.errors
+
+          utils.dialog({
+            title: '填错啦',
+            content(h) {
+              return h('errors-bag', {
+                props: {
+                  errorsBag,
+                },
+              })
+            },
+          })
+
+          break
         default:
           utils.snackbar(`服务器错误(code: ${res.status})`)
       }
