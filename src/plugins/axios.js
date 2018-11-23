@@ -76,6 +76,11 @@ _axios.interceptors.response.use(
         case 404:
           utils.snackbar('请求的网址的不存在')
           break
+        case 401:
+          store.dispatch('frontendLogout')
+          store.commit('changeEditMode', false)
+          utils.snackbar('已登出')
+          break
         default:
           utils.snackbar(`服务器错误(code: ${res.status})`)
       }

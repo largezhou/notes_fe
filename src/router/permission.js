@@ -34,10 +34,6 @@ router.beforeEach((to, from, next) => {
             //   则直接跳转
             //   否则跳转到登录页
             if (res && res.status == 401) {
-              store.dispatch('frontendLogout')
-
-              utils.snackbar('已登出，请重新登录')
-
               if (needAuth) {
                 next({ name: 'login' })
               } else {
