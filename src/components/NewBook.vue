@@ -14,7 +14,7 @@
           <v-toolbar-title>{{ this.book ? `编辑 ${this.book.title}` : '添加一本书' }}</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat @click="onSubmit" :loading="submitting" :disabled="$v.$anyError">
+            <v-btn dark flat @click="onSubmit" :loading="submitting">
               <mdi-icon icon="content-save"/>
             </v-btn>
           </v-toolbar-items>

@@ -68,7 +68,7 @@
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn depressed color="primary" @click="onSubmit" :loading="submitting" :disabled="$v.$anyError">{{ this.note ? '更新' : '添加笔记' }}</v-btn>
+      <v-btn depressed color="primary" @click="onSubmit" :loading="submitting">{{ this.note ? '更新' : '添加笔记' }}</v-btn>
       <v-btn depressed @click="onReset" v-if="this.note">重置</v-btn>
       <v-btn depressed @click="onClear" v-else>清空</v-btn>
     </v-card-actions>
