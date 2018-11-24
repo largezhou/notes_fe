@@ -21,7 +21,7 @@
       />
       <div v-if="device == 'desktop'" class="resizer" ref="resizer" @mousedown="onDragStart"/>
     </div>
-    <div class="error-message">{{ errorMessages }}</div>
+    <error-messages :error-messages="errorMessages"/>
   </div>
 </template>
 
@@ -31,11 +31,17 @@ import { mavonEditor } from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import { mapState } from 'vuex'
 import { postCreateImage } from '@/api/images'
+import ErrorMessages from '@/components/ErrorMessages'
 
 export default {
   name: 'MDEditor',
-  components: { mavonEditor },
-  mixins: [vFormItem],
+  components: {
+    mavonEditor,
+    ErrorMessages,
+  },
+  mixins: [
+    vFormItem,
+  ],
   props: {
     placeholder: {
       type: String,

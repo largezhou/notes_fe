@@ -36,11 +36,16 @@
   &.has-error {
     .label {
       color: $error-color;
+      animation: shake .6s cubic-bezier(.25, .8, .5, 1);
     }
   }
 
-  .error-message {
+  .error-wrapper {
     margin-top: 4px;
+    min-height: 18px;
+  }
+
+  .error-message {
     font-size: 12px;
     color: $error-color;
     overflow-wrap: break-word;

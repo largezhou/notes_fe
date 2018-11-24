@@ -1,6 +1,6 @@
 <template>
   <div class="v-form-item v-input-upload" :class="{ 'has-error': hasError }">
-    <div class="label">{{ label }}</div>
+    <div class="v-label label">{{ label }}</div>
     <div class="picker" @click="onClickPicker">
       <mdi-icon v-if="!this.filename" icon="file-upload"/>
       <v-tooltip top v-else>
@@ -23,8 +23,7 @@
         </v-btn>
       </v-scale-transition>
     </div>
-    <div class="error-message">{{ errorMessages }}</div>
-
+    <error-messages :error-messages="errorMessages"/>
     <input type="file" :accept="accept" readonly ref="input" @change="onInputChange"/>
   </div>
 </template>
@@ -32,10 +31,16 @@
 <script>
 import { vImage, vFile } from '@/validators'
 import vFormItem from '@/mixins/vform_item'
+import ErrorMessages from '@/components/ErrorMessages'
 
 export default {
   name: 'FilePicker',
-  mixins: [vFormItem],
+  mixins: [
+    vFormItem,
+  ],
+  components: {
+    ErrorMessages,
+  },
   data: () => ({
     src: '',
     filename: '',
