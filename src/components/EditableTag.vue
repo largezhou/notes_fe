@@ -15,7 +15,14 @@
     <div class="actions" v-if="canEdit">
       <v-input class="name-input" :style="nameInputStyle" v-show="nameEditing">
         <input type="text" v-model="name" ref="input" @keyup.enter="onUpdateName">
-        <mdi-icon @click="onUpdateName" icon="check"/>
+        <v-progress-circular
+          v-if="submitting"
+          :size="18"
+          :width="1.5"
+          color="rgba(0,0,0,.54)"
+          indeterminate
+        />
+        <mdi-icon v-else @click="onUpdateName" icon="check"/>
         <mdi-icon @click="onCancelEditName" icon="close"/>
       </v-input>
       <div v-show="actionsOpened && !nameEditing">
@@ -52,6 +59,8 @@ export default {
     name: '',
     // 标签是否太靠右
     veryRight: false,
+
+    submitting: false,
   }),
   created() {
     this.name = this.tag.name
@@ -116,6 +125,11 @@ export default {
       })
     },
     onUpdateName() {
+      if (this.submitting) {
+        this.$dialog('等下~')
+        return
+      }
+
       const name = this.name.trim()
 
       const error = msg => {
@@ -136,10 +150,15 @@ export default {
         return this.onCancelEditName()
       }
 
+      this.submitting = true
+
       updateTag(this.tag.id, { name })
         .then(res => {
           this.tag.name = name
           this.onCancelEditName()
+        })
+        .finally(() => {
+          this.submitting = false
         })
     },
   },
@@ -187,6 +206,7 @@ export default {
     height: 34px;
     width: 34px;
     margin: 0;
+
     & + .v-btn {
       margin-left: 5px;
     }
@@ -247,6 +267,7 @@ export default {
 
   .actions {
     height: 28px;
+
     .v-btn {
       height: 28px;
       width: 28px;
