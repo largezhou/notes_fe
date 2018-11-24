@@ -1,5 +1,5 @@
 <template>
-  <page-layout page-desc="看过的书啊">
+  <page-layout page-desc="看过的书啊" :loading="loading">
     <book-info-card
       v-for="(book, index) of books"
       :key="book.id"
@@ -13,19 +13,26 @@
 <script>
 import { getBooks } from '@/api/books'
 import BookInfoCard from '@/components/BookInfoCard'
+import getData from '@/mixins/get_data'
 
 export default {
   name: 'Index',
-  components: { BookInfoCard },
+  mixins: [
+    getData,
+  ],
+  components: {
+    BookInfoCard,
+  },
   data: () => ({
     books: [],
+    loading: false,
   }),
   created() {
     this.getData()
   },
   methods: {
-    getData() {
-      getBooks()
+    _getData() {
+      return getBooks()
         .then(res => {
           const data = res.data
           this.books = data

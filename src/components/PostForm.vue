@@ -112,6 +112,13 @@ export default {
 
     submitting: false,
   }),
+  created() {
+    // 由于父组件页面，使用了 v-if ，只有在获取到数据之后，才会创建该组件
+    // 所以如果是编辑页面，则该组件创建的时候，就已经有了 post 数据
+    if (this.post) {
+      this.onReset()
+    }
+  },
   methods: {
     onSubmit() {
       if (this.submitting) {

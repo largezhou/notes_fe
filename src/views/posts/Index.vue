@@ -1,5 +1,5 @@
 <template>
-  <page-layout page-desc="这里是博客">
+  <page-layout page-desc="这里是博客" :loading="loading">
     <post-item
       v-for="(post, index) of posts"
       :key="post.id"
@@ -17,21 +17,26 @@ import reloadData from '@/mixins/reload_data'
 import { getPosts } from '@/api/posts'
 import PostItem from '@/components/PostItem'
 import Paginator from '@/components/Paginator'
+import getData from '@/mixins/get_data'
 
 export default {
   name: 'Index',
-  mixins: [reloadData],
-  components: { PageLayout, PostItem, Paginator },
+  mixins: [
+    reloadData,
+    getData,
+  ],
+  components: {
+    PageLayout,
+    PostItem,
+    Paginator,
+  },
   data: () => ({
     posts: [],
     page: null,
   }),
   methods: {
-    getData() {
-      this.getPosts()
-    },
-    getPosts() {
-      getPosts()
+    _getData() {
+      return getPosts()
         .then(res => {
           const data = res.data
           this.posts = data.data
@@ -44,7 +49,7 @@ export default {
   },
   watch: {
     editMode(newValue) {
-      this.$active && this.getPosts()
+      this.$active && this.getData()
     },
     $route() {
       this.$active && this.getData()

@@ -36,11 +36,13 @@ import BookWidget from '@/components/BookWidget'
 import BookNoteItem from '@/components/BookNoteItem'
 import reloadData from '@/mixins/reload_data'
 import Paginator from '@/components/Paginator'
+import getData from '@/mixins/get_data'
 
 export default {
   name: 'Index',
   mixins: [
     reloadData,
+    getData,
   ],
   components: {
     BookWidget,
@@ -58,9 +60,8 @@ export default {
     }
   },
   methods: {
-    getData() {
-      this.loading = true
-      getNotes()
+    _getData() {
+      return getNotes()
         .then(res => {
           const data = res.data
           this.notes = data.data
@@ -68,9 +69,6 @@ export default {
 
           this.currentPage = this.page.current_page
           this.totalPage = this.page.last_page
-        })
-        .finally(() => {
-          this.loading = false
         })
     },
     onForceDelete(item, index) {

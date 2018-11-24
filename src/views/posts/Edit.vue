@@ -1,5 +1,5 @@
 <template>
-  <page-layout page-desc="调整一下博客">
+  <page-layout page-desc="调整一下博客" :loading="loading">
     <post-form :post="post"/>
   </page-layout>
 </template>
@@ -8,16 +8,23 @@
 import PostForm from '@/components/PostForm'
 import { getPost } from '@/api/posts'
 import PageLayout from '@/components/PageLayout'
+import getData from '@/mixins/get_data'
 
 export default {
   name: 'Edit',
-  components: { PageLayout, PostForm },
+  mixins: [
+    getData,
+  ],
+  components: {
+    PageLayout,
+    PostForm,
+  },
   data: () => ({
     post: null,
   }),
   methods: {
-    getPost() {
-      getPost(this.$route.params.postId)
+    _getData() {
+      return getPost(this.$route.params.postId)
         .then(res => {
           this.post = res.data
         })
@@ -26,7 +33,7 @@ export default {
   watch: {
     $route: {
       handler(newValue) {
-        this.getPost()
+        this.getData()
       },
       immediate: true,
     },

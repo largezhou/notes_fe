@@ -1,29 +1,31 @@
 <template>
-  <page-layout class="book-show" v-if="book">
-    <book-info-card :book="book"/>
+  <page-layout class="book-show" :loading="loading">
+    <template v-if="book">
+      <book-info-card :book="book"/>
 
-    <v-card class="read-progress">
-      <v-progress-linear color="info" height="18" :value="readPercent"/>
-      <span class="progress-text">{{ readPercent }}%</span>
-    </v-card>
-    <div class="notes-sort-group">
-      <v-btn flat small @click="onChangeSort('page')">页数
-        <mdi-icon :icon="sortIcon('page')"/>
-      </v-btn>
-      <v-btn flat small @click="onChangeSort('created_at')">时间
-        <mdi-icon :icon="sortIcon('created_at')"/>
-      </v-btn>
-    </div>
-    <div v-if="notes.length > 0">
-      <book-note-item
-        v-for="(item, index) of notes"
-        :key="item.id"
-        :item="item"
-        :book="book"
-        disable-book
-        @force-deleted="onForceDelete(item, index)"
-      />
-    </div>
+      <v-card class="read-progress">
+        <v-progress-linear color="info" height="18" :value="readPercent"/>
+        <span class="progress-text">{{ readPercent }}%</span>
+      </v-card>
+      <div class="notes-sort-group">
+        <v-btn flat small @click="onChangeSort('page')">页数
+          <mdi-icon :icon="sortIcon('page')"/>
+        </v-btn>
+        <v-btn flat small @click="onChangeSort('created_at')">时间
+          <mdi-icon :icon="sortIcon('created_at')"/>
+        </v-btn>
+      </div>
+      <div v-if="notes.length > 0">
+        <book-note-item
+          v-for="(item, index) of notes"
+          :key="item.id"
+          :item="item"
+          :book="book"
+          disable-book
+          @force-deleted="onForceDelete(item, index)"
+        />
+      </div>
+    </template>
   </page-layout>
 </template>
 
@@ -32,11 +34,18 @@ import BookNoteItem from '@/components/BookNoteItem'
 import { getBook } from '@/api/books'
 import reloadData from '@/mixins/reload_data'
 import BookInfoCard from '@/components/BookInfoCard'
+import getData from '@/mixins/get_data'
 
 export default {
   name: 'Show',
-  mixins: [reloadData],
-  components: { BookNoteItem, BookInfoCard },
+  mixins: [
+    reloadData,
+    getData,
+  ],
+  components: {
+    BookNoteItem,
+    BookInfoCard,
+  },
   data() {
     return {
       sortField: 'page',
@@ -44,6 +53,8 @@ export default {
 
       book: null,
       notes: [],
+
+      loading: false,
     }
   },
   computed: {
@@ -86,9 +97,9 @@ export default {
       return (this.sortType == 'asc') ? 'menu-up' : 'menu-down'
     },
 
-    getData() {
+    _getData() {
       const r = this.$route
-      getBook(r.params.bookId)
+      return getBook(r.params.bookId)
         .then(res => {
           const data = res.data
           this.book = data.book
@@ -157,6 +168,7 @@ export default {
 
   .notes-sort-group {
     margin-bottom: 10px;
+
     .v-btn {
       margin: 0;
       padding: 3px 5px;

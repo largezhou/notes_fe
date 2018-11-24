@@ -151,6 +151,9 @@ export default {
     book: Object,
     note: Object,
   },
+  created() {
+    this.note && this.onReset()
+  },
   computed: {
     contentError() {
       return this.fieldsAnyError(['content', 'page'])
@@ -228,7 +231,6 @@ export default {
       handler(newValue) {
         newValue && (this.attrs.form.page.maxValue = `不能超过${newValue.total}页`)
       },
-      immediate: true,
     },
   },
 }

@@ -1,8 +1,6 @@
 <template>
-  <page-layout page-desc="笔记调整一下">
-
+  <page-layout page-desc="笔记调整一下" :loading="loading">
     <note-form :note="note" :book="book"/>
-
   </page-layout>
 </template>
 
@@ -10,25 +8,37 @@
 import PageLayout from '@/components/PageLayout'
 import NoteForm from '@/components/NoteForm'
 import { getNote } from '@/api/notes'
+import getData from '@/mixins/get_data'
 
 export default {
   name: 'Edit',
-  components: { PageLayout, NoteForm },
+  mixins: [
+    getData,
+  ],
+  components: {
+    PageLayout,
+    NoteForm,
+  },
   data: () => ({
     note: null,
     book: null,
   }),
-  created() {
-    this.getNote()
-  },
   methods: {
-    getNote() {
-      getNote(this.$route.params.noteId)
+    _getData() {
+      return getNote(this.$route.params.noteId)
         .then(res => {
           const data = res.data
           this.book = data.book
           this.note = data.note
         })
+    },
+  },
+  watch: {
+    $route: {
+      handler() {
+        this.getData()
+      },
+      immediate: true,
     },
   },
 }
