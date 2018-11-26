@@ -138,6 +138,9 @@ export default {
 
     const $fileInput = this.leftBar.$el.querySelector('[type=file]')
 
+    // 调整编辑框选择图片的图片类型限定
+    $fileInput.accept = 'image/*'
+
     // 该值默认有一个值，会导致删除图片出错，所以先清空
     this.leftBar.img_file = []
 
