@@ -13,18 +13,20 @@
       <v-tabs-items v-model="type" class="elevation-1" style="margin-top: 10px;">
         <v-tab-item value="notes">
           <book-note-item
-            v-for="note of notes"
+            v-for="(note, index) of notes"
             :key="note.id"
             :item="note"
             :book="note.book"
+            @force-deleted="onForceDelete('notes', index)"
           />
         </v-tab-item>
 
         <v-tab-item value="posts">
           <post-item
-            v-for="post of posts"
+            v-for="(post, index) of posts"
             :key="post.id"
             :post="post"
+            @force-deleted="onForceDelete('posts', index)"
           />
         </v-tab-item>
       </v-tabs-items>
@@ -67,6 +69,9 @@ export default {
           this.notes = data.notes
           this.posts = data.posts
         })
+    },
+    onForceDelete(type, index) {
+      this[type].splice(index, 1)
     },
   },
   watch: {
