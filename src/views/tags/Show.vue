@@ -1,47 +1,54 @@
 <template>
-  <page-layout v-if="tag" :page-desc="`${this.tag.name} • ${this.tag.count}`">
-
-    <v-tabs
-      fixed-tabs
-      v-model="type"
-      color="transparent"
-    >
-      <v-tab class="tag-type" href="#notes">笔记{{ this.notes.length ? ` • ${this.notes.length}` : '' }}</v-tab>
-      <v-tab class="tag-type" href="#posts">博客{{ this.posts.length ? ` • ${this.posts.length}` : '' }}</v-tab>
-    </v-tabs>
-
-    <v-tabs-items v-model="type" class="white elevation-1">
-      <v-tab-item
-        value="notes"
+  <page-layout :page-desc="tag ?`${tag.name} • ${tag.count}` : ''" :loading="loading">
+    <template v-if="tag">
+      <v-tabs
+        fixed-tabs
+        v-model="type"
+        color="transparent"
       >
-        <v-card>
-          <v-card-text>
-            <h1>NOTES</h1>
-          </v-card-text>
-        </v-card>
-      </v-tab-item>
+        <v-tab class="tag-type" href="#notes">笔记{{ this.notes.length ? ` • ${this.notes.length}` : '' }}</v-tab>
+        <v-tab class="tag-type" href="#posts">博客{{ this.posts.length ? ` • ${this.posts.length}` : '' }}</v-tab>
+      </v-tabs>
 
-      <v-tab-item
-        value="posts"
-      >
-        <v-card>
-          <v-card-text>
-            <h1>POSTS</h1>
-          </v-card-text>
-        </v-card>
-      </v-tab-item>
-    </v-tabs-items>
+      <v-tabs-items v-model="type" class="elevation-1" style="margin-top: 10px;">
+        <v-tab-item value="notes">
+          <book-note-item
+            v-for="note of notes"
+            :key="note.id"
+            :item="note"
+            :book="note.book"
+          />
+        </v-tab-item>
 
+        <v-tab-item value="posts">
+          <post-item
+            v-for="post of posts"
+            :key="post.id"
+            :post="post"
+          />
+        </v-tab-item>
+      </v-tabs-items>
+    </template>
   </page-layout>
 </template>
 
 <script>
 import PageLayout from '@/components/PageLayout'
 import { getTag } from '@/api/tags'
+import BookNoteItem from '@/components/BookNoteItem'
+import PostItem from '@/components/PostItem'
+import getData from '@/mixins/get_data'
 
 export default {
   name: 'Show',
-  components: { PageLayout },
+  mixins: [
+    getData,
+  ],
+  components: {
+    PageLayout,
+    BookNoteItem,
+    PostItem,
+  },
   data: () => ({
     tag: null,
     notes: [],
@@ -52,8 +59,8 @@ export default {
     this.getData()
   },
   methods: {
-    getData() {
-      getTag(this.$route.params.tagId)
+    _getData() {
+      return getTag(this.$route.params.tagId)
         .then(res => {
           const data = res.data
           this.tag = data
@@ -78,6 +85,9 @@ export default {
         query: this.query,
         hash: newValue,
       })
+    },
+    editMode() {
+      this.getData()
     },
   },
 }
