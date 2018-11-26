@@ -12,7 +12,7 @@
         :toolbars="toolbars"
         :subfield="false"
         defaultOpen="edit"
-        :class="{ widescreen: widescreen, resize: !!dragging }"
+        :class="{ widescreen, resize: !!dragging, mobile: device == 'mobile' }"
         :value="value"
         @change="onChange"
         ref="editor"
@@ -215,6 +215,11 @@ export default {
 
       this.editorHeight += e.y - this.dragging
 
+      // 编辑框默认 最小 300 高度
+      if (this.editorHeight < 300) {
+        this.editorHeight = 300
+      }
+
       this.dragging = e.y
     },
 
@@ -253,6 +258,10 @@ export default {
 
     &.fullscreen {
       height: auto !important;
+    }
+
+    &.mobile {
+      max-height: 600px;
     }
   }
 }
