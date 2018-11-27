@@ -6,7 +6,7 @@ import utils from '@/libs/utils'
 
 const Random = Mock.Random
 
-const fullBook = {
+export const fullBook = {
   'id|+1': 1,
   title: '@ctitle',
   started_at: '@datetime',
@@ -37,7 +37,7 @@ const briefBook = {
   title: '@ctitle',
 }
 
-const noteTmpl = {
+export const noteTmpl = {
   'id|+1': 1,
   title() {
     if (Math.random() > 0.5) {

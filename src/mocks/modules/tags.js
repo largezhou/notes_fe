@@ -1,6 +1,8 @@
 import mock from '../mock'
 import utils from '@/libs/utils'
 import _ from 'lodash'
+import { noteTmpl, fullBook } from './notes'
+import postTmpl from './posts'
 
 const tagTmpl = {
   'id|+1': 1,
@@ -9,7 +11,18 @@ const tagTmpl = {
 }
 
 mock(/\/tags\/\d+/, 'get', {
-  data: tagTmpl,
+  data: {
+    ...tagTmpl,
+    'notes|1-10': [
+      {
+        ...noteTmpl,
+        book: fullBook,
+      },
+    ],
+    'posts|1-10': [
+      postTmpl,
+    ],
+  },
 })
 
 // 获取所有标签，可搜索

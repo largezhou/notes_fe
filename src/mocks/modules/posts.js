@@ -5,24 +5,26 @@ import utils from '@/libs/utils'
 const Mock = require('mockjs')
 const Random = Mock.Random
 
+const postTmpl = {
+  'id|+1': 1,
+  title: '@ctitle',
+  desc: '@cparagraph',
+  content: '@cparagraph',
+  created_at: '@datetime',
+  updated_at: '@datetime',
+  'tags|5-15': [
+    {
+      'id|+1': 1,
+      'name|3-5': '@cword',
+    },
+  ],
+}
+
 // 博客列表
 mock(/\/posts(\?.*)?$/, 'get', {
   data: {
     'data|15': [
-      {
-        'id|+1': 1,
-        title: '@ctitle',
-        desc: '@cparagraph',
-        content: '@cparagraph',
-        created_at: '@datetime',
-        updated_at: '@datetime',
-        'tags|5-15': [
-          {
-            'id|+1': 1,
-            'name|3-5': '@cword',
-          },
-        ],
-      },
+      postTmpl,
     ],
     meta: {
       'current_page': 1,
@@ -97,3 +99,5 @@ mock(/\/posts\/\d+/, 'put', { data: {} }, (tmpl, options) => {
     // tmpl.book = bookInfoTmpl
   }
 })
+
+export default postTmpl
