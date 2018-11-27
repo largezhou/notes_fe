@@ -37,7 +37,7 @@
         </v-btn>
       </div>
 
-      <v-btn class="settings" v-show="!actionsOpened" flat small icon @click="actionsOpened = true">
+      <v-btn class="settings" v-show="!actionsOpened" flat small icon @click="onOpen">
         <mdi-icon color="grey darken-1" icon="settings"/>
       </v-btn>
     </div>
@@ -64,6 +64,11 @@ export default {
   }),
   created() {
     this.name = this.tag.name
+
+    this.$root.$on('tagActionsOpened', this.onOtherTagActionsOpened)
+  },
+  beforeDestroy() {
+    this.$root.$off('tagActionsOpened', this.onOtherTagActionsOpened)
   },
   computed: {
     ...mapState({
@@ -147,7 +152,10 @@ export default {
 
       if (name === this.tag.name) {
         this.$snackbar('啥也没改')
-        return this.onCancelEditName()
+        this.onCancelEditName()
+        this.actionsOpened = false
+
+        return
       }
 
       this.submitting = true
@@ -156,10 +164,21 @@ export default {
         .then(res => {
           this.tag.name = name
           this.onCancelEditName()
+          this.actionsOpened = false
         })
         .finally(() => {
           this.submitting = false
         })
+    },
+
+    onOpen() {
+      this.$root.$emit('tagActionsOpened', this.tag)
+      this.actionsOpened = true
+    },
+    onOtherTagActionsOpened(tag) {
+      if (this.tag.id != tag.id) {
+        this.actionsOpened = false
+      }
     },
   },
   watch: {
