@@ -20,7 +20,13 @@
                 </v-flex>
 
                 <v-flex xs5>
-                  <v-checkbox label="已读到此处" v-model="form.mark_read" color="primary" checked/>
+                  <v-checkbox
+                    label="已读到此处"
+                    v-model="form.mark_read"
+                    color="primary"
+                    checked
+                    @change="markReadDirty = true"
+                  />
                 </v-flex>
 
                 <v-flex xs12>
@@ -145,6 +151,7 @@ export default {
       },
 
       submitting: false,
+      markReadDirty: false,
     }
   },
   props: {
@@ -231,6 +238,19 @@ export default {
       handler(newValue) {
         newValue && (this.attrs.form.page.maxValue = `不能超过${newValue.total}页`)
       },
+    },
+    'form.page': {
+      handler(newValue) {
+        log(newValue)
+        // 只要手动点过 已读到此处 则不会自动标记了
+        if (this.markReadDirty) {
+          return
+        }
+
+        // 如果笔记所属页，大于书的已读页，则自动标记，否则取消
+        this.form.mark_read = newValue > this.book.read
+      },
+      immediate: true,
     },
   },
 }
