@@ -238,6 +238,7 @@ export default {
       handler(newValue) {
         newValue && (this.attrs.form.page.maxValue = `不能超过${newValue.total}页`)
       },
+      immediate: true,
     },
     'form.page': {
       handler(newValue) {
