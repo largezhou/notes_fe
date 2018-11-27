@@ -15,7 +15,7 @@
           <mdi-icon :icon="sortIcon('created_at')"/>
         </v-btn>
       </div>
-      <div v-if="notes.length > 0">
+      <div v-if="notes.length">
         <book-note-item
           v-for="(item, index) of notes"
           :key="item.id"
@@ -25,6 +25,7 @@
           @force-deleted="onForceDelete(item, index)"
         />
       </div>
+      <empty v-else/>
     </template>
   </page-layout>
 </template>

@@ -1,12 +1,15 @@
 <template>
   <page-layout page-desc="看过的书啊" :loading="loading">
-    <book-info-card
-      v-for="(book, index) of books"
-      :key="book.id"
-      :book="book"
-      :can-expand="false"
-      @force-deleted="onForceDelete(book, index)"
-    />
+    <template v-if="books.length">
+      <book-info-card
+        v-for="(book, index) of books"
+        :key="book.id"
+        :book="book"
+        :can-expand="false"
+        @force-deleted="onForceDelete(book, index)"
+      />
+    </template>
+    <empty v-else/>
   </page-layout>
 </template>
 

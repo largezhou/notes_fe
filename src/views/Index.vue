@@ -15,7 +15,7 @@
           />
         </div>
 
-        <template v-else>
+        <template v-else-if="notes.length">
           <book-note-item
             v-for="(item, index) of notes"
             :key="item.id"
@@ -24,7 +24,9 @@
           />
         </template>
 
-        <paginator v-show="!loading" :page="page"/>
+        <empty v-else/>
+
+        <paginator v-if="notes.length" v-show="!loading" :page="page"/>
       </v-flex>
     </v-layout>
   </v-container>

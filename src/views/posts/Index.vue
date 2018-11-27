@@ -1,13 +1,15 @@
 <template>
   <page-layout page-desc="这里是博客" :loading="loading">
-    <post-item
-      v-for="(post, index) of posts"
-      :key="post.id"
-      :post="post"
-      @force-deleted="onForceDeleted(post, index)"
-    />
-
-    <paginator :page="page"/>
+    <template v-if="posts.length">
+      <post-item
+        v-for="(post, index) of posts"
+        :key="post.id"
+        :post="post"
+        @force-deleted="onForceDeleted(post, index)"
+      />
+    </template>
+    <empty v-else/>
+    <paginator v-if="posts.length" :page="page"/>
   </page-layout>
 </template>
 

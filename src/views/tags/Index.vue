@@ -1,11 +1,14 @@
 <template>
   <page-layout page-desc="所有的标签" class="tag-index" :loading="loading">
-    <editable-tag
-      v-for="(tag, index) of tags"
-      :key="tag.id"
-      :tag="tag"
-      @deleted="onDeleted(tag, index)"
-    />
+    <template v-if="tags.length">
+      <editable-tag
+        v-for="(tag, index) of tags"
+        :key="tag.id"
+        :tag="tag"
+        @deleted="onDeleted(tag, index)"
+      />
+    </template>
+    <empty v-else/>
   </page-layout>
 </template>
 
@@ -15,6 +18,7 @@ import EditableTag from '@/components/EditableTag'
 import { getTags } from '@/api/tags'
 import Tags from '@/components/Tags'
 import getData from '@/mixins/get_data'
+import Empty from '@/components/Empty'
 
 export default {
   name: 'Index',
@@ -22,6 +26,7 @@ export default {
     getData,
   ],
   components: {
+    Empty,
     Tags,
     PageLayout,
     EditableTag,
