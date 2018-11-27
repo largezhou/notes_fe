@@ -151,7 +151,6 @@ export default {
               postId: res.data.id,
             },
           })
-          this.$store.commit('changeEditMode', false)
         })
         .catch(() => {
           this.submitting = false

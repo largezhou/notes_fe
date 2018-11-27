@@ -21,6 +21,18 @@
     </v-card-text>
 
     <hidden-mark v-show="post.hidden"/>
+
+    <item-action
+      class="actions"
+      :item="post"
+      v-if="username"
+      v-show="editMode"
+      :update-handler="updateHandler"
+      :delete-handler="deleteHandler"
+      :force-delete-handler="forceDeleteHandler"
+      :edit-handler="editHandler"
+      @force-deleted="item => { $emit('force-deleted', item) }"
+    />
   </v-card>
 </template>
 
@@ -28,12 +40,28 @@
 import Tags from '@/components/Tags'
 import MarkdownBody from '@/components/MarkdownBody'
 import HiddenMark from '@/components/HiddenMark'
+import ItemAction from '@/components/ItemActions'
+import { mapState } from 'vuex'
 
 export default {
   name: 'PostDetailCard',
-  components: { Tags, MarkdownBody, HiddenMark },
+  components: {
+    Tags,
+    MarkdownBody,
+    HiddenMark,
+    ItemAction,
+  },
   props: {
     post: Object,
+    updateHandler: Function,
+    deleteHandler: Function,
+    forceDeleteHandler: Function,
+    editHandler: Function,
+  },
+  computed: {
+    ...mapState({
+      username: state => state.user.name,
+    }),
   },
 }
 </script>
@@ -60,6 +88,18 @@ export default {
 @media (max-width: 599px) {
   .post-content-card {
     padding: 10px;
+  }
+}
+
+/deep/ .actions {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: rgba(234, 234, 234, 0.5);
+  border-bottom-right-radius: 4px;
+
+  > div {
+    display: inline-block;
   }
 }
 </style>

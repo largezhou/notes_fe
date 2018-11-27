@@ -206,7 +206,6 @@ export default {
               noteId: res.data.id,
             },
           })
-          this.$store.commit('changeEditMode', false)
         })
         .catch(() => {
           this.submitting = false
@@ -242,7 +241,6 @@ export default {
     },
     'form.page': {
       handler(newValue) {
-        log(newValue)
         // 只要手动点过 已读到此处 则不会自动标记了
         if (this.markReadDirty) {
           return

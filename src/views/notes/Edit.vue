@@ -1,6 +1,6 @@
 <template>
   <page-layout page-desc="笔记调整一下" :loading="loading">
-    <note-form :note="note" :book="book"/>
+    <note-form v-if="note" :note="note" :book="book"/>
   </page-layout>
 </template>
 
