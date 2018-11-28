@@ -70,6 +70,7 @@ export default {
 /deep/ .v-list {
   > div {
     display: inline-block;
+    vertical-align: middle;
   }
 
   /deep/ .v-list__tile {
