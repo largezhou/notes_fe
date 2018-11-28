@@ -1,6 +1,6 @@
 import mock from '../mock'
 import utils from '@/libs/utils'
-import _ from 'lodash'
+import _trimStart from 'lodash/trimStart'
 import { noteTmpl, fullBook } from './notes'
 import postTmpl from './posts'
 
@@ -42,7 +42,7 @@ mock(/\/tags\/\d+/, 'get', {
         delete tmpl[key]
         key = 'data|1-3'
 
-        tagTmpl.name = _.trimStart(q.q) + '@cword'
+        tagTmpl.name = _trimStart(q.q) + '@cword'
 
         tmpl[key] = [
           tagTmpl,

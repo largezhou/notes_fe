@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import _ from 'lodash'
+import _forIn from 'lodash/forIn'
 
 export default {
   name: 'ErrorsBag',
@@ -20,7 +20,7 @@ export default {
   computed: {
     flatErrorsBag() {
       const errors = []
-      _.forIn(this.errorsBag, (fieldErrors, field) => {
+      _forIn(this.errorsBag, (fieldErrors, field) => {
         if (field == 'html_content') {
           return
         }

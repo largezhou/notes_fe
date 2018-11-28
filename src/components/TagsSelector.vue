@@ -29,7 +29,8 @@
 
 <script>
 import { getTags } from '@/api/tags'
-import _ from 'lodash'
+import _unionBy from 'lodash/unionBy'
+import _debounce from 'lodash/debounce'
 import vFormItem from '@/mixins/vform_item'
 
 export default {
@@ -45,7 +46,7 @@ export default {
     tags: [],
   }),
   created() {
-    this.debounceSearchTags = _.debounce(this.searchTags, 500)
+    this.debounceSearchTags = _debounce(this.searchTags, 500)
 
     this.initTags()
   },
@@ -69,7 +70,7 @@ export default {
       })
         .then(res => {
           const data = res.data
-          this.tags = _.unionBy(this.tags, data, 'id')
+          this.tags = _unionBy(this.tags, data, 'id')
         })
         .finally(() => {
           this.searching = false

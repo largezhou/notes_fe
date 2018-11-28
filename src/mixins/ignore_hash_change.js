@@ -1,3 +1,5 @@
+import _isEqual from 'lodash/isEqual'
+
 export default {
   data: () => ({
     oldRoute: null,
@@ -7,7 +9,7 @@ export default {
     checkOnlyHashChange() {
       return this.oldRoute &&
         this.oldRoute.path === this.$route.path &&
-        _.isEqual(this.oldRoute.query, this.$route.query)
+        _isEqual(this.oldRoute.query, this.$route.query)
     },
   },
 

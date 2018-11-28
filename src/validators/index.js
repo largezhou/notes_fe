@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import _get from 'lodash/get'
 
 export const vFile = value => {
   return value instanceof File
@@ -11,7 +11,7 @@ export const vImage = value => {
 export const validateErrorsMixins = {
   methods: {
     validateErrors(key) {
-      const data = _.get(this.$v, key)
+      const data = _get(this.$v, key)
       // 输入框没有输入过值时，不要显示错误消息
       if (!data.$dirty) {
         return
@@ -20,7 +20,7 @@ export const validateErrorsMixins = {
       const validators = data.$params
       for (const vt of Object.keys(validators)) {
         if (!data[vt]) {
-          return _.get(this.attrs, key)[vt]
+          return _get(this.attrs, key)[vt]
         }
       }
     },
