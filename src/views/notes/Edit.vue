@@ -9,11 +9,13 @@ import PageLayout from '@/components/PageLayout'
 import NoteForm from '@/components/NoteForm'
 import { getNote } from '@/api/notes'
 import getData from '@/mixins/get_data'
+import ignoreHashChange from '@/mixins/ignore_hash_change'
 
 export default {
   name: 'Edit',
   mixins: [
     getData,
+    ignoreHashChange,
   ],
   components: {
     PageLayout,
@@ -31,14 +33,6 @@ export default {
           this.book = data.book
           this.note = data.note
         })
-    },
-  },
-  watch: {
-    $route: {
-      handler() {
-        this.getData()
-      },
-      immediate: true,
     },
   },
 }

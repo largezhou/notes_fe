@@ -9,11 +9,13 @@ import PostForm from '@/components/PostForm'
 import { getPost } from '@/api/posts'
 import PageLayout from '@/components/PageLayout'
 import getData from '@/mixins/get_data'
+import ignoreHashChange from '@/mixins/ignore_hash_change'
 
 export default {
   name: 'Edit',
   mixins: [
     getData,
+    ignoreHashChange,
   ],
   components: {
     PageLayout,
@@ -28,14 +30,6 @@ export default {
         .then(res => {
           this.post = res.data
         })
-    },
-  },
-  watch: {
-    $route: {
-      handler(newValue) {
-        this.getData()
-      },
-      immediate: true,
     },
   },
 }
