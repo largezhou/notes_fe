@@ -19,7 +19,7 @@
 
     <tags :tags="item.tags"/>
 
-    <item-action
+    <item-actions
       class="actions"
       :item="item"
       v-if="username"
@@ -39,13 +39,13 @@
 import HumanTime from '@/components/HumanTime'
 import Tags from '@/components/Tags'
 import HiddenMark from '@/components/HiddenMark'
-import ItemAction from '@/components/ItemActions'
+import ItemActions from '@/components/ItemActions'
 import { mapState } from 'vuex'
 import { updateNote, deleteNote, forceDeleteNote } from '@/api/notes'
 
 export default {
   name: 'BookNoteItem',
-  components: { HumanTime, Tags, ItemAction, HiddenMark },
+  components: { HumanTime, Tags, ItemActions, HiddenMark },
   props: {
     item: Object,
     disableBook: Boolean,
@@ -118,20 +118,8 @@ export default {
 }
 
 .actions {
-  position: absolute;
   right: 0;
   top: 0;
-  background-color: rgba(234, 234, 234, 0.5);
   border-bottom-left-radius: 4px;
-}
-
-/deep/ .v-list {
-  > div {
-    display: inline-block;
-  }
-
-  .v-list__tile {
-    padding: 0 10px;
-  }
 }
 </style>

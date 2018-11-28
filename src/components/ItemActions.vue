@@ -1,5 +1,5 @@
 <template>
-  <v-list dense>
+  <v-list dense class="item-actions" :class="{ inline }" :style="{ backgroundColor }">
     <!-- 隐藏与显示 -->
     <v-list-tile @click="updateHidden">
       <v-list-tile-action>
@@ -48,6 +48,14 @@ export default {
     forceDeleteHandler: Function,
     forceDeleteMsg: String,
     editHandler: Function,
+    inline: {
+      type: Boolean,
+      default: true,
+    },
+    backgroundColor: {
+      type: String,
+      default: 'rgba(234, 234, 234, 0.5)',
+    },
   },
   methods: {
     updateHidden() {
@@ -142,5 +150,20 @@ export default {
 <style lang="scss" scoped>
 .v-list__tile__action {
   min-width: initial;
+}
+
+.item-actions {
+  position: absolute;
+
+  &.inline {
+    > div {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    /deep/ .v-list__tile {
+      padding: 0 10px;
+    }
+  }
 }
 </style>

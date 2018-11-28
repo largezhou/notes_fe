@@ -60,21 +60,8 @@ export default {
 }
 
 .actions {
-  position: absolute;
   right: 0;
   top: 0;
-  background-color: rgba(234, 234, 234, 0.5);
   border-bottom-left-radius: 4px;
-}
-
-/deep/ .v-list {
-  > div {
-    display: inline-block;
-    vertical-align: middle;
-  }
-
-  /deep/ .v-list__tile {
-    padding: 0 10px;
-  }
 }
 </style>

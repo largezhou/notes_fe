@@ -77,7 +77,9 @@
 
     <!-- 编辑系列 -->
     <item-actions
-      class="editable-warp"
+      class="actions"
+      :inline="false"
+      :background-color="null"
       :style="{ top: canExpand ? '40px' : '0' }"
       v-if="canEdit"
       v-show="vExpand && editMode"
@@ -266,10 +268,7 @@ $add-note-btn-pos: 12px;
 </style>
 
 <style lang="scss" scoped>
-.editable-warp {
-  position: absolute;
+.actions {
   right: 0;
-
-  width: 55px;
 }
 </style>

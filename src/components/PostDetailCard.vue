@@ -91,15 +91,9 @@ export default {
   }
 }
 
-/deep/ .actions {
-  position: absolute;
+.actions {
   left: 0;
   top: 0;
-  background-color: rgba(234, 234, 234, 0.5);
-  border-bottom-right-radius: 4px;
-
-  > div {
-    display: inline-block;
-  }
+  border-bottom-right-radius: 4px !important;
 }
 </style>
