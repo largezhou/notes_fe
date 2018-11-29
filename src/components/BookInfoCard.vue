@@ -1,5 +1,5 @@
 <template>
-  <v-slide-x-reverse-transition @afterLeave="$emit('force-deleted', book)">
+  <component :is="wrapperComponent" @afterLeave="$emit('force-deleted', book)">
     <v-card class="book-info-card" :class="{ collapsed: !vExpand }" v-if="book" v-show="!book.force_deleted">
       <v-card-text>
         <v-layout row wrap>
@@ -95,7 +95,7 @@
 
       <hidden-mark v-show="vExpand && book.hidden && !editMode"/>
     </v-card>
-  </v-slide-x-reverse-transition>
+  </component>
 </template>
 
 <script>
@@ -122,6 +122,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    animate: {
+      type: Boolean,
+      default: false,
+    },
   },
   data: () => ({
     vExpand: true,
@@ -145,6 +149,11 @@ export default {
     },
     canEdit() {
       return !!this.username
+    },
+    wrapperComponent() {
+      return this.animate
+        ? 'v-slide-x-reverse-transition'
+        : 'div'
     },
   },
   created() {

@@ -7,6 +7,7 @@
         :book="book"
         :can-expand="false"
         @force-deleted="onForceDelete(book, index)"
+        animate
       />
     </template>
     <empty v-else/>
