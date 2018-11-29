@@ -16,14 +16,7 @@
       <div class="actions" v-if="canEdit">
         <v-input class="name-input" :style="nameInputStyle" v-show="nameEditing">
           <input type="text" v-model="name" ref="input" @keyup.enter="onUpdateName">
-          <v-progress-circular
-            v-if="submitting"
-            :size="18"
-            :width="1.5"
-            color="rgba(0,0,0,.54)"
-            indeterminate
-          />
-          <mdi-icon v-else @click="onUpdateName" icon="check"/>
+          <mdi-icon :loading="submitting" @click="onUpdateName" icon="check"/>
           <mdi-icon @click="onCancelEditName" icon="close"/>
         </v-input>
         <div v-show="actionsOpened && !nameEditing">
@@ -31,7 +24,7 @@
             <mdi-icon color="grey darken-1" icon="pencil"/>
           </v-btn>
           <v-btn flat small icon @click="onDelete">
-            <mdi-icon color="grey darken-1" icon="delete"/>
+            <mdi-icon :loading="deleting" color="grey darken-1" icon="delete"/>
           </v-btn>
           <v-btn flat small icon @click="actionsOpened = false">
             <mdi-icon color="grey darken-1" icon="close"/>
@@ -63,6 +56,7 @@ export default {
     veryRight: false,
 
     submitting: false,
+    deleting: false,
   }),
   created() {
     this.name = this.tag.name
@@ -106,9 +100,14 @@ export default {
         content: '删除后不可恢复！！！',
       })
         .then(() => {
+          this.deleting = true
+
           delTag(this.tag.id)
             .then(() => {
               this.$set(this.tag, 'deleted', true)
+            })
+            .finally(() => {
+              this.deleting = false
             })
         })
     },

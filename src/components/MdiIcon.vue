@@ -1,8 +1,8 @@
 <template>
   <v-progress-circular
     v-if="loading"
-    :width="2"
-    size="22"
+    :width="1.5"
+    size="20"
     indeterminate
     color="rgba(0, 0, 0, .54)"
   />
