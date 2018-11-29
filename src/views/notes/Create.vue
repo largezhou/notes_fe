@@ -1,7 +1,12 @@
 <template>
   <page-layout class="note-create" :loading="loading">
     <template v-if="book">
-      <book-info-card :book="book" :new-note-btn="false" :expand="false"/>
+      <book-info-card
+        :book="book"
+        :new-note-btn="false"
+        :expand="false"
+        @force-deleted="$router.push({ name: 'bookIndex' })"
+      />
 
       <div class="page-desc">~~ 添加笔记 ~~</div>
 

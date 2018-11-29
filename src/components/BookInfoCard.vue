@@ -90,7 +90,7 @@
         :force-delete-handler="forceDeleteBook"
         force-delete-msg="彻底删除后不可恢复！<br>彻底删除后书中的笔记也会彻底删除！"
         :edit-handler="editBook"
-        @force-deleted="item => $set(item, 'force_deleted', true)"
+        @force-deleted="onForceDeleted"
       />
 
       <hidden-mark v-show="vExpand && book.hidden && !editMode"/>
@@ -181,6 +181,14 @@ export default {
         Object.keys(this.book).forEach(field => {
           this.book[field] = book[field]
         })
+      }
+    },
+
+    onForceDeleted(item) {
+      if (this.animate) {
+        this.$set(item, 'force_deleted', true)
+      } else {
+        this.$emit('force-deleted', item)
       }
     },
   },
