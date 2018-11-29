@@ -1,9 +1,6 @@
 <template>
   <v-container grid-list-md class="content">
     <v-layout row wrap justify-center>
-      <v-flex md3 class="hidden-sm-and-down">
-        <book-widget/>
-      </v-flex>
       <v-flex md9 sm12>
 
         <div v-if="loading" class="text-xs-center">
@@ -26,6 +23,9 @@
         </template>
 
         <empty v-else/>
+      </v-flex>
+      <v-flex md3 class="hidden-sm-and-down">
+        <book-widget/>
       </v-flex>
     </v-layout>
   </v-container>
