@@ -1,47 +1,49 @@
 <template>
-  <div class="tag-wrap">
-    <v-btn
-      :style="{ width: tagWidth }"
-      ref="tags"
-      class="tag"
-      flat
-      color="primary"
-      outline
-      :to="`/tags/${tag.id}`"
-    >{{ tag.name }}
-      <span class="count">{{ tag.count }}</span>
-    </v-btn>
+  <v-slide-y-reverse-transition @afterLeave="$emit('deleted', tag)">
+    <div class="tag-wrap" v-if="!tag.deleted">
+      <v-btn
+        :style="{ width: tagWidth }"
+        ref="tags"
+        class="tag"
+        flat
+        color="primary"
+        outline
+        :to="`/tags/${tag.id}`"
+      >{{ tag.name }}
+        <span class="count">{{ tag.count }}</span>
+      </v-btn>
 
-    <div class="actions" v-if="canEdit">
-      <v-input class="name-input" :style="nameInputStyle" v-show="nameEditing">
-        <input type="text" v-model="name" ref="input" @keyup.enter="onUpdateName">
-        <v-progress-circular
-          v-if="submitting"
-          :size="18"
-          :width="1.5"
-          color="rgba(0,0,0,.54)"
-          indeterminate
-        />
-        <mdi-icon v-else @click="onUpdateName" icon="check"/>
-        <mdi-icon @click="onCancelEditName" icon="close"/>
-      </v-input>
-      <div v-show="actionsOpened && !nameEditing">
-        <v-btn flat small icon @click="onNameEdit">
-          <mdi-icon color="grey darken-1" icon="pencil"/>
-        </v-btn>
-        <v-btn flat small icon @click="onDelete">
-          <mdi-icon color="grey darken-1" icon="delete"/>
-        </v-btn>
-        <v-btn flat small icon @click="actionsOpened = false">
-          <mdi-icon color="grey darken-1" icon="close"/>
+      <div class="actions" v-if="canEdit">
+        <v-input class="name-input" :style="nameInputStyle" v-show="nameEditing">
+          <input type="text" v-model="name" ref="input" @keyup.enter="onUpdateName">
+          <v-progress-circular
+            v-if="submitting"
+            :size="18"
+            :width="1.5"
+            color="rgba(0,0,0,.54)"
+            indeterminate
+          />
+          <mdi-icon v-else @click="onUpdateName" icon="check"/>
+          <mdi-icon @click="onCancelEditName" icon="close"/>
+        </v-input>
+        <div v-show="actionsOpened && !nameEditing">
+          <v-btn flat small icon @click="onNameEdit">
+            <mdi-icon color="grey darken-1" icon="pencil"/>
+          </v-btn>
+          <v-btn flat small icon @click="onDelete">
+            <mdi-icon color="grey darken-1" icon="delete"/>
+          </v-btn>
+          <v-btn flat small icon @click="actionsOpened = false">
+            <mdi-icon color="grey darken-1" icon="close"/>
+          </v-btn>
+        </div>
+
+        <v-btn class="settings" v-show="!actionsOpened" flat small icon @click="onOpen">
+          <mdi-icon color="grey darken-1" icon="settings"/>
         </v-btn>
       </div>
-
-      <v-btn class="settings" v-show="!actionsOpened" flat small icon @click="onOpen">
-        <mdi-icon color="grey darken-1" icon="settings"/>
-      </v-btn>
     </div>
-  </div>
+  </v-slide-y-reverse-transition>
 </template>
 
 <script>
@@ -106,7 +108,7 @@ export default {
         .then(() => {
           delTag(this.tag.id)
             .then(() => {
-              this.$emit('deleted', this.tag)
+              this.$set(this.tag, 'deleted', true)
             })
         })
     },

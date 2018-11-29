@@ -1,27 +1,29 @@
 <template>
-  <v-card class="post">
-    <v-card-title class="title">
-      <router-link :to="`/posts/${post.id}`">{{ post.title }}</router-link>
-    </v-card-title>
+  <v-slide-x-reverse-transition @afterLeave="$emit('force-deleted', post)">
+    <v-card class="post" v-show="!post.force_deleted">
+      <v-card-title class="title">
+        <router-link :to="`/posts/${post.id}`">{{ post.title }}</router-link>
+      </v-card-title>
 
-    <v-card-text class="desc">{{ post.desc }}</v-card-text>
+      <v-card-text class="desc">{{ post.desc }}</v-card-text>
 
-    <tags :tags="post.tags"/>
+      <tags :tags="post.tags"/>
 
-    <item-actions
-      class="actions"
-      v-if="username"
-      v-show="editMode"
-      :item="post"
-      :update-handler="updatePost"
-      :delete-handler="deletePost"
-      :force-delete-handler="forceDeletePost"
-      :edit-handler="editPost"
-      @force-deleted="item => { $emit('force-deleted', item) }"
-    />
+      <item-actions
+        class="actions"
+        v-if="username"
+        v-show="editMode"
+        :item="post"
+        :update-handler="updatePost"
+        :delete-handler="deletePost"
+        :force-delete-handler="forceDeletePost"
+        :edit-handler="editPost"
+        @force-deleted="item => $set(item, 'force_deleted', true)"
+      />
 
-    <hidden-mark v-show="post.hidden && !editMode"/>
-  </v-card>
+      <hidden-mark v-show="post.hidden && !editMode"/>
+    </v-card>
+  </v-slide-x-reverse-transition>
 </template>
 
 <script>

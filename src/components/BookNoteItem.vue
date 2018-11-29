@@ -1,38 +1,40 @@
 <template>
-  <v-card class="note-item">
-    <v-card-title>
-      <div class="belong">
-        <div v-if="disableBook">
-          <router-link class="page-link" :to="`/notes/${item.id}`">第{{ item.page }}页</router-link>
+  <v-slide-x-reverse-transition @afterLeave="$emit('force-deleted', item)">
+    <v-card class="note-item" v-show="!item.force_deleted">
+      <v-card-title>
+        <div class="belong">
+          <div v-if="disableBook">
+            <router-link class="page-link" :to="`/notes/${item.id}`">第{{ item.page }}页</router-link>
+          </div>
+          <div v-else>
+            <router-link :class="{ hidden: item.book.hidden, deleted: item.book.deleted_at }" :to="`/books/${item.book.id}`">{{ item.book.title }}</router-link>
+            <span> • </span>
+            <router-link class="page-link" :to="`/notes/${item.id}`">第{{ item.page }}页</router-link>
+          </div>
         </div>
-        <div v-else>
-          <router-link :class="{ hidden: item.book.hidden, deleted: item.book.deleted_at }" :to="`/books/${item.book.id}`">{{ item.book.title }}</router-link>
-          <span> • </span>
-          <router-link class="page-link" :to="`/notes/${item.id}`">第{{ item.page }}页</router-link>
-        </div>
-      </div>
-    </v-card-title>
+      </v-card-title>
 
-    <v-card-text v-if="item.title" class="note-title">{{ item.title }}</v-card-text>
+      <v-card-text v-if="item.title" class="note-title">{{ item.title }}</v-card-text>
 
-    <v-card-text v-if="item.desc" class="desc">{{ item.desc }}</v-card-text>
+      <v-card-text v-if="item.desc" class="desc">{{ item.desc }}</v-card-text>
 
-    <tags :tags="item.tags"/>
+      <tags :tags="item.tags"/>
 
-    <item-actions
-      class="actions"
-      :item="item"
-      v-if="username"
-      v-show="editMode"
-      :update-handler="updateNote"
-      :delete-handler="deleteNote"
-      :force-delete-handler="forceDeleteNote"
-      :edit-handler="editNote"
-      @force-deleted="item => { $emit('force-deleted', item) }"
-    />
+      <item-actions
+        class="actions"
+        :item="item"
+        v-if="username"
+        v-show="editMode"
+        :update-handler="updateNote"
+        :delete-handler="deleteNote"
+        :force-delete-handler="forceDeleteNote"
+        :edit-handler="editNote"
+        @force-deleted="item => $set(item, 'force_deleted', true)"
+      />
 
-    <hidden-mark v-show="item.hidden && !editMode"/>
-  </v-card>
+      <hidden-mark v-show="item.hidden && !editMode"/>
+    </v-card>
+  </v-slide-x-reverse-transition>
 </template>
 
 <script>

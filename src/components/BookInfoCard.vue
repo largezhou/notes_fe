@@ -1,99 +1,101 @@
 <template>
-  <v-card class="book-info-card" :class="{ collapsed: !vExpand }" v-if="book">
-    <v-card-text>
-      <v-layout row wrap>
-        <v-flex xs4 class="cover" v-show="vExpand">
-          <img :src="book.cover">
-        </v-flex>
-        <v-flex :xs6="vExpand" :sm8="vExpand" :xs10="!vExpand" class="book-info">
-          <div class="title text-ellipsis" :class="{ collapsed: !vExpand }">
-            <v-tooltip :bottom="widescreen" :left="!widescreen">
+  <v-slide-x-reverse-transition @afterLeave="$emit('force-deleted', book)">
+    <v-card class="book-info-card" :class="{ collapsed: !vExpand }" v-if="book" v-show="!book.force_deleted">
+      <v-card-text>
+        <v-layout row wrap>
+          <v-flex xs4 class="cover" v-show="vExpand">
+            <img :src="book.cover">
+          </v-flex>
+          <v-flex :xs6="vExpand" :sm8="vExpand" :xs10="!vExpand" class="book-info">
+            <div class="title text-ellipsis" :class="{ collapsed: !vExpand }">
+              <v-tooltip :bottom="widescreen" :left="!widescreen">
 
-              <router-link
-                v-if="widescreen"
-                slot="activator"
-                :to="`/books/${book.id}`"
-              >{{ book.title }}
-              </router-link>
-              <span v-else slot="activator">{{ book.title }}</span>
+                <router-link
+                  v-if="widescreen"
+                  slot="activator"
+                  :to="`/books/${book.id}`"
+                >{{ book.title }}
+                </router-link>
+                <span v-else slot="activator">{{ book.title }}</span>
 
-              <router-link :to="`/books/${book.id}`">{{ book.title }}</router-link>
-            </v-tooltip>
-          </div>
-          <div v-show="vExpand">
-            <div class="item">
-              <span class="label">开始阅读</span>
-              <human-time v-if="book.started_at" :time="book.started_at" prefix="开始于："/>
-              <span v-else>未读</span>
+                <router-link :to="`/books/${book.id}`">{{ book.title }}</router-link>
+              </v-tooltip>
             </div>
-            <div class="item">
-              <span class="label">更新</span>
-              <human-time :time="book.updated_at" prefix="最近更新："/>
+            <div v-show="vExpand">
+              <div class="item">
+                <span class="label">开始阅读</span>
+                <human-time v-if="book.started_at" :time="book.started_at" prefix="开始于："/>
+                <span v-else>未读</span>
+              </div>
+              <div class="item">
+                <span class="label">更新</span>
+                <human-time :time="book.updated_at" prefix="最近更新："/>
+              </div>
+              <div class="item">
+                <span class="label">已读</span>
+                <span>{{ book.read }}</span> 页
+              </div>
+              <div class="item">
+                <span class="label">总页数</span>
+                <span>{{ book.total }}</span> 页
+              </div>
+              <div class="item">
+                <span class="label">笔记</span>
+                <span>{{ book.notes_count }}</span> 条
+              </div>
             </div>
-            <div class="item">
-              <span class="label">已读</span>
-              <span>{{ book.read }}</span> 页
-            </div>
-            <div class="item">
-              <span class="label">总页数</span>
-              <span>{{ book.total }}</span> 页
-            </div>
-            <div class="item">
-              <span class="label">笔记</span>
-              <span>{{ book.notes_count }}</span> 条
-            </div>
-          </div>
-        </v-flex>
-      </v-layout>
-    </v-card-text>
+          </v-flex>
+        </v-layout>
+      </v-card-text>
 
-    <!--添加笔记按钮-->
-    <v-btn
-      v-show="vExpand && !editMode"
-      v-if="newNoteBtn && username"
-      class="add-note-btn"
-      color="pink"
-      fab
-      dark
-      small
-      absolute
-      :to="createNoteLink"
-    >
-      <mdi-icon icon="plus"/>
-    </v-btn>
+      <!--添加笔记按钮-->
+      <v-btn
+        v-show="vExpand && !editMode"
+        v-if="newNoteBtn && username"
+        class="add-note-btn"
+        color="pink"
+        fab
+        dark
+        small
+        absolute
+        :to="createNoteLink"
+      >
+        <mdi-icon icon="plus"/>
+      </v-btn>
 
-    <!-- 展开收起按钮 -->
-    <v-btn
-      v-if="canExpand"
-      class="toggle-btn"
-      flat
-      icon
-      small
-      absolute
-      @click="onToggle"
-    >
-      <mdi-icon :icon="toggleIcon"/>
-    </v-btn>
+      <!-- 展开收起按钮 -->
+      <v-btn
+        v-if="canExpand"
+        class="toggle-btn"
+        flat
+        icon
+        small
+        absolute
+        @click="onToggle"
+      >
+        <mdi-icon :icon="toggleIcon"/>
+      </v-btn>
 
-    <!-- 编辑系列 -->
-    <item-actions
-      class="actions"
-      :inline="false"
-      :background-color="null"
-      :style="{ top: canExpand ? '40px' : '0' }"
-      v-if="canEdit"
-      v-show="vExpand && editMode"
-      :item="book"
-      :update-handler="updateBook"
-      :delete-handler="deleteBook"
-      :force-delete-handler="forceDeleteBook"
-      force-delete-msg="彻底删除后不可恢复！<br>彻底删除后书中的笔记也会彻底删除！"
-      :edit-handler="editBook"
-      @force-deleted="item => { $emit('force-deleted', item) }"
-    />
+      <!-- 编辑系列 -->
+      <item-actions
+        class="actions"
+        :inline="false"
+        :background-color="null"
+        :style="{ top: canExpand ? '40px' : '0' }"
+        v-if="canEdit"
+        v-show="vExpand && editMode"
+        :item="book"
+        :update-handler="updateBook"
+        :delete-handler="deleteBook"
+        :force-delete-handler="forceDeleteBook"
+        force-delete-msg="彻底删除后不可恢复！<br>彻底删除后书中的笔记也会彻底删除！"
+        :edit-handler="editBook"
+        @force-deleted="item => $set(item, 'force_deleted', true)"
+      />
 
-    <hidden-mark v-show="vExpand && book.hidden && !editMode"/>
-  </v-card>
+      <hidden-mark v-show="vExpand && book.hidden && !editMode"/>
+    </v-card>
+  </v-slide-x-reverse-transition>
 </template>
 
 <script>
@@ -191,6 +193,7 @@ $add-note-btn-pos: 12px;
 
   .cover {
     max-width: 150px;
+
     img {
       width: 100%;
     }
