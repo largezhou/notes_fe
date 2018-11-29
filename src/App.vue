@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-resize="onWindowResize" :class="{ 'edit-mode': editMode }">
+  <div id="app" v-resize="onWindowResize" :class="[{ 'edit-mode': editMode }, deviceClass]">
     <v-app>
       <navbar ref="navbar"/>
       <v-content>
@@ -29,7 +29,11 @@ export default {
   computed: {
     ...mapState({
       widescreen: state => state.app.widescreen,
+      device: state => state.app.device,
     }),
+    deviceClass() {
+      return `device-${this.device}`
+    },
   },
   methods: {
     onWindowResize() {

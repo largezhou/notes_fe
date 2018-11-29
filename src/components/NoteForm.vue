@@ -264,4 +264,14 @@ export default {
     font-weight: 900;
   }
 }
+
+.v-card__text {
+  padding: 16px 6px;
+}
+
+.device-mobile {
+  .v-card__text {
+    padding: 16px 0;
+  }
+}
 </style>
