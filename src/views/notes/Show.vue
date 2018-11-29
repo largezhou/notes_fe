@@ -1,7 +1,11 @@
 <template>
   <page-layout :loading="loading">
     <template v-if="note">
-      <book-info-card :book="book" :expand="false"/>
+      <book-info-card
+        :book="book"
+        :expand="false"
+        @force-deleted="$router.push({ name: 'bookIndex' })"
+      />
       <post-detail-card
         :post="note"
         :update-handler="updateNote"
