@@ -1,5 +1,5 @@
 <template>
-  <component :is="wrapperComponent" @afterLeave="$emit('force-deleted', book)">
+  <component :is="wrapperComponent" @afterLeave="forceDeletedHandler(book)">
     <v-card class="book-info-card" :class="{ collapsed: !vExpand }" v-if="book" v-show="!book.force_deleted">
       <v-card-text>
         <v-layout row wrap>
@@ -126,6 +126,12 @@ export default {
       type: Boolean,
       default: false,
     },
+    forceDeletedHandler: {
+      type: Function,
+      default() {
+         this.$router.push({ name: 'bookIndex' })
+      },
+    },
   },
   data: () => ({
     vExpand: true,
@@ -188,7 +194,8 @@ export default {
       if (this.animate) {
         this.$set(item, 'force_deleted', true)
       } else {
-        this.$emit('force-deleted', item)
+        this.forceDeletedHandler(item)
+        // this.$emit('force-deleted', item)
       }
     },
   },

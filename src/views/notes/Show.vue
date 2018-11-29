@@ -4,7 +4,6 @@
       <book-info-card
         :book="book"
         :expand="false"
-        @force-deleted="$router.push({ name: 'bookIndex' })"
       />
       <post-detail-card
         :post="note"

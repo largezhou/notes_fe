@@ -6,7 +6,7 @@
         :key="book.id"
         :book="book"
         :can-expand="false"
-        @force-deleted="onForceDelete(book, index)"
+        :force-deleted-handler="onForceDelete(index)"
         animate
       />
     </template>
@@ -43,8 +43,10 @@ export default {
         })
     },
 
-    onForceDelete(book, index) {
-      this.books.splice(index, 1)
+    onForceDelete(index) {
+      return item => {
+        this.books.splice(index, 1)
+      }
     },
   },
   watch: {

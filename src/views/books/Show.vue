@@ -3,7 +3,6 @@
     <template v-if="book">
       <book-info-card
         :book="book"
-        @force-deleted="$router.push({ name: 'bookIndex' })"
       />
 
       <v-card class="read-progress">
