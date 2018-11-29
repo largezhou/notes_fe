@@ -264,3 +264,11 @@ export default {
   },
 }
 </script>
+
+<style scoped lang="scss">
+.device-mobile {
+  .v-card__text {
+    padding: 16px 0;
+  }
+}
+</style>
