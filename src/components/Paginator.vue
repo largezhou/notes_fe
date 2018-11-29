@@ -1,5 +1,8 @@
 <template>
-  <div class="text-xs-center" v-if="page">
+  <div
+    class="text-xs-center"
+    v-if="page && page.total > 0 && page.last_page > 1"
+  >
     <v-pagination
       :value="page.current_page"
       :length="page.last_page"

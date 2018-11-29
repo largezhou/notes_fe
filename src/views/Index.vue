@@ -22,11 +22,10 @@
             :item="item"
             @force-deleted="onForceDelete(item, index)"
           />
+          <paginator :page="page"/>
         </template>
 
         <empty v-else/>
-
-        <paginator v-if="notes.length" v-show="!loading" :page="page"/>
       </v-flex>
     </v-layout>
   </v-container>

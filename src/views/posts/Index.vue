@@ -9,7 +9,7 @@
       />
     </template>
     <empty v-else/>
-    <paginator v-if="posts.length" :page="page"/>
+    <paginator :page="page"/>
   </page-layout>
 </template>
 
