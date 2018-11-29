@@ -16,7 +16,7 @@
             <v-flex xs12>
               <v-textarea
                 label="描述（选填）"
-                hint="会自动截取笔记内容的前部"
+                hint="留空会自动截取部分内容"
                 :error-messages="validateErrors('form.desc')"
                 v-model="$v.form.desc.$model"
                 rows="2"
