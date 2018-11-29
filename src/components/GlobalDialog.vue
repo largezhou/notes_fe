@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="shown" :max-width="maxWidth">
-    <v-card>
+    <v-card :class="[ className ]" @keydown.esc="test">
       <v-card-title class="headline" v-if="title" v-text="title"/>
 
       <v-card-text v-if="typeof content == 'function'">
@@ -9,7 +9,7 @@
       <v-card-text v-else-if="html" v-html="content"/>
       <v-card-text v-else v-text="content"/>
 
-      <v-card-actions>
+      <v-card-actions v-if="actions">
         <v-spacer></v-spacer>
         <v-btn color="blue darken-1" flat @click="shown = false">确定</v-btn>
       </v-card-actions>
@@ -50,9 +50,26 @@ export default Vue.extend({
       default: 290,
     },
     html: Boolean,
+    className: String,
+    actions: {
+      type: Boolean,
+      default: true,
+    },
+    escCLose: Boolean,
   },
   mounted() {
     this.shown = true
+    document.addEventListener('keydown', this.onEscDown)
+  },
+  beforeDestroy() {
+    document.removeEventListener('keydown', this.onEscDown)
+  },
+  methods: {
+    onEscDown(e) {
+      if (this.escCLose && e.code == 'Escape') {
+        this.shown = false
+      }
+    },
   },
   watch: {
     shown(newValue) {
