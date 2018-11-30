@@ -48,12 +48,6 @@ export default {
               })
             },
           })
-          // const a = document.createElement('a')
-          // a.href = e.target.src
-          // a.target = '_blank'
-          // document.body.appendChild(a)
-          // a.click()
-          // document.body.removeChild(a)
         })
       })
     },
