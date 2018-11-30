@@ -1,5 +1,9 @@
 <template>
-  <v-dialog v-model="shown" :max-width="maxWidth" :content-class="className">
+  <v-dialog
+    v-model="shown"
+    :max-width="maxWidth"
+    :content-class="className"
+  >
     <v-card>
       <v-card-title class="headline" v-if="title" v-text="title"/>
 
