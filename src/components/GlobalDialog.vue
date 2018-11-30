@@ -1,6 +1,6 @@
 <template>
-  <v-dialog v-model="shown" :max-width="maxWidth">
-    <v-card :class="[ className ]" @keydown.esc="test">
+  <v-dialog v-model="shown" :max-width="maxWidth" :content-class="className">
+    <v-card>
       <v-card-title class="headline" v-if="title" v-text="title"/>
 
       <v-card-text v-if="typeof content == 'function'">

@@ -3,10 +3,17 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'MarkdownBody',
   props: {
     content: String,
+  },
+  computed: {
+    ...mapState({
+      device: state => state.app.device,
+    }),
   },
   mounted() {
     this.handleFootnoteAnchor()
@@ -37,7 +44,7 @@ export default {
             title: '',
             maxWidth: '100%',
             className: 'img-preview',
-            actions: false,
+            actions: this.device == 'mobile',
             escCLose: true,
             content(h) {
               return h('v-img', {
@@ -70,6 +77,12 @@ export default {
 </style>
 
 <style lang="scss">
+.device-mobile {
+  .img-preview {
+    margin: 4px;
+  }
+}
+
 .img-preview {
   .v-card__text {
     padding: 0;
