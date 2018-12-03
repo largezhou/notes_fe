@@ -123,6 +123,15 @@ const otherRouters = [
         },
         component: () => import('@/views/posts/Edit'),
       },
+
+      {
+        path: 'search',
+        name: 'search',
+        meta: {
+          keepAlive: true,
+        },
+        component: () => import('@/views/Search'),
+      },
     ],
   },
 ]

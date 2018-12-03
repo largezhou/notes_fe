@@ -17,7 +17,11 @@
           <v-btn to="/tags" flat>标签</v-btn>
           <v-btn to="/posts" flat>博客</v-btn>
         </v-toolbar-items>
+
         <v-spacer @click="onGoLogin" style="height: 60px"/>
+
+        <navbar-search/>
+
         <v-toolbar-items v-if="widescreen && username">
           <v-menu left offset-y>
             <v-btn slot="activator" flat class="more-menu">
@@ -63,10 +67,14 @@
 import { mapState } from 'vuex'
 import utils from '@/libs/utils'
 import NewBook from '@/components/NewBook'
+import NavbarSearch from '@/components/NavbarSearch'
 
 export default {
   name: 'Navbar',
-  components: { NewBook },
+  components: {
+    NewBook,
+    NavbarSearch,
+  },
   computed: {
     ...mapState({
       username: state => state.user.name,
