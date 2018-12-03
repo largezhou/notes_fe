@@ -57,7 +57,7 @@ export default {
         this.q = ''
 
         if (newValue.name == 'search') {
-          this.q = newValue.query.q
+          this.q = newValue.query.q || ''
         }
       },
       immediate: true,

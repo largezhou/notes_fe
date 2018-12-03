@@ -1,6 +1,6 @@
 <template>
   <page-layout
-    :page-desc="`搜索 “${q}” 的结果`"
+    :page-desc="pageDesc"
     :loading="loading"
   >
     <template v-if="items.length">
@@ -31,7 +31,12 @@ export default {
   },
   computed: {
     q() {
-      return this.$route.query.q
+      return this.$route.query.q || ''
+    },
+    pageDesc() {
+      return this.q
+        ? `搜索 “${this.q}” 的结果`
+        : '搜啥搜呢'
     },
   },
   data: () => ({
