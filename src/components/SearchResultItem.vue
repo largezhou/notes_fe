@@ -2,9 +2,11 @@
   <v-slide-x-reverse-transition>
     <v-card class="search-result">
       <v-card-title class="title" v-if="link || item.title">
-        <mdi-icon v-if="icon" :icon="icon"/>
 
-        <router-link v-if="link" :to="link" v-html="title"/>
+        <router-link v-if="link" :to="link">
+          <mdi-icon v-if="icon" :icon="icon"/>
+          <span v-html="title"/>
+        </router-link>
         <span v-else v-html="title"/>
       </v-card-title>
 
