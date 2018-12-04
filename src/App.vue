@@ -2,7 +2,7 @@
   <div id="app" v-resize="onWindowResize" :class="[{ 'edit-mode': editMode }, deviceClass]">
     <v-app>
       <navbar ref="navbar"/>
-      <v-content>
+      <v-content :style="{ marginTop }">
         <keep-alive>
           <router-view v-if="$route.meta.keepAlive" :key="$route.name"/>
         </keep-alive>
@@ -25,7 +25,15 @@ import SliderBar from '@/components/SliderBar'
 
 export default {
   name: 'App',
-  components: { SliderBar, Navbar, BackToTop, GlobalConfirm },
+  components: {
+    SliderBar,
+    Navbar,
+    BackToTop,
+    GlobalConfirm,
+  },
+  data: () => ({
+    marginTop: '64px',
+  }),
   computed: {
     ...mapState({
       widescreen: state => state.app.widescreen,
@@ -37,21 +45,25 @@ export default {
   },
   methods: {
     onWindowResize() {
-      const widescreen = window.innerWidth >= 600
+      const width = window.innerWidth
 
+      // 更新是不是宽屏的状态
+      const widescreen = width >= 600
       if (widescreen != this.widescreen) {
         this.$store.commit('changeWidescreen', widescreen)
       }
+
+      // 捉摸不透导航栏的高度是怎么变化的，就这样 hack 一下
+      clearTimeout(this._st)
+      this._st = setTimeout(() => {
+        this.marginTop = this.$refs.navbar.$el.offsetHeight + 'px'
+      }, 500)
     },
   },
 }
 </script>
 
 <style lang="scss">
-.v-content {
-  margin-top: 64px;
-}
-
 #app .v-speed-dial {
   position: fixed;
 }
