@@ -69,5 +69,9 @@ export default {
 <style scoped lang="scss">
 .navbar-search {
   flex-grow: 0;
+
+  /deep/ .v-input__control {
+    min-height: 40px;
+  }
 }
 </style>

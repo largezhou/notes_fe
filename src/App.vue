@@ -49,7 +49,7 @@ export default {
 
 <style lang="scss">
 .v-content {
-  margin-top: 60px;
+  margin-top: 64px;
 }
 
 #app .v-speed-dial {

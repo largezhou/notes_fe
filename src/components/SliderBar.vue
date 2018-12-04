@@ -11,6 +11,7 @@
           <v-list-tile-avatar>
             <img width="30" height="30" src="@/assets/logo.png">
           </v-list-tile-avatar>
+          笔记首页
         </v-list-tile>
       </v-list>
     </v-toolbar>
