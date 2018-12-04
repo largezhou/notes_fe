@@ -70,7 +70,6 @@ export default {
 @import '~@/styles/variables';
 
 .post-info-card {
-  margin-top: 10px;
   position: relative;
   overflow: hidden;
 }

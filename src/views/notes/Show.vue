@@ -4,6 +4,7 @@
       <book-info-card
         :book="book"
         :expand="false"
+        style="margin-bottom: 10px;"
       />
       <post-detail-card
         :post="note"
