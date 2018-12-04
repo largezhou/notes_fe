@@ -1,5 +1,5 @@
 <template>
-  <v-slide-x-reverse-transition @afterLeave="$emit('force-deleted', post)">
+  <v-slide-y-reverse-transition @afterLeave="$emit('force-deleted', post)">
     <v-card class="post" v-show="!post.force_deleted">
       <v-card-title class="title">
         <router-link :to="`/posts/${post.id}`">{{ post.title }}</router-link>
@@ -23,7 +23,7 @@
 
       <hidden-mark v-show="post.hidden && !editMode"/>
     </v-card>
-  </v-slide-x-reverse-transition>
+  </v-slide-y-reverse-transition>
 </template>
 
 <script>

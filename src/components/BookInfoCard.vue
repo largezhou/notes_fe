@@ -158,7 +158,7 @@ export default {
     },
     wrapperComponent() {
       return this.animate
-        ? 'v-slide-x-reverse-transition'
+        ? 'v-slide-y-reverse-transition'
         : 'div'
     },
   },

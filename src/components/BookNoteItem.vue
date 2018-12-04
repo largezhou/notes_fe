@@ -1,5 +1,5 @@
 <template>
-  <v-slide-x-reverse-transition @afterLeave="$emit('force-deleted', item)">
+  <v-slide-y-reverse-transition @afterLeave="$emit('force-deleted', item)">
     <v-card class="note-item" v-show="!item.force_deleted">
       <v-card-title>
         <div class="belong">
@@ -34,7 +34,7 @@
 
       <hidden-mark v-show="item.hidden && !editMode"/>
     </v-card>
-  </v-slide-x-reverse-transition>
+  </v-slide-y-reverse-transition>
 </template>
 
 <script>

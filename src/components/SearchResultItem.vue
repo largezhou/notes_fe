@@ -1,5 +1,5 @@
 <template>
-  <v-slide-x-reverse-transition>
+  <v-slide-y-reverse-transition>
     <v-card class="search-result">
       <v-card-title class="title" v-if="link || item.title">
 
@@ -12,7 +12,7 @@
 
       <v-card-text v-if="item.content" v-html="item.content"/>
     </v-card>
-  </v-slide-x-reverse-transition>
+  </v-slide-y-reverse-transition>
 </template>
 
 <script>
