@@ -23,6 +23,7 @@
 
 <script>
 import Vue from 'vue'
+import router from '@/router'
 
 const DialogContent = {
   name: 'DialogContent',
@@ -38,6 +39,7 @@ const DialogContent = {
 }
 
 export default Vue.extend({
+  router,
   name: 'GlobalDialog',
   components: { DialogContent },
   data: () => ({
@@ -86,6 +88,9 @@ export default Vue.extend({
           }, 500)
         })
       }
+    },
+    $route() {
+      this.shown = false
     },
   },
 })
