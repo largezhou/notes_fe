@@ -6,18 +6,11 @@
     hide-details
     label="搜索..."
     :style="{ marginRight: widescreen ? '10px' : '0' }"
-    @focus="focused = true"
-    @blur="focused = false"
     v-model="q"
+    append-icon="mdi-magnify"
     @keydown.enter="onSearch"
-  >
-    <mdi-icon
-      slot="append"
-      icon="magnify"
-      :color="focused ? 'primary' : 'white'"
-      @click="onSearch"
-    />
-  </v-text-field>
+    @click:append="onSearch"
+  />
 </template>
 
 <script>
@@ -31,8 +24,6 @@ export default {
     }),
   },
   data: () => ({
-    focused: false,
-    active: false,
     q: '',
   }),
   methods: {
