@@ -197,7 +197,7 @@ export default {
       postCreateImage(formData)
         .then(res => {
           const data = res.data
-          this.$refs.editor.$img2Url(pos, data.origin + data.src)
+          this.$refs.editor.$img2Url(pos, data.src)
         })
     },
 
