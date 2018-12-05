@@ -1,5 +1,7 @@
 import { getToken, removeToken, setToken } from '@/libs/token'
 import { login, getInfo, logout } from '@/api/auth'
+import utils from '@/libs/utils'
+import router from '@/router'
 
 export default {
   state: {
@@ -59,7 +61,13 @@ export default {
           .then(res => {
             dispatch('clearAuth')
             removeToken()
+            sessionStorage.removeItem('editMode')
             resolve()
+            if (utils.needAuth(router.currentRoute)) {
+              location.href = '/'
+            } else {
+              location.reload()
+            }
           })
           .catch(err => {
             reject(err)

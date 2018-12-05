@@ -91,16 +91,7 @@ export default {
   },
   methods: {
     onLogout() {
-      this.$store
-        .dispatch('logout')
-        .then(() => {
-          this.$snackbar('已退出')
-          if (utils.needAuth(this.$route)) {
-            location.href = '/'
-          } else {
-            location.reload()
-          }
-        })
+      this.$store.dispatch('logout')
     },
 
     onToggleSliderBar() {

@@ -98,7 +98,6 @@ export default {
           data: this.form,
         })
         .then(res => {
-          this.$snackbar('登录成功')
           const r = this.$route.query._redirect
           const to = r || '/'
 

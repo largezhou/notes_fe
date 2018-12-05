@@ -122,14 +122,7 @@ export default {
     onLogout() {
       this.onClick()
 
-      this.$store
-        .dispatch('logout')
-        .then(() => {
-          this.$snackbar('已退出')
-          if (utils.needAuth(this.$route)) {
-            this.$router.push({ name: 'index' })
-          }
-        })
+      this.$store.dispatch('logout')
     },
     onToggleEditMode() {
       this.onClick()
