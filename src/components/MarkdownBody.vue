@@ -93,8 +93,14 @@ export default {
 
 <style scoped lang="scss">
 .markdown-body {
-  /deep/ img {
-    cursor: pointer;
+  /deep/ {
+    .katex-display {
+      overflow-x: auto;
+    }
+
+    img {
+      cursor: pointer;
+    }
   }
 }
 </style>
