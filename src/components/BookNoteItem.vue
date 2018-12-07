@@ -14,7 +14,22 @@
         </div>
       </v-card-title>
 
-      <v-card-text v-if="item.desc" class="desc">{{ item.desc }}</v-card-text>
+      <v-card-text
+        v-show="!showDetail"
+        class="desc"
+        @click="onLoadDetail"
+        ref="desc"
+      >
+        <v-progress-linear :indeterminate="true" v-if="loading" :height="15"/>
+        <span v-show="!loading">{{ item.desc || '详情>>>' }}</span>
+      </v-card-text>
+      <v-card-text
+        v-show="showDetail"
+        class="desc"
+        @click="showDetail = false"
+      >
+        <markdown-body :content="item.html_content"/>
+      </v-card-text>
 
       <tags :tags="item.tags"/>
 
@@ -41,16 +56,28 @@ import Tags from '@/components/Tags'
 import HiddenMark from '@/components/HiddenMark'
 import ItemActions from '@/components/ItemActions'
 import { mapState } from 'vuex'
-import { updateNote, deleteNote, forceDeleteNote } from '@/api/notes'
+import { updateNote, deleteNote, forceDeleteNote, getNote } from '@/api/notes'
+import MarkdownBody from '@/components/MarkdownBody'
 
 export default {
   name: 'BookNoteItem',
-  components: { HumanTime, Tags, ItemActions, HiddenMark },
+  components: {
+    MarkdownBody,
+    HumanTime,
+    Tags,
+    ItemActions,
+    HiddenMark,
+  },
   props: {
     item: Object,
     disableBook: Boolean,
     book: Object,
   },
+  data: () => ({
+    loading: false,
+    showDetail: false,
+    descHeight: 0,
+  }),
   created() {
     this.updateNote = updateNote
     this.deleteNote = deleteNote
@@ -59,14 +86,37 @@ export default {
       this.$router.push(`/notes/${this.item.id}/edit`)
     }
   },
+  mounted() {
+    this.$nextTick(() => {
+      this.descHeight = this.$refs.desc.offsetHeight
+    })
+  },
   computed: {
     ...mapState({
       username: state => state.user.name,
     }),
   },
   methods: {
-    pageLink(book, page) {
-      return `/books/${book}/pages/${page}`
+    onLoadDetail() {
+      if (this.loading) {
+        return
+      }
+
+      if (this.item.html_content) {
+        this.showDetail = true
+        return
+      }
+
+      this.loading = true
+
+      getNote(this.item.id, { only: 'html_content' })
+        .then(res => {
+          this.$set(this.item, 'html_content', res.data.html_content)
+          this.showDetail = true
+        })
+        .finally(() => {
+          this.loading = false
+        })
     },
   },
 }
@@ -93,6 +143,7 @@ export default {
     font-size: 14px;
     padding-top: 10px;
     padding-bottom: 10px;
+    cursor: pointer;
   }
 
   .page-link {
@@ -109,6 +160,12 @@ export default {
 
   .note-hidden-mark {
     color: #ccc;
+  }
+
+  /deep/ {
+    .v-progress-linear {
+      margin: 3px 0;
+    }
   }
 }
 
