@@ -55,6 +55,7 @@ export default {
           const data = res.data
           this.note = data.note
           this.book = data.book
+          this.note.title = `${this.book.title} • 第${this.note.page}页`
         })
     },
     onForceDeleted(item) {

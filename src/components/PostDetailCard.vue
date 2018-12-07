@@ -1,7 +1,7 @@
 <template>
   <v-card class="post-info-card" v-if="post">
     <v-card-text class="post-content-card">
-      <h1 style="text-align: center">{{ post.title || '-- UNDEFINED TITLE --'}}</h1>
+      <h1 style="text-align: center">{{ post.title }}</h1>
       <div class="time">
         <v-tooltip top>
           <span slot="activator">{{ post.created_at }}</span>
@@ -14,7 +14,7 @@
         </v-tooltip>
       </div>
 
-      <tags :tags="post.tags" style="margin-top: 10px;"/>
+      <tags :tags="post.tags" style="margin: 10px 0;"/>
 
       <markdown-body :content="post.html_content"/>
 
