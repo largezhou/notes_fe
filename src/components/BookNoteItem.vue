@@ -82,9 +82,7 @@ export default {
     this.updateNote = updateNote
     this.deleteNote = deleteNote
     this.forceDeleteNote = forceDeleteNote
-    this.editNote = () => {
-      this.$router.push(`/notes/${this.item.id}/edit`)
-    }
+    this.editNote = `/notes/${this.item.id}/edit`
   },
   mounted() {
     this.$nextTick(() => {

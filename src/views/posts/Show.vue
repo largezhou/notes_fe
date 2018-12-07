@@ -37,15 +37,14 @@ export default {
     this.deletePost = deletePost
     this.updatePost = updatePost
     this.forceDeletePost = forceDeletePost
-    this.editPost = () => {
-      this.$router.push(`/posts/${this.post.id}/edit`)
-    }
+    this.editPost = ''
   },
   methods: {
     _getData(postId = this.$route.params.postId) {
       return getPost(postId)
         .then(res => {
           this.post = res.data
+          this.editPost = `/posts/${this.post.id}/edit`
         })
     },
   },

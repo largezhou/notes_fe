@@ -56,7 +56,7 @@ export default {
     updateHandler: Function,
     deleteHandler: Function,
     forceDeleteHandler: Function,
-    editHandler: Function,
+    editHandler: [Function, String],
   },
   computed: {
     ...mapState({

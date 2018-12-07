@@ -48,9 +48,7 @@ export default {
     this.deletePost = deletePost
     this.updatePost = updatePost
     this.forceDeletePost = forceDeletePost
-    this.editPost = () => {
-      this.$router.push(`/posts/${this.post.id}/edit`)
-    }
+    this.editPost = `/posts/${this.post.id}/edit`
   },
 }
 </script>

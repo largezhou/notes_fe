@@ -8,7 +8,7 @@
     </v-list-tile>
 
     <!-- 编辑 -->
-    <v-list-tile @click="onEdit">
+    <v-list-tile @click="onEdit" :to="editLink">
       <v-list-tile-action>
         <mdi-icon icon="pencil"/>
       </v-list-tile-action>
@@ -47,7 +47,7 @@ export default {
     deleteHandler: Function,
     forceDeleteHandler: Function,
     forceDeleteMsg: String,
-    editHandler: Function,
+    editHandler: [String, Function],
     inline: {
       type: Boolean,
       default: true,
@@ -55,6 +55,15 @@ export default {
     backgroundColor: {
       type: String,
       default: 'rgba(234, 234, 234, 0.5)',
+    },
+  },
+  computed: {
+    editLink() {
+      if (typeof this.editHandler == 'function') {
+        return ''
+      } else {
+        return this.editHandler
+      }
     },
   },
   methods: {
@@ -71,7 +80,9 @@ export default {
         })
     },
     onEdit() {
-      this.editHandler()
+      if (typeof this.editHandler == 'function') {
+        this.editHandler()
+      }
     },
 
     onDeleteOrRestore() {

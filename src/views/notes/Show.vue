@@ -44,9 +44,7 @@ export default {
     this.updateNote = updateNote
     this.deleteNote = deleteNote
     this.forceDeleteNote = forceDeleteNote
-    this.editNote = () => {
-      this.$router.push(`/notes/${this.note.id}/edit`)
-    }
+    this.editNote = ''
   },
   methods: {
     _getData(id = this.$route.params.noteId) {
@@ -56,6 +54,8 @@ export default {
           this.note = data.note
           this.book = data.book
           this.note.title = `${this.book.title} • 第${this.note.page}页`
+
+          this.editNote = `/notes/${this.note.id}/edit`
         })
     },
     onForceDeleted(item) {
