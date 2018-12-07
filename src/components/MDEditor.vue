@@ -47,36 +47,39 @@ export default {
       type: String,
       default: ' ',
     },
+    defaultHeight: Number,
   },
-  data: () => ({
-    dirty: false,
-    externalLink: {
-      markdown_css() {
-        return '/markdown/github-markdown.min.css'
+  data() {
+    return {
+      dirty: false,
+      externalLink: {
+        markdown_css() {
+          return '/markdown/github-markdown.min.css'
+        },
+        hljs_js() {
+          return '/highlightjs/highlight.min.js'
+        },
+        hljs_css(css) {
+          return '/highlightjs/styles/' + css + '.min.css'
+        },
+        hljs_lang(lang) {
+          return '/highlightjs/languages/' + lang + '.min.js'
+        },
+        katex_css() {
+          return '/katex/katex.min.css'
+        },
+        katex_js() {
+          return '/katex/katex.min.js'
+        },
       },
-      hljs_js() {
-        return '/highlightjs/highlight.min.js'
-      },
-      hljs_css(css) {
-        return '/highlightjs/styles/' + css + '.min.css'
-      },
-      hljs_lang(lang) {
-        return '/highlightjs/languages/' + lang + '.min.js'
-      },
-      katex_css() {
-        return '/katex/katex.min.css'
-      },
-      katex_js() {
-        return '/katex/katex.min.js'
-      },
-    },
 
-    fullscreen: false,
+      fullscreen: false,
 
-    // 每次拖动更新该值，用来记录上一个鼠标位置，判断往上还是往下拖
-    dragging: 0,
-    editorHeight: 0,
-  }),
+      // 每次拖动更新该值，用来记录上一个鼠标位置，判断往上还是往下拖
+      dragging: 0,
+      editorHeight: this.defaultHeight,
+    }
+  },
   computed: {
     ...mapState({
       widescreen: state => state.app.widescreen,
@@ -261,6 +264,7 @@ export default {
 
     &.fullscreen {
       height: auto !important;
+      max-height: 100% !important;
     }
 
     &.mobile {

@@ -35,6 +35,7 @@
                 :error-messages="validateErrors('form.content')"
                 v-model="$v.form.content.$model"
                 @change="onContentChange"
+                :default-height="400"
               />
             </v-flex>
 
@@ -182,18 +183,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/deep/ {
-  .v-note-wrapper {
-    &.widescreen {
-      height: 400px;
-    }
-
-    &.fullscreen {
-      height: auto;
-    }
-  }
-}
-
 .v-card__text {
   padding: 16px 6px;
 }

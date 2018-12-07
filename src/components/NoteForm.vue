@@ -3,72 +3,53 @@
     <v-card-text>
       <v-container grid-list-md>
         <v-form ref="form" v-if="book">
-          <v-tabs slider-color="primary" grow>
-            <v-tab :class="{ 'has-error': contentError }" ripple>内容</v-tab>
-            <v-tab :class="{ 'has-error': otherError }" ripple>其他</v-tab>
-            <v-tab-item>
-              <v-layout wrap justify-center>
-                <v-flex xs7>
-                  <v-text-field
-                    label="第几页？"
-                    type="number"
-                    min="1"
-                    :max="book.total"
-                    :error-messages="validateErrors('form.page')"
-                    v-model="$v.form.page.$model"
-                  />
-                </v-flex>
+          <v-layout wrap justify-center>
+            <v-flex xs12>
+              <v-textarea
+                label="描述（选填）"
+                hint="留空会自动截取部分内容"
+                :error-messages="validateErrors('form.desc')"
+                v-model="$v.form.desc.$model"
+                rows="2"
+              />
+            </v-flex>
 
-                <v-flex xs5>
-                  <v-checkbox
-                    label="已读到此处"
-                    v-model="form.mark_read"
-                    color="primary"
-                    checked
-                    @change="markReadDirty = true"
-                  />
-                </v-flex>
+            <v-flex xs12>
+              <tags-selector v-model="form.tags"/>
+            </v-flex>
 
-                <v-flex xs12>
-                  <m-d-editor
-                    label="笔记"
-                    :error-messages="validateErrors('form.content')"
-                    v-model="$v.form.content.$model"
-                    @change="onContentChange"
-                  />
-                </v-flex>
+            <v-flex xs7>
+              <v-text-field
+                label="第几页？"
+                type="number"
+                min="1"
+                :max="book.total"
+                :error-messages="validateErrors('form.page')"
+                v-model="$v.form.page.$model"
+              />
+            </v-flex>
 
-              </v-layout>
-            </v-tab-item>
+            <v-flex xs5>
+              <v-checkbox
+                label="已读到此处"
+                v-model="form.mark_read"
+                color="primary"
+                checked
+                @change="markReadDirty = true"
+              />
+            </v-flex>
 
-            <v-tab-item>
-              <v-layout wrap justify-center>
-                <v-flex xs12>
-                  <v-text-field
-                    label="标题（选填）"
-                    :error-messages="validateErrors('form.title')"
-                    v-model="$v.form.title.$model"
-                  />
-                </v-flex>
+            <v-flex xs12>
+              <m-d-editor
+                label="笔记"
+                :error-messages="validateErrors('form.content')"
+                v-model="$v.form.content.$model"
+                @change="onContentChange"
+                :default-height="350"
+              />
+            </v-flex>
 
-                <v-flex xs12>
-                  <v-textarea
-                    label="描述（选填）"
-                    hint="留空会自动截取部分内容"
-                    :error-messages="validateErrors('form.desc')"
-                    v-model="$v.form.desc.$model"
-                    rows="2"
-                  />
-                </v-flex>
-
-                <v-flex xs12>
-                  <tags-selector v-model="form.tags"/>
-                </v-flex>
-
-              </v-layout>
-            </v-tab-item>
-          </v-tabs>
-
+          </v-layout>
         </v-form>
       </v-container>
     </v-card-text>
@@ -103,9 +84,6 @@ export default {
           minValue: minValue(1),
           maxValue: maxValue(this.book ? this.book.total : 0),
         },
-        title: {
-          maxLength: maxLength(255),
-        },
         desc: {
           maxLength: maxLength(255),
         },
@@ -121,7 +99,6 @@ export default {
     return {
       form: {
         page: '',
-        title: '',
         desc: '',
         content: '',
         tags: [],
@@ -136,9 +113,6 @@ export default {
             integer: '必须是整数',
             minValue: '不能小于1',
             maxValue: '不能超过书的总页数',
-          },
-          title: {
-            maxLength: '标题长度不能大于255个字',
           },
           desc: {
             maxLength: '描述长度不能大于255个字',
@@ -160,14 +134,6 @@ export default {
   },
   created() {
     this.note && this.onReset()
-  },
-  computed: {
-    contentError() {
-      return this.fieldsAnyError(['content', 'page'])
-    },
-    otherError() {
-      return this.fieldsAnyError(['title', 'desc'])
-    },
   },
   methods: {
     onClear() {
@@ -258,10 +224,12 @@ export default {
 <style scoped lang="scss">
 @import '~@/styles/variables';
 
-/deep/ .has-error {
-  .v-tabs__item {
-    color: $error-color;
-    font-weight: 900;
+/deep/ {
+  .has-error {
+    .v-tabs__item {
+      color: $error-color;
+      font-weight: 900;
+    }
   }
 }
 
