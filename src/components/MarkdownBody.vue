@@ -96,6 +96,7 @@ export default {
   /deep/ {
     .katex-display {
       overflow-x: auto;
+      overflow-y: hidden;
     }
 
     img {
