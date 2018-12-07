@@ -50,7 +50,7 @@
 
       <!--添加笔记按钮-->
       <v-btn
-        v-show="vExpand && !editMode"
+        v-show="vExpand"
         v-if="newNoteBtn && username"
         class="add-note-btn"
         color="pink"

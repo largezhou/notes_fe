@@ -52,17 +52,14 @@ export default {
 
 <style lang="scss" scoped>
 .tags {
-  margin-top: 10px;
-
   &.one-line {
-    height: 50px;
+    height: 35px;
     position: relative;
-    padding: 8px;
     padding-right: 70px;
     overflow: hidden;
 
     .more {
-      top: 8px;
+      top: -1px;
       right: 8px;
     }
   }

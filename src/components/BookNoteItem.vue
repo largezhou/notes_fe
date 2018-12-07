@@ -14,8 +14,6 @@
         </div>
       </v-card-title>
 
-      <v-card-text v-if="item.title" class="note-title">{{ item.title }}</v-card-text>
-
       <v-card-text v-if="item.desc" class="desc">{{ item.desc }}</v-card-text>
 
       <tags :tags="item.tags"/>
@@ -93,13 +91,8 @@ export default {
 
   .desc {
     font-size: 14px;
-  }
-
-  .note-title {
-    color: $non-important-color;
-    font-size: 14px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 
   .page-link {

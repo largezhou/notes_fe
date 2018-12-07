@@ -14,7 +14,7 @@
         </v-tooltip>
       </div>
 
-      <tags :tags="post.tags"/>
+      <tags :tags="post.tags" style="margin-top: 10px;"/>
 
       <markdown-body :content="post.html_content"/>
 
