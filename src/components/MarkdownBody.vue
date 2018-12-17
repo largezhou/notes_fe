@@ -89,6 +89,7 @@ export default {
 @import '~mavon-editor/dist/highlightjs/styles/monokai-sublime.min.css';
 @import '~mavon-editor/dist/katex/katex.min.css';
 @import '~mavon-editor/dist/markdown/github-markdown.min.css';
+@import '~mavon-editor/dist/css/index.css';
 </style>
 
 <style scoped lang="scss">
