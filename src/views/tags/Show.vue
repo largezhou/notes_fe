@@ -1,5 +1,5 @@
 <template>
-  <page-layout :page-desc="tag ?`${tag.name} • ${tag.count}` : ''" :loading="loading">
+  <page-layout :page-desc="tag ?`${tag.name} • ${tag.targets_count}` : ''" :loading="loading">
     <template v-if="tag">
       <v-tabs
         fixed-tabs
