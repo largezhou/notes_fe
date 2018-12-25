@@ -159,23 +159,25 @@ export default {
       if (this.note) {
         // 更新
         res = updateNote(this.note.id, this.form)
+          .then(res => {
+            this.$router.back()
+          })
       } else {
         // 创建
         res = postCreateNote(this.book.id, this.form)
+          .then(res => {
+            this.$router.push({
+              name: 'noteShow',
+              params: {
+                noteId: res.data.id,
+              },
+            })
+          })
       }
 
-      res
-        .then(res => {
-          this.$router.push({
-            name: 'noteShow',
-            params: {
-              noteId: res.data.id,
-            },
-          })
-        })
-        .catch(() => {
-          this.submitting = false
-        })
+      res.catch(() => {
+        this.submitting = false
+      })
     },
 
     onReset() {

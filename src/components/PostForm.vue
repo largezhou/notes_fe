@@ -139,23 +139,25 @@ export default {
       if (this.post) {
         // 更新
         res = updatePost(this.post.id, this.form)
+          .then(res => {
+            this.$router.back()
+          })
       } else {
         // 创建
         res = postCreatePost(this.form)
+          .then(res => {
+            this.$router.push({
+              name: 'postShow',
+              params: {
+                postId: res.data.id,
+              },
+            })
+          })
       }
 
-      res
-        .then(res => {
-          this.$router.push({
-            name: 'postShow',
-            params: {
-              postId: res.data.id,
-            },
-          })
-        })
-        .catch(() => {
-          this.submitting = false
-        })
+      res.catch(() => {
+        this.submitting = false
+      })
     },
     onClear() {
       this.$refs.form.reset()
