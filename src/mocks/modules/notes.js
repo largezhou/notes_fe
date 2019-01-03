@@ -93,9 +93,14 @@ mock(/\/notes\/\d+/, 'get', {
     note: noteTmpl,
   },
 }, (tmpl, options) => {
-  tmpl.data.note.id = router.currentRoute.params.noteId
-  tmpl.data.note.html_content = detail
-  tmpl.data.book = fullBook
+  let { only } = utils.queryFromUrl(options.url)
+  if (only) {
+    tmpl.data.html_content = detail
+  } else {
+    tmpl.data.note.id = router.currentRoute.params.noteId
+    tmpl.data.note.html_content = detail
+    tmpl.data.book = fullBook
+  }
 })
 
 // 删除
