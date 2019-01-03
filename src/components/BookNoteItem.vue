@@ -3,14 +3,11 @@
     <v-card class="note-item" v-show="!item.force_deleted">
       <v-card-title>
         <div class="belong">
-          <div v-if="disableBook">
-            <router-link class="page-link" :to="`/notes/${item.id}`">第{{ item.page }}页</router-link>
-          </div>
-          <div v-else>
+          <template v-if="!disableBook">
             <router-link :class="{ hidden: item.book.hidden, deleted: item.book.deleted_at }" :to="`/books/${item.book.id}`">{{ item.book.title }}</router-link>
             <span> • </span>
-            <router-link class="page-link" :to="`/notes/${item.id}`">第{{ item.page }}页</router-link>
-          </div>
+          </template>
+          <router-link class="page-link" :to="`/notes/${item.id}`">第{{ item.page }}页</router-link>
         </div>
       </v-card-title>
 
