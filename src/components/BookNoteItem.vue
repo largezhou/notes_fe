@@ -8,13 +8,23 @@
             <span> • </span>
           </template>
           <router-link class="page-link" :to="`/notes/${item.id}`">第{{ item.page }}页</router-link>
+          <v-btn
+            @click="showDetail = !showDetail"
+            class="hide-detail"
+            color="primary"
+            flat
+            icon
+            small
+            absolute
+          >
+            <mdi-icon :icon="showDetail ? 'chevron-up' : 'chevron-down'"/>
+          </v-btn>
         </div>
       </v-card-title>
 
       <v-card-text
         v-show="!showDetail"
         class="desc"
-        @click="onLoadDetail"
         ref="desc"
       >
         <v-progress-linear :indeterminate="true" v-if="loading" :height="15"/>
@@ -23,7 +33,6 @@
       <v-card-text
         v-show="showDetail"
         class="desc"
-        @click="showDetail = false"
       >
         <markdown-body :content="item.html_content"/>
       </v-card-text>
@@ -91,6 +100,11 @@ export default {
       username: state => state.user.name,
     }),
   },
+  watch: {
+    showDetail(newValue) {
+      newValue && this.onLoadDetail()
+    },
+  },
   methods: {
     onLoadDetail() {
       if (this.loading) {
@@ -138,7 +152,6 @@ export default {
     font-size: 14px;
     padding-top: 10px;
     padding-bottom: 10px;
-    cursor: pointer;
   }
 
   .page-link {
@@ -168,5 +181,9 @@ export default {
   right: 0;
   top: 0;
   border-bottom-left-radius: 4px;
+}
+
+.hide-detail {
+  margin-left: 10px;
 }
 </style>
