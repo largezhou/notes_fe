@@ -2,6 +2,10 @@ import _trim from 'lodash/trim'
 
 const Mock = require('mockjs')
 
+Mock.setup({
+  timeout: '200-600',
+})
+
 let baseURL = process.env.VUE_APP_BASE_URL || '/'
 
 const resolve = path => {

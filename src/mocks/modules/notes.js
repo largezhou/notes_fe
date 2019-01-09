@@ -95,7 +95,7 @@ mock(/\/notes\/\d+/, 'get', {
 }, (tmpl, options) => {
   let { only } = utils.queryFromUrl(options.url)
   if (only) {
-    tmpl.data.html_content = detail
+    tmpl.data.html_content = '<h1>HTML_CONTENT</h1><p>嘿嘿嘿~~</p>'
   } else {
     tmpl.data.note.id = router.currentRoute.params.noteId
     tmpl.data.note.html_content = detail

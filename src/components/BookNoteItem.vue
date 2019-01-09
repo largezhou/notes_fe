@@ -9,7 +9,7 @@
           </template>
           <router-link class="page-link" :to="`/notes/${item.id}`">第{{ item.page }}页</router-link>
           <v-btn
-            @click="showDetail = !showDetail"
+            @click="onToggleDetail"
             class="hide-detail"
             color="primary"
             flat
@@ -100,12 +100,14 @@ export default {
       username: state => state.user.name,
     }),
   },
-  watch: {
-    showDetail(newValue) {
-      newValue && this.onLoadDetail()
-    },
-  },
   methods: {
+    onToggleDetail() {
+      if (this.showDetail) {
+        this.showDetail = false
+      } else {
+        this.onLoadDetail()
+      }
+    },
     onLoadDetail() {
       if (this.loading) {
         return
