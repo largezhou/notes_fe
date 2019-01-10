@@ -186,6 +186,6 @@ export default {
 }
 
 .hide-detail {
-  margin-left: 5px;
+  margin: 0px 8px 0px 0px;
 }
 </style>
