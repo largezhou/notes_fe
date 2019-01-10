@@ -8,6 +8,12 @@
         </keep-alive>
         <router-view v-if="!$route.meta.keepAlive"/>
       </v-content>
+      <v-footer color="grey lighten-2 text-xs-center">
+        <div class="container footer-items">
+          <span>Copyright <strong>largezhou</strong></span>
+          <span><strong><a href="mailto:largezhou@hotmail.com">largezhou@hotmail.com</a></strong></span>
+        </div>
+      </v-footer>
     </v-app>
 
     <back-to-top/>
@@ -66,5 +72,13 @@ export default {
 <style lang="scss">
 #app .v-speed-dial {
   position: fixed;
+}
+
+.footer-items {
+  span {
+    + span {
+      margin-left: 20px;
+    }
+  }
 }
 </style>
