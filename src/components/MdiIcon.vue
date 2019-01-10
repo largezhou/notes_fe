@@ -4,7 +4,7 @@
     :width="1.5"
     size="20"
     indeterminate
-    color="rgba(0, 0, 0, .54)"
+    color="color"
   />
   <v-icon
     v-else

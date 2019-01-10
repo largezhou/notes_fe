@@ -3,11 +3,6 @@
     <v-card class="note-item" v-show="!item.force_deleted">
       <v-card-title>
         <div class="belong">
-          <template v-if="!disableBook">
-            <router-link :class="{ hidden: item.book.hidden, deleted: item.book.deleted_at }" :to="`/books/${item.book.id}`">{{ item.book.title }}</router-link>
-            <span> • </span>
-          </template>
-          <router-link class="page-link" :to="`/notes/${item.id}`">第{{ item.page }}页</router-link>
           <v-btn
             @click="onToggleDetail"
             class="hide-detail"
@@ -15,10 +10,17 @@
             flat
             icon
             small
-            absolute
           >
-            <mdi-icon :icon="showDetail ? 'chevron-up' : 'chevron-down'"/>
+            <mdi-icon
+              :icon="showDetail ? 'chevron-up' : 'chevron-down'"
+              :loading="loading"
+            />
           </v-btn>
+          <template v-if="!disableBook">
+            <router-link :class="{ hidden: item.book.hidden, deleted: item.book.deleted_at }" :to="`/books/${item.book.id}`">{{ item.book.title }}</router-link>
+            <span> • </span>
+          </template>
+          <router-link class="page-link" :to="`/notes/${item.id}`">第{{ item.page }}页</router-link>
         </div>
       </v-card-title>
 
@@ -27,8 +29,7 @@
         class="desc"
         ref="desc"
       >
-        <v-progress-linear :indeterminate="true" v-if="loading" :height="15"/>
-        <span v-show="!loading">{{ item.desc || '详情>>>' }}</span>
+        <span>{{ item.desc || '详情>>>' }}</span>
       </v-card-text>
       <v-card-text
         v-show="showDetail"
@@ -147,7 +148,6 @@ export default {
 
   .belong {
     font-size: 18px;
-    margin-bottom: 8px;
   }
 
   .desc {
@@ -186,6 +186,6 @@ export default {
 }
 
 .hide-detail {
-  margin-left: 10px;
+  margin-left: 5px;
 }
 </style>
