@@ -104,6 +104,8 @@ export default {
       cursor: pointer;
     }
   }
+
+  line-height: 1.75;
 }
 </style>
 
