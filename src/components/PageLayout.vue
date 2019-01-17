@@ -2,7 +2,7 @@
 <template>
   <v-container grid-list-md class="content">
     <v-layout row wrap justify-center>
-      <v-flex md10 sm12>
+      <v-flex md11 sm12>
         <div v-if="pageDesc" class="page-desc">~~ {{ pageDesc }} ~~</div>
         <div v-if="loading" class="text-xs-center">
           <v-progress-circular
