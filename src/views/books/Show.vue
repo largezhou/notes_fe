@@ -10,12 +10,22 @@
         <span class="progress-text">{{ readPercent }}%</span>
       </v-card>
       <div class="notes-sort-group">
-        <v-btn flat small @click="onChangeSort('page')">页数
+        <v-btn flat @click="onChangeSort('page')">页数
           <mdi-icon :icon="sortIcon('page')"/>
         </v-btn>
-        <v-btn flat small @click="onChangeSort('created_at')">时间
+        <v-btn flat @click="onChangeSort('created_at')">时间
           <mdi-icon :icon="sortIcon('created_at')"/>
         </v-btn>
+        <v-spacer style="height: 0;"/>
+        <v-text-field
+          class="search-page"
+          flat
+          solo
+          append-icon="mdi-magnify"
+          label="页数..."
+          hide-details
+          @click:append=""
+        />
       </div>
       <div v-if="notes.length">
         <book-note-item
@@ -171,6 +181,7 @@ export default {
 
   .notes-sort-group {
     margin-bottom: 10px;
+    display: flex;
 
     .v-btn {
       margin: 0;
@@ -183,6 +194,16 @@ export default {
     font-size: 14px;
     text-align: center;
     color: $non-important-color;
+  }
+
+  .search-page {
+    max-width: 150px;
+    @media (max-width: 599px) {
+      max-width: 100px;
+    }
+    .v-input__control {
+      min-height: 36px;
+    }
   }
 }
 </style>
