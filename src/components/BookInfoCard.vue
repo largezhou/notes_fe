@@ -133,10 +133,12 @@ export default {
       },
     },
   },
-  data: () => ({
-    vExpand: true,
-    deleteConfirmModal: false,
-  }),
+  data() {
+    return {
+      vExpand: this.expand,
+      deleteConfirmModal: false,
+    }
+  },
   computed: {
     ...mapState({
       username: state => state.user.name,
@@ -163,8 +165,6 @@ export default {
     },
   },
   created() {
-    this.vExpand = this.expand
-
     this.$root.$on('bookUpdated', this.onBookUpdated)
 
     this.deleteBook = deleteBook
@@ -180,6 +180,7 @@ export default {
   methods: {
     onToggle() {
       this.vExpand = !this.vExpand
+      this.$emit('update:expand', this.vExpand)
     },
 
     onBookUpdated(book) {
@@ -197,6 +198,11 @@ export default {
         this.forceDeletedHandler(item)
         // this.$emit('force-deleted', item)
       }
+    },
+  },
+  watch: {
+    expand(newValue) {
+      this.vExpand = newValue
     },
   },
 }

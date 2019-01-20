@@ -1,6 +1,7 @@
 import mock from '../mock'
 import router from '@/router'
 import utils from '@/libs/utils'
+import { noteTmpl } from '@/mocks/modules/notes'
 
 const Mock = require('mockjs')
 const Random = Mock.Random
@@ -52,7 +53,7 @@ mock(/\/books\/\d+(\?.*)?$/, 'get', {
       'total|100-900': 1,
       'notes_count|0-20': 1,
     },
-    'notes|5': [
+    'notes|10': [
       {
         'id|+1': 1,
         title: '@ctitle',
@@ -67,6 +68,14 @@ mock(/\/books\/\d+(\?.*)?$/, 'get', {
         ],
       },
     ],
+    meta: {
+      'current_page': 1,
+      'from': 1,
+      'last_page': 7,
+      'per_page': 15,
+      'to': 15,
+      'total': 100,
+    },
   },
 }, (tmpl, options) => {
   tmpl.data.book.id = router.currentRoute.params.bookId
@@ -98,3 +107,21 @@ mock(/\/books\/\d+/, 'delete')
 
 // 彻底删除
 mock(/\/deleted-books\/\d+/, 'delete')
+
+// 获取书籍的笔记
+mock(/\/books\/\d+\/notes(\?.*)?$/, 'get', {
+  data: {
+    'data|10': [
+      noteTmpl,
+    ],
+    meta: {
+      'current_page': 1,
+      'from': 1,
+      'last_page': 7,
+      'per_page': 15,
+      'to': 15,
+      'total': 100,
+    },
+  },
+}, (tmpl, options) => {
+})

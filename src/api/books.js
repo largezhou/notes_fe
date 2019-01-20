@@ -50,3 +50,11 @@ export function forceDeleteBook(bookId) {
     method: 'delete',
   })
 }
+
+export function getBooksNotes(bookId, params) {
+  return axios({
+    url: `books/${bookId}/notes`,
+    method: 'get',
+    params,
+  })
+}

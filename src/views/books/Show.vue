@@ -3,6 +3,7 @@
     <template v-if="book">
       <book-info-card
         :book="book"
+        :expand.sync="expandBookCard"
       />
 
       <v-card class="read-progress">
@@ -27,17 +28,28 @@
           @click:append=""
         />
       </div>
-      <div v-if="notes.length">
-        <book-note-item
-          v-for="(item, index) of notes"
-          :key="item.id"
-          :item="item"
-          :book="book"
-          disable-book
-          @force-deleted="onForceDelete(item, index)"
+      <div v-if="notesLoading" class="text-xs-center">
+        <v-progress-circular
+          :size="40"
+          :width="2"
+          color="primary"
+          indeterminate
         />
       </div>
-      <empty v-else/>
+      <template v-else>
+        <div v-if="notes.length">
+          <book-note-item
+            v-for="(item, index) of notes"
+            :key="item.id"
+            :item="item"
+            :book="book"
+            disable-book
+            @force-deleted="onForceDelete(item, index)"
+          />
+          <paginator :page="page"/>
+        </div>
+        <empty v-else/>
+      </template>
     </template>
   </page-layout>
 </template>
@@ -48,6 +60,8 @@ import { getBook } from '@/api/books'
 import reloadData from '@/mixins/reload_data'
 import BookInfoCard from '@/components/BookInfoCard'
 import getData from '@/mixins/get_data'
+import { getBooksNotes } from '@/api/books'
+import Paginator from '@/components/Paginator'
 
 export default {
   name: 'Show',
@@ -58,6 +72,7 @@ export default {
   components: {
     BookNoteItem,
     BookInfoCard,
+    Paginator,
   },
   data() {
     return {
@@ -66,8 +81,14 @@ export default {
 
       book: null,
       notes: [],
+      page: null,
 
       loading: false,
+
+      oldBookId: null,
+      notesLoading: false,
+
+      expandBookCard: true,
     }
   },
   computed: {
@@ -117,6 +138,9 @@ export default {
           const data = res.data
           this.book = data.book
           this.notes = data.notes
+          this.page = data.meta
+
+          this.oldBookId = this.book.id
         })
     },
 
@@ -141,13 +165,32 @@ export default {
     onForceDelete(item, index) {
       this.notes.splice(index, 1)
     },
+    getNotes() {
+      this.notesLoading = true
+      getBooksNotes(this.book.id, this.$route.query)
+        .then(res => {
+          const data = res.data
+          this.notes = data.data
+          this.page = data.meta
+        })
+        .finally(() => {
+          this.notesLoading = false
+        })
+    },
   },
   watch: {
     $route: {
       handler() {
+        this.initSort()
+
         if (this.$active) {
-          this.initSort()
-          this.getData()
+          // 记录旧的 bookId，如果路由中 bookId 变了，则重新获取所有数据，否则只获取笔记的数据
+          if (this.oldBookId !== this.$route.params.bookId) {
+            this.getData()
+          } else {
+            this.expandBookCard = false
+            this.getNotes()
+          }
         }
       },
       immediate: true,
@@ -201,6 +244,7 @@ export default {
     @media (max-width: 599px) {
       max-width: 100px;
     }
+
     .v-input__control {
       min-height: 36px;
     }
