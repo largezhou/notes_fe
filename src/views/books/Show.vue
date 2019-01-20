@@ -137,16 +137,17 @@ export default {
     },
 
     _getData() {
-      const r = this.$route
-      return getBook(r.params.bookId)
-        .then(res => {
-          const data = res.data
-          this.book = data.book
-          this.notes = data.notes
-          this.page = data.meta
+      const bookId = this.$route.params.bookId
 
+      const res = getBook(bookId)
+        .then(res => {
+          this.book = res.data
           this.oldBookId = this.book.id
         })
+
+      this.getNotes(bookId)
+
+      return res
     },
 
     setDataFromQuery() {
@@ -172,9 +173,9 @@ export default {
     onForceDelete(item, index) {
       this.notes.splice(index, 1)
     },
-    getNotes() {
+    getNotes(bookId = this.book.id) {
       this.notesLoading = true
-      getBooksNotes(this.book.id, this.$route.query)
+      getBooksNotes(bookId, this.$route.query)
         .then(res => {
           const data = res.data
           this.notes = data.data
@@ -205,7 +206,7 @@ export default {
 
         if (this.$active) {
           // 记录旧的 bookId，如果路由中 bookId 变了，则重新获取所有数据，否则只获取笔记的数据
-          if (this.oldBookId !== this.$route.params.bookId) {
+          if (this.oldBookId != this.$route.params.bookId) {
             this.getData()
           } else {
             this.expandBookCard = false
