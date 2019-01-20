@@ -10,7 +10,7 @@
         <v-progress-linear color="info" height="18" :value="readPercent"/>
         <span class="progress-text">{{ readPercent }}%</span>
       </v-card>
-      <div class="notes-sort-group">
+      <div class="notes-actions">
         <v-btn flat @click="onChangeSort('page')">页数
           <mdi-icon :icon="sortIcon('page')"/>
         </v-btn>
@@ -25,7 +25,10 @@
           append-icon="mdi-magnify"
           label="页数..."
           hide-details
-          @click:append=""
+          v-model="searchPage"
+          @keydown.enter="onSearchPage"
+          @click:append="onSearchPage"
+          ref="searchPage"
         />
       </div>
       <div v-if="notesLoading" class="text-xs-center">
@@ -89,6 +92,8 @@ export default {
       notesLoading: false,
 
       expandBookCard: true,
+
+      searchPage: '',
     }
   },
   computed: {
@@ -144,7 +149,7 @@ export default {
         })
     },
 
-    initSort() {
+    setDataFromQuery() {
       const sortField = ['page', 'created_at']
       const sortType = ['desc', 'asc']
 
@@ -161,6 +166,8 @@ export default {
       } else {
         this.sortType = query._sort_type
       }
+
+      this.searchPage = query.search_page
     },
     onForceDelete(item, index) {
       this.notes.splice(index, 1)
@@ -177,11 +184,24 @@ export default {
           this.notesLoading = false
         })
     },
+    onSearchPage() {
+      if (this.searchPage && !/^\d+f?$/i.test(this.searchPage)) {
+        this.$dialog('搜索内容只能 "数字"，或者 "数字 + F(f)"')
+        return
+      }
+
+      this.$router.push({
+        name: this.$route.name,
+        query: {
+          search_page: this.searchPage,
+        },
+      })
+    },
   },
   watch: {
     $route: {
       handler() {
-        this.initSort()
+        this.setDataFromQuery()
 
         if (this.$active) {
           // 记录旧的 bookId，如果路由中 bookId 变了，则重新获取所有数据，否则只获取笔记的数据
@@ -222,7 +242,7 @@ export default {
     }
   }
 
-  .notes-sort-group {
+  .notes-actions {
     margin-bottom: 10px;
     display: flex;
 
