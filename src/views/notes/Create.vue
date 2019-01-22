@@ -40,8 +40,7 @@ export default {
 
       getBook(this.$route.params.bookId)
         .then(res => {
-          const data = res.data
-          this.book = data.book
+          this.book = res.data
         })
         .finally(() => {
           this.loading = false
