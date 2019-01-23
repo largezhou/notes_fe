@@ -1,5 +1,5 @@
 <template>
-  <div class="markdown-body" v-html="content"/>
+  <div class="markdown-body" v-html="content" @click="onPreviewImg"/>
 </template>
 
 <script>
@@ -17,7 +17,6 @@ export default {
   },
   mounted() {
     this.handleFootnoteAnchor()
-    this.handleImgPreview()
   },
   methods: {
     // 处理脚注锚点偏移的问题，把脚注的锚点放到 sup 标签前面，脚注数字的 a 标签去掉 id 属性
@@ -36,49 +35,48 @@ export default {
       }
     },
 
-    handleImgPreview() {
-      const imgs = document.querySelectorAll('.markdown-body img')
-      imgs.forEach(img => {
-        img.addEventListener('click', e => {
-          const maxWidth = 1200
-          const maxHeight = this.device == 'mobile' ? 600 : 800
+    onPreviewImg(e) {
+      if (e.target.tagName != 'IMG') {
+        return
+      }
 
-          const img = e.target
-          let height = img.naturalHeight
-          let width = img.naturalWidth
+      const maxWidth = 1200
+      const maxHeight = this.device == 'mobile' ? 600 : 800
 
-          const ratio = width / height
+      const img = e.target
 
-          // 限制最大高度
-          if (height > maxHeight) {
-            height = maxHeight
-            width = height * ratio
-          }
+      let height = img.naturalHeight
+      let width = img.naturalWidth
+      const ratio = width / height
 
-          // 限制最大宽度
-          if (width > maxWidth) {
-            width = maxWidth
-            height = width / ratio
-          }
+      // 限制最大高度
+      if (height > maxHeight) {
+        height = maxHeight
+        width = height * ratio
+      }
 
-          this.$dialog({
-            title: '',
-            maxWidth: width + 'px',
-            className: 'img-preview',
-            actions: false,
-            escCLose: true,
-            content: h => {
-              return h('v-img', {
-                props: {
-                  src: e.target.src,
-                  contain: true,
-                  maxHeight: height,
-                  maxWidth: width,
-                },
-              })
+      // 限制最大宽度
+      if (width > maxWidth) {
+        width = maxWidth
+        height = width / ratio
+      }
+
+      this.$dialog({
+        title: '',
+        maxWidth: width + 'px',
+        className: 'img-preview',
+        actions: false,
+        escCLose: true,
+        content: h => {
+          return h('v-img', {
+            props: {
+              src: e.target.src,
+              contain: true,
+              maxHeight: height,
+              maxWidth: width,
             },
           })
-        })
+        },
       })
     },
   },
