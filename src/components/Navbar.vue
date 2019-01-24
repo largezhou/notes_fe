@@ -55,6 +55,10 @@
               <span class="navbar-menu-icon"><mdi-icon :icon="editMode ? 'check' : 'keyboard'"/></span>
               <v-list-tile-title>{{ editMode ? '完 成' : '编 辑' }}</v-list-tile-title>
             </v-list-tile>
+            <v-list-tile @click="onBackup">
+              <span class="navbar-menu-icon"><mdi-icon icon="cloud-upload-outline"/></span>
+              <v-list-tile-title>备 份</v-list-tile-title>
+            </v-list-tile>
 
             <v-divider/>
 
@@ -72,9 +76,9 @@
 
 <script>
 import { mapState } from 'vuex'
-import utils from '@/libs/utils'
 import NewBook from '@/components/NewBook'
 import NavbarSearch from '@/components/NavbarSearch'
+import { postBackup } from '@/api/backups'
 
 export default {
   name: 'Navbar',
@@ -129,6 +133,11 @@ export default {
       }
 
       this.goLoginLastTime = Date.now()
+    },
+
+    async onBackup() {
+      await postBackup()
+      this.$snackbar('备份完成')
     },
   },
 }

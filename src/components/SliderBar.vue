@@ -81,6 +81,15 @@
           </v-list-tile-content>
         </v-list-tile>
 
+        <v-list-tile @click="onBackup" active-class="non-active">
+          <v-list-tile-action>
+            <mdi-icon icon="cloud-upload-outline"/>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>备份</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+
         <v-divider/>
 
         <v-list-tile @click="onLogout" active-class="non-active">
@@ -100,6 +109,7 @@
 import { mapState } from 'vuex'
 import utils from '@/libs/utils'
 import NewBook from '@/components/NewBook'
+import { postBackup } from '@/api/backups'
 
 export default {
   name: 'SliderBar',
@@ -128,6 +138,12 @@ export default {
       this.onClick()
 
       this.toggleEditMode()
+    },
+    async onBackup() {
+      this.onClick()
+
+      await postBackup()
+      this.$snackbar('备份完成')
     },
   },
 }
