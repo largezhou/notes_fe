@@ -13,6 +13,7 @@
         :force-delete-handler="forceDeleteNote"
         :edit-handler="editNote"
         @force-deleted="onForceDeleted"
+        :sub-title="subTitle"
       />
     </template>
   </page-layout>
@@ -46,6 +47,11 @@ export default {
     this.forceDeleteNote = forceDeleteNote
     this.editNote = ''
   },
+  computed: {
+    subTitle() {
+      return `${this.book.title} • 第${this.note.page}页`
+    },
+  },
   methods: {
     _getData(id = this.$route.params.noteId) {
       return getNote(id)
@@ -53,7 +59,6 @@ export default {
           const data = res.data
           this.note = data.note
           this.book = data.book
-          this.note.title = `${this.book.title} • 第${this.note.page}页`
 
           this.editNote = `/notes/${this.note.id}/edit`
         })

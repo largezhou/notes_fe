@@ -5,12 +5,10 @@
         <v-form ref="form" v-if="book">
           <v-layout wrap justify-center>
             <v-flex xs12>
-              <v-textarea
-                label="描述（选填）"
-                hint="留空会自动截取部分内容"
-                :error-messages="validateErrors('form.desc')"
-                v-model="$v.form.desc.$model"
-                rows="2"
+              <v-text-field
+                label="标题"
+                :error-messages="validateErrors('form.title')"
+                v-model="$v.form.title.$model"
               />
             </v-flex>
 
@@ -84,7 +82,8 @@ export default {
           minValue: minValue(1),
           maxValue: maxValue(this.book ? this.book.total : 0),
         },
-        desc: {
+        title: {
+          required,
           maxLength: maxLength(255),
         },
         content: {
@@ -99,7 +98,7 @@ export default {
     return {
       form: {
         page: '',
-        desc: '',
+        title: '',
         content: '',
         tags: [],
         html_content: '',
@@ -114,8 +113,9 @@ export default {
             minValue: '不能小于1',
             maxValue: '不能超过书的总页数',
           },
-          desc: {
-            maxLength: '描述长度不能大于255个字',
+          title: {
+            required: '标题要填的',
+            maxLength: '标题长度不能大于255个字',
           },
           content: {
             required: '必须填写内容',

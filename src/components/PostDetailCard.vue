@@ -1,6 +1,7 @@
 <template>
   <v-card class="post-info-card" v-if="post">
     <v-card-text class="post-content-card">
+      <h2 v-show="subTitle" style="text-align: center; font-weight: unset">{{ subTitle }}</h2>
       <h1 style="text-align: center">{{ post.title }}</h1>
       <div class="time">
         <v-tooltip top>
@@ -57,6 +58,7 @@ export default {
     deleteHandler: Function,
     forceDeleteHandler: Function,
     editHandler: [Function, String],
+    subTitle: String,
   },
   computed: {
     ...mapState({

@@ -26,15 +26,15 @@
 
       <v-card-text
         v-show="!showDetail"
-        class="desc"
-        ref="desc"
+        class="note-title"
       >
-        <span>{{ item.desc || '详情>>>' }}</span>
+        <span>{{ item.title }}</span>
       </v-card-text>
       <v-card-text
         v-show="showDetail"
-        class="desc"
+        class="note-title"
       >
+        <h2 class="detail-title">{{ item.title }}</h2>
         <markdown-body :content="item.html_content"/>
       </v-card-text>
 
@@ -83,18 +83,12 @@ export default {
   data: () => ({
     loading: false,
     showDetail: false,
-    descHeight: 0,
   }),
   created() {
     this.updateNote = updateNote
     this.deleteNote = deleteNote
     this.forceDeleteNote = forceDeleteNote
     this.editNote = `/notes/${this.item.id}/edit`
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.descHeight = this.$refs.desc.offsetHeight
-    })
   },
   computed: {
     ...mapState({
@@ -150,7 +144,7 @@ export default {
     font-size: 18px;
   }
 
-  .desc {
+  .note-title {
     font-size: 14px;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -187,5 +181,12 @@ export default {
 
 .hide-detail {
   margin: 0px 8px 0px 0px;
+}
+
+.detail-title {
+  padding-bottom: .3em;
+  font-size: 2em;
+  border-bottom: 1px solid #eaecef;
+  margin-bottom: 16px;
 }
 </style>
