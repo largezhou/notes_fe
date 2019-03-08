@@ -132,6 +132,12 @@ const otherRouters = [
         },
         component: () => import('@/views/Search'),
       },
+
+      {
+        path: 'read-records',
+        name: 'getReadRecords',
+        component: () => import('@/views/read_records/Index.vue'),
+      },
     ],
   },
 ]

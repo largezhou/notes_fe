@@ -24,6 +24,10 @@
         <v-btn to="/books" flat>看过</v-btn>
         <v-btn to="/tags" flat>标签</v-btn>
         <v-btn to="/posts" flat>博客</v-btn>
+        <v-tooltip bottom>
+          <v-btn slot="activator" to="/read-records" flat>路</v-btn>
+          <span>Long Hard Road Out Of Hell</span>
+        </v-tooltip>
       </v-toolbar-items>
 
       <v-spacer @click="onGoLogin" style="height: 50px"/>
