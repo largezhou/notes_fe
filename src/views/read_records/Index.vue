@@ -1,20 +1,36 @@
 <template>
   <page-layout page-desc="通往程序之路" :loading="loading">
     <template v-if="records.length">
-      <div
-        v-for="day of days"
-        :key="day"
+      <v-expansion-panel
+        expand
       >
-        <p>{{ day }}</p>
-        <p>当天总数 {{ groupedByDay[day].sum }}</p>
-        <div
-          v-for="(r, index) of groupedByDay[day].books"
-          :key="index"
+        <v-expansion-panel-content
+          v-for="day of days"
+          :key="day"
         >
-          <p>书名 {{ r.book ? r.book.title : '神秘书籍' }}</p>
-          <p>页数 {{ r.sum }}</p>
-        </div>
-      </div>
+          <div
+            slot="header"
+            class="progress-wrapper"
+          >
+            <div>{{ day }}</div>
+            <div class="progress">
+              <v-progress-linear
+                color="info"
+                height="21"
+                :value="groupedByDay[day].sum / maxSum * 100"
+              />
+              <span class="sum">{{ groupedByDay[day].sum }} 页</span>
+            </div>
+          </div>
+          <div
+            class="books"
+            v-for="(r, index) of groupedByDay[day].books"
+            :key="index"
+          >
+            <div>{{ r.book ? r.book.title : '神秘书籍' }} - {{ r.sum }}</div>
+          </div>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
     </template>
     <empty v-else/>
     <v-btn @click="onLoadMore">更多</v-btn>
@@ -99,6 +115,48 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.v-expansion-panel {
+  box-shadow: none;
 
+  .v-expansion-panel__container {
+    border-top: none;
+    background: initial;
+  }
+}
+
+/deep/ {
+  .v-expansion-panel__header {
+    padding: 12px 16px;
+  }
+}
+
+.books {
+  padding: 12px 16px;
+}
+
+.progress-wrapper {
+  > div {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .v-progress-linear {
+    margin: 0;
+  }
+
+  .progress {
+    position: relative;
+    width: calc(100% - 100px);
+    margin-left: 15px;
+  }
+}
+
+.sum {
+  left: 5px;
+  top: 1px;
+  color: white;
+  position: absolute;
+  z-index: 1;
+}
 </style>
