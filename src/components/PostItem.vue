@@ -10,6 +10,7 @@
       <tags :tags="post.tags"/>
 
       <item-actions
+        set-top
         class="actions"
         v-if="username"
         v-show="editMode"

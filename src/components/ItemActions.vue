@@ -1,9 +1,19 @@
 <template>
   <v-list dense class="item-actions" :class="{ inline }" :style="{ backgroundColor }">
-    <!-- 隐藏与显示 -->
-    <v-list-tile @click="updateHidden">
+    <!-- 置顶与取消置顶 -->
+    <v-list-tile
+      v-if="setTop"
+      @click="updateField('is_top')"
+    >
       <v-list-tile-action>
-        <mdi-icon :loading="hiding" :icon="item.hidden ? 'eye' : 'eye-off'"/>
+        <mdi-icon :loading="updating.is_top" :icon="item.is_top ? 'arrow-collapse-down' : 'arrow-collapse-up'"/>
+      </v-list-tile-action>
+    </v-list-tile>
+
+    <!-- 隐藏与显示 -->
+    <v-list-tile @click="updateField('hidden')">
+      <v-list-tile-action>
+        <mdi-icon :loading="updating.hidden" :icon="item.hidden ? 'eye' : 'eye-off'"/>
       </v-list-tile-action>
     </v-list-tile>
 
@@ -37,7 +47,7 @@
 export default {
   name: 'ItemActions',
   data: () => ({
-    hiding: false,
+    updating: {},
     deleting: false,
     restoring: false,
   }),
@@ -56,6 +66,7 @@ export default {
       type: String,
       default: 'rgba(234, 234, 234, 0.5)',
     },
+    setTop: Boolean,
   },
   computed: {
     editLink() {
@@ -67,16 +78,16 @@ export default {
     },
   },
   methods: {
-    updateHidden() {
-      this.hiding = true
-      this.updateHandler(this.item.id, {
-        hidden: !this.item.hidden,
-      })
+    updateField(field) {
+      this.$set(this.updating, field, true)
+      const data = {}
+      data[field] = !this.item[field]
+      this.updateHandler(this.item.id, data)
         .then(res => {
-          this.$set(this.item, 'hidden', res.data.hidden)
+          this.$set(this.item, field, res.data[field])
         })
         .finally(() => {
-          this.hiding = false
+          this.updating[field] = false
         })
     },
     onEdit() {
