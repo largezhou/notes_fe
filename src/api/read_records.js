@@ -1,9 +1,11 @@
 import axios from '@/plugins/axios'
 
-export function getReadRecords(params) {
+export function getReadRecords(page) {
   return axios({
     url: 'read-records',
     method: 'get',
-    params,
+    params: {
+      page,
+    },
   })
 }
