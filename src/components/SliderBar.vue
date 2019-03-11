@@ -47,6 +47,15 @@
         </v-list-tile-content>
       </v-list-tile>
 
+      <v-list-tile @click="onClick" to="/read-records" active-class="non-active">
+        <v-list-tile-action>
+          <mdi-icon icon="road-variant"/>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title>路</v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+
       <div v-if="username">
         <v-divider/>
 
