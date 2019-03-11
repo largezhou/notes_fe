@@ -10,7 +10,7 @@ const recordTmpl = {
     return Math.random() > 0.8
       ? null
       : Mock.mock({
-        'book_id|1-20': 1,
+        'id|1-20': 1,
         title: '@ctitle',
       })
   },

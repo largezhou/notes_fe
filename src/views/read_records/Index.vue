@@ -1,10 +1,15 @@
 <template>
-  <page-layout page-desc="通往程序员之路" :loading="loading && firstLoad">
+  <page-layout
+    page-desc="通往程序员之路"
+    :loading="loading && firstLoad"
+    :flex="{ md8: true, sm10: true }"
+  >
     <template v-if="days.length">
       <v-expansion-panel expand>
         <v-expansion-panel-content
           v-for="day of days"
           :key="day"
+          expand-icon
         >
           <div
             slot="header"
@@ -27,7 +32,7 @@
           >
             <router-link
               v-if="r.book"
-              :to="`/books/${r.book.id}`"
+              :to="`/books/${r.book_id}`"
             >
               《{{ r.book.title }}》
             </router-link>

@@ -2,7 +2,7 @@
 <template>
   <v-container grid-list-md class="content">
     <v-layout row wrap justify-center>
-      <v-flex md11 sm12>
+      <v-flex v-bind="flex">
         <div v-if="pageDesc" class="page-desc">~~ {{ pageDesc }} ~~</div>
         <div v-if="loading" class="text-xs-center">
           <v-progress-circular
@@ -24,6 +24,16 @@ export default {
   props: {
     pageDesc: String,
     loading: Boolean,
+    flex: {
+      type: Object,
+      default: () => ({
+        md11: true,
+        sm12: true,
+      }),
+    },
+  },
+  created() {
+    window.t = this
   },
 }
 </script>
