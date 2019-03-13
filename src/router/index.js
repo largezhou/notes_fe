@@ -80,6 +80,9 @@ const otherRouters = [
       {
         path: 'tags',
         name: 'tagIndex',
+        meta: {
+          keepAlive: true,
+        },
         component: () => import('@/views/tags/Index'),
       },
 
