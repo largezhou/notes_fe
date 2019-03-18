@@ -15,7 +15,7 @@
         </v-tooltip>
       </div>
 
-      <tags :tags="post.tags" style="margin: 10px 0;"/>
+      <tags :tags="post.tags" style="margin-bottom: 10px;"/>
 
       <markdown-body :content="post.html_content"/>
 
@@ -80,6 +80,7 @@ export default {
   color: $non-important-color;
   font-size: 13px;
   text-align: center;
+  margin-bottom: 5px;
 }
 
 .post-content-card {
