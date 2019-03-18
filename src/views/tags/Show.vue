@@ -92,13 +92,6 @@ export default {
       },
       immediate: true,
     },
-    type(newValue) {
-      this.$router.push({
-        path: this.path,
-        query: this.query,
-        hash: newValue,
-      })
-    },
     editMode() {
       this.getData()
     },
