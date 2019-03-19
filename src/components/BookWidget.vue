@@ -1,32 +1,34 @@
 <template>
-  <div class="book-widget">
-    <div v-if="books.length == 0 && !loading" class="empty title">啥书也没看~</div>
-    <div v-else>
-      <v-card
-        v-for="item of books"
-        :key="item.id"
-      >
-        <v-img
-          :src="item.cover"
-          aspect-ratio="0.75"
-        ></v-img>
+  <div style="overflow: hidden">
+    <div class="book-widget">
+      <div v-if="books.length == 0 && !loading" class="empty title">啥书也没看~</div>
+      <template v-else>
+        <v-card
+          v-for="item of books"
+          :key="item.id"
+        >
+          <v-img
+            :src="item.cover"
+            aspect-ratio="0.75"
+          ></v-img>
 
-        <v-card-title>
-          <h3 class="title">{{ item.title }}</h3>
-        </v-card-title>
+          <v-card-title>
+            <h3 class="title">{{ item.title }}</h3>
+          </v-card-title>
 
-        <v-card-text class="footer">
-          <span>{{ item.read }} / {{ item.total }} 页</span>
-          <span class="pull-right">
+          <v-card-text class="footer">
+            <span>{{ item.read }} / {{ item.total }} 页</span>
+            <span class="pull-right">
               <human-time :time="item.updated_at" prefix="更新于："/>
               </span>
-        </v-card-text>
+          </v-card-text>
 
-        <v-card-actions>
-          <v-spacer/>
-          <v-btn :to="`/books/${item.id}`" flat color="primary">详情</v-btn>
-        </v-card-actions>
-      </v-card>
+          <v-card-actions>
+            <v-spacer/>
+            <v-btn :to="`/books/${item.id}`" flat color="primary">详情</v-btn>
+          </v-card-actions>
+        </v-card>
+      </template>
     </div>
   </div>
 </template>
@@ -64,6 +66,10 @@ export default {
 
 <style lang="scss">
 .book-widget {
+  overflow-y: auto;
+  max-height: 1500px;
+  margin-right: -17px;
+
   .v-card {
     margin-bottom: 10px;
   }
