@@ -101,7 +101,9 @@ export default {
      * 格式化 records 记录
      */
     groupRecords(records) {
+      // 上一个不同的日期
       let preDay
+      // 本次请求的数据中的天数
       let daysCount = 0
 
       records.forEach(r => {
@@ -125,9 +127,10 @@ export default {
 
         this.groupedByDay[r.day].sum += Number(r.sum)
         this.groupedByDay[r.day].books.push(r)
-
-        this.isEnd = this.perPage > daysCount
       })
+
+      // 如果每页数大于本次请求获取的数据的天数，说明数据已经没有了
+      this.isEnd = this.perPage > daysCount
     },
 
     onLoadMore() {
