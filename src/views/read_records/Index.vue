@@ -2,7 +2,8 @@
   <page-layout
     page-desc="通往程序员之路"
     :loading="loading && firstLoad"
-    :flex="{ md8: true, sm10: true }"
+    :flex="{ md8: false, sm10: false }"
+    style="max-width: 700px;"
   >
     <template v-if="days.length">
       <v-expansion-panel expand>

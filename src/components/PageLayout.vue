@@ -32,9 +32,6 @@ export default {
       }),
     },
   },
-  created() {
-    window.t = this
-  },
 }
 </script>
 
