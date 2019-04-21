@@ -19,6 +19,7 @@
     <back-to-top/>
     <global-confirm/>
     <slider-bar v-if="!widescreen"/>
+    <new-book/>
   </div>
 </template>
 
@@ -28,10 +29,12 @@ import GlobalConfirm from '@/components/GlobalConfirm'
 import BackToTop from '@/components/BackToTop'
 import { mapState } from 'vuex'
 import SliderBar from '@/components/SliderBar'
+import NewBook from './components/NewBook'
 
 export default {
   name: 'App',
   components: {
+    NewBook,
     SliderBar,
     Navbar,
     BackToTop,

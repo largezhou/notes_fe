@@ -1,99 +1,96 @@
 <template>
-  <div @click="onClick">
-    <slot/>
-    <v-dialog
-      v-model="modal"
-      max-width="500px"
-      persistent
-    >
-      <v-card>
-        <v-toolbar card dark color="primary">
-          <v-btn icon dark @click="onCancel">
-            <mdi-icon icon="close"/>
+  <v-dialog
+    v-model="modal"
+    max-width="500px"
+    persistent
+  >
+    <v-card>
+      <v-toolbar card dark color="primary">
+        <v-btn icon dark @click="onCancel">
+          <mdi-icon icon="close"/>
+        </v-btn>
+        <v-toolbar-title>{{ this.book ? `编辑 ${this.book.title}` : '添加一本书' }}</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-toolbar-items>
+          <v-btn dark flat @click="onSubmit" :loading="submitting">
+            <mdi-icon icon="content-save"/>
           </v-btn>
-          <v-toolbar-title>{{ this.book ? `编辑 ${this.book.title}` : '添加一本书' }}</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-toolbar-items>
-            <v-btn dark flat @click="onSubmit" :loading="submitting">
-              <mdi-icon icon="content-save"/>
-            </v-btn>
-          </v-toolbar-items>
-        </v-toolbar>
-        <v-card-text>
-          <v-container grid-list-md>
-            <v-form ref="form">
-              <v-layout wrap>
+        </v-toolbar-items>
+      </v-toolbar>
+      <v-card-text>
+        <v-container grid-list-md>
+          <v-form ref="form">
+            <v-layout wrap>
 
-                <v-flex xs12>
-                  <v-text-field
-                    label="书名"
-                    :error-messages="validateErrors('form.title')"
-                    v-model="$v.form.title.$model"
-                  />
-                </v-flex>
+              <v-flex xs12>
+                <v-text-field
+                  label="书名"
+                  :error-messages="validateErrors('form.title')"
+                  v-model="$v.form.title.$model"
+                />
+              </v-flex>
 
-                <v-flex xs6>
-                  <v-text-field
-                    label="总页数"
-                    type="number"
-                    min="1"
-                    :error-messages="validateErrors('form.total')"
-                    v-model="$v.form.total.$model"
-                  />
-                </v-flex>
-                <v-flex xs6>
-                  <v-text-field
-                    label="已读"
-                    type="number"
-                    min="0"
-                    :error-messages="validateErrors('form.read')"
-                    v-model="$v.form.read.$model"
-                  />
-                </v-flex>
+              <v-flex xs6>
+                <v-text-field
+                  label="总页数"
+                  type="number"
+                  min="1"
+                  :error-messages="validateErrors('form.total')"
+                  v-model="$v.form.total.$model"
+                />
+              </v-flex>
+              <v-flex xs6>
+                <v-text-field
+                  label="已读"
+                  type="number"
+                  min="0"
+                  :error-messages="validateErrors('form.read')"
+                  v-model="$v.form.read.$model"
+                />
+              </v-flex>
 
-                <v-flex xs12>
-                  <v-dialog
-                    ref="startDateModal"
-                    v-model="startDateModal"
-                    :return-value.sync="form.started_at"
-                    lazy
-                    full-width
-                    width="290px"
+              <v-flex xs12>
+                <v-dialog
+                  ref="startDateModal"
+                  v-model="startDateModal"
+                  :return-value.sync="form.started_at"
+                  lazy
+                  full-width
+                  width="290px"
+                >
+                  <v-text-field
+                    v-model="form.started_at"
+                    slot="activator"
+                    label="开始时间"
+                    readonly
+                    clearable
+                  ></v-text-field>
+                  <v-date-picker
+                    v-model="form.started_at"
+                    scrollable
+                    locale="zh-cn"
                   >
-                    <v-text-field
-                      v-model="form.started_at"
-                      slot="activator"
-                      label="开始时间"
-                      readonly
-                      clearable
-                    ></v-text-field>
-                    <v-date-picker
-                      v-model="form.started_at"
-                      scrollable
-                      locale="zh-cn"
-                    >
-                      <v-spacer/>
-                      <v-btn flat color="primary" @click="startDateModal = false">取消</v-btn>
-                      <v-btn flat color="primary" @click="$refs.startDateModal.save(form.started_at)">确定</v-btn>
-                    </v-date-picker>
-                  </v-dialog>
-                </v-flex>
+                    <v-spacer/>
+                    <v-btn flat color="primary" @click="startDateModal = false">取消</v-btn>
+                    <v-btn flat color="primary" @click="$refs.startDateModal.save(form.started_at)">确定</v-btn>
+                  </v-date-picker>
+                </v-dialog>
+              </v-flex>
 
-                <v-flex xs12>
-                  <file-picker
-                    label="封面"
-                    :error-messages="validateErrors('form.cover')"
-                    v-model="$v.form.cover.$model"
-                    accept="image/*"
-                  />
-                </v-flex>
-              </v-layout>
-            </v-form>
-          </v-container>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
-  </div>
+              <v-flex xs12>
+                <file-picker
+                  label="封面"
+                  :error-messages="validateErrors('form.cover')"
+                  v-model="$v.form.cover.$model"
+                  accept="image/*"
+                />
+              </v-flex>
+            </v-layout>
+          </v-form>
+        </v-container>
+      </v-card-text>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
@@ -181,12 +178,14 @@ export default {
   }),
   created() {
     this.$root.$on('editBook', this.onEdit)
+    this.$root.$on('createBook', this.onOpen)
   },
   beforeDestroy() {
     this.$root.$off('editBook', this.onEdit)
+    this.$root.$off('createBook', this.onOpen)
   },
   methods: {
-    onClick() {
+    onOpen() {
       this.modal = true
       this.book = null
     },

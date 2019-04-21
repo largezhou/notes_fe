@@ -41,12 +41,10 @@
           </v-btn>
           <v-list>
 
-            <new-book>
-              <v-list-tile @click="">
-                <span class="navbar-menu-icon"><mdi-icon icon="book-plus"/></span>
-                <v-list-tile-title>看 书</v-list-tile-title>
-              </v-list-tile>
-            </new-book>
+            <v-list-tile @click="$root.$emit('createBook')">
+              <span class="navbar-menu-icon"><mdi-icon icon="book-plus"/></span>
+              <v-list-tile-title>看 书</v-list-tile-title>
+            </v-list-tile>
 
             <v-list-tile to="/posts/create">
               <span class="navbar-menu-icon"><mdi-icon icon="square-edit-outline"/></span>

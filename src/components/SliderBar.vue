@@ -59,16 +59,14 @@
       <div v-if="username">
         <v-divider/>
 
-        <new-book>
-          <v-list-tile @click="onClick" active-class="non-active">
-            <v-list-tile-action>
-              <mdi-icon icon="book-plus"/>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>看书</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-        </new-book>
+        <v-list-tile @click="onCreateBook" active-class="non-active">
+          <v-list-tile-action>
+            <mdi-icon icon="book-plus"/>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>看书</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
 
         <v-list-tile @click="onClick" to="/posts/create" active-class="non-active">
           <v-list-tile-action>
@@ -153,6 +151,10 @@ export default {
 
       await postBackup()
       this.$snackbar('备份完成')
+    },
+    onCreateBook() {
+      this.$root.$emit('createBook')
+      this.onClick()
     },
   },
 }
