@@ -1,6 +1,6 @@
 <template>
   <page-layout>
-    <v-form ref="form" class="login-form">
+    <v-form ref="form" class="login-form" @keydown.enter.native="onLogin">
       <p class="title">登录吧</p>
       <v-text-field
         autofocus
@@ -66,19 +66,7 @@ export default {
       submitting: false,
     }
   },
-  mounted() {
-    document.addEventListener('keydown', this.onEnterDown)
-  },
-  beforeDestroy() {
-    document.removeEventListener('keydown', this.onEnterDown)
-  },
   methods: {
-    onEnterDown(e) {
-      if (e.code == 'Enter' && document.querySelector('input:focus')) {
-        this.onLogin()
-      }
-    },
-
     onLogin() {
       if (this.submitting) {
         this.$dialog('别急')
