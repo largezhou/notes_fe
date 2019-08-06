@@ -44,6 +44,7 @@
                 v-model="$v.form.content.$model"
                 @change="onContentChange"
                 :default-height="350"
+                @save="quickSubmit"
               />
             </v-flex>
 
@@ -143,7 +144,7 @@ export default {
       this.$v.$reset()
     },
 
-    onSubmit() {
+    onSubmit(quick = false) {
       if (this.submitting) {
         this.$snackbar('等一下啊')
         return
@@ -162,7 +163,7 @@ export default {
         // 更新
         res = updateNote(this.note.id, this.form)
           .then(res => {
-            if (this.stay) {
+            if (this.stay || quick) {
               this.submitting = false
               this.$snackbar('更新成功')
             } else {
@@ -202,6 +203,12 @@ export default {
       return fields.some(f => {
         return this.$v.form[f].$anyError
       })
+    },
+    quickSubmit() {
+      // 编辑时，才能快速保存，之后再优化
+      if (this.note) {
+        this.onSubmit(true)
+      }
     },
   },
   watch: {

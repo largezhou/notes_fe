@@ -18,6 +18,7 @@
         ref="editor"
         @imgAdd="onImgAdd"
         @fullScreen="onFullscreen"
+        @save="(payload) => $emit('save', payload)"
       />
       <div v-if="device == 'desktop'" class="resizer" ref="resizer" @mousedown="onDragStart"/>
     </div>
