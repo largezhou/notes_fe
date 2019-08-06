@@ -45,10 +45,10 @@
       </v-container>
     </v-card-text>
     <v-card-actions>
-      <v-spacer></v-spacer>
       <v-btn depressed color="primary" @click="onSubmit" :loading="submitting">{{ this.post ? '更新' : '添加博客' }}</v-btn>
       <v-btn depressed @click="onReset" v-if="this.post">重置</v-btn>
       <v-btn depressed @click="onClear" v-else>清空</v-btn>
+      <v-checkbox v-model="stay" v-if="this.post" label="留在此页" hide-details class="mt-0 ml-4"/>
     </v-card-actions>
   </v-card>
 </template>
@@ -112,6 +112,8 @@ export default {
     },
 
     submitting: false,
+
+    stay: false,
   }),
   created() {
     // 由于父组件页面，使用了 v-if ，只有在获取到数据之后，才会创建该组件
@@ -140,7 +142,12 @@ export default {
         // 更新
         res = updatePost(this.post.id, this.form)
           .then(res => {
-            this.$router.back()
+            if (this.stay) {
+              this.submitting = false
+              this.$snackbar('更新成功')
+            } else {
+              this.$router.back()
+            }
           })
       } else {
         // 创建
