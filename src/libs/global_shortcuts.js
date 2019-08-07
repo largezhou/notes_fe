@@ -53,7 +53,7 @@ register('KeyE', e => {
 
 // 进入登录页面
 register('KeyA', e => {
-  if (store.state.user.name) {
+  if (store.state.user.name || (router.currentRoute.name === 'login')) {
     return
   }
 

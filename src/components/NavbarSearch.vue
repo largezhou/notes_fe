@@ -47,7 +47,7 @@ export default {
       handler(newValue) {
         this.q = ''
 
-        if (newValue.name == 'search') {
+        if (newValue.name === 'search') {
           this.q = newValue.query.q || ''
         }
       },
@@ -61,7 +61,7 @@ export default {
 .navbar-search {
   flex-grow: 0;
 
-  /deep/ .v-input__control {
+  > > > .v-input__control {
     min-height: 40px;
   }
 }

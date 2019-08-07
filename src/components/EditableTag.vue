@@ -249,7 +249,7 @@ export default {
 
   width: 140px;
 
-  /deep/ {
+  > > > {
     .v-input__control {
       height: 100%;
     }

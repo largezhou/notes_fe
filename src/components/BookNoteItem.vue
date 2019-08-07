@@ -166,7 +166,7 @@ export default {
     color: #ccc;
   }
 
-  /deep/ {
+  > > > {
     .v-progress-linear {
       margin: 3px 0;
     }

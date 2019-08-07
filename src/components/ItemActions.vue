@@ -183,7 +183,7 @@ export default {
       vertical-align: middle;
     }
 
-    /deep/ .v-list__tile {
+    > > > .v-list__tile {
       padding: 0 10px;
     }
   }

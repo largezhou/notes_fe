@@ -1,5 +1,6 @@
 <template>
-  <v-toolbar
+  <v-app-bar
+    app
     dark
     color="primary"
     ref="toolbar"
@@ -7,6 +8,7 @@
     fixed
     class="navbar"
     extension-height="60"
+    hide-on-scroll
     :scroll-threshold="100"
   >
     <div class="v-toolbar__content wrapper container">
@@ -14,66 +16,67 @@
         <mdi-icon icon="menu"/>
       </v-btn>
 
-      <v-toolbar-items class="brand-icon" v-if="widescreen">
-        <v-btn to="/" flat>
+      <v-toolbar-items v-if="widescreen">
+        <v-btn to="/" text>
           <img width="30" height="30" src="@/assets/logo.png">
         </v-btn>
       </v-toolbar-items>
 
       <v-toolbar-items v-if="widescreen">
-        <v-btn to="/books" flat>看过</v-btn>
-        <v-btn to="/tags" flat>标签</v-btn>
-        <v-btn to="/posts" flat>博客</v-btn>
+        <v-btn to="/books" text>看过</v-btn>
+        <v-btn to="/tags" text>标签</v-btn>
+        <v-btn to="/posts" text>博客</v-btn>
         <v-tooltip bottom>
-          <v-btn slot="activator" to="/read-records" flat>路</v-btn>
+          <template #activator="{ on }">
+            <v-btn v-on="on" to="/read-records" text>路</v-btn>
+          </template>
           <span>Long Hard Road Out Of Hell</span>
         </v-tooltip>
       </v-toolbar-items>
 
-      <v-spacer @click="onGoLogin" style="height: 50px"/>
+      <v-spacer @click="onGoLogin" style="height: inherit;"/>
 
       <navbar-search/>
 
-      <v-toolbar-items v-if="widescreen && username">
-        <v-menu left offset-y>
-          <v-btn slot="activator" flat class="more-menu">
-            <mdi-icon icon="dots-horizontal"/>
+      <v-menu left bottom v-if="widescreen && username">
+        <template #activator="{ on }">
+          <v-btn icon v-on="on">
+            <v-icon>mdi-dots-vertical</v-icon>
           </v-btn>
-          <v-list>
+        </template>
 
-            <v-list-tile @click="$root.$emit('createBook')">
-              <span class="navbar-menu-icon"><mdi-icon icon="book-plus"/></span>
-              <v-list-tile-title>看 书</v-list-tile-title>
-            </v-list-tile>
+        <v-list>
+          <v-list-item @click="$root.$emit('createBook')">
+            <span class="navbar-menu-icon"><mdi-icon icon="book-plus"/></span>
+            <v-list-item-title>看 书</v-list-item-title>
+          </v-list-item>
 
-            <v-list-tile to="/posts/create">
-              <span class="navbar-menu-icon"><mdi-icon icon="square-edit-outline"/></span>
-              <v-list-tile-title>博 客</v-list-tile-title>
-            </v-list-tile>
+          <v-list-item to="/posts/create">
+            <span class="navbar-menu-icon"><mdi-icon icon="square-edit-outline"/></span>
+            <v-list-item-title>博 客</v-list-item-title>
+          </v-list-item>
 
-            <v-divider/>
+          <v-divider/>
 
-            <v-list-tile @click="onToggleEditMode">
-              <span class="navbar-menu-icon"><mdi-icon :icon="editMode ? 'check' : 'keyboard'"/></span>
-              <v-list-tile-title>{{ editMode ? '完 成' : '编 辑' }}</v-list-tile-title>
-            </v-list-tile>
-            <v-list-tile @click="onBackup">
-              <span class="navbar-menu-icon"><mdi-icon icon="cloud-upload-outline"/></span>
-              <v-list-tile-title>备 份</v-list-tile-title>
-            </v-list-tile>
+          <v-list-item @click="onToggleEditMode">
+            <span class="navbar-menu-icon"><mdi-icon :icon="editMode ? 'check' : 'keyboard'"/></span>
+            <v-list-item-title>{{ editMode ? '完 成' : '编 辑' }}</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="onBackup">
+            <span class="navbar-menu-icon"><mdi-icon icon="cloud-upload-outline"/></span>
+            <v-list-item-title>备 份</v-list-item-title>
+          </v-list-item>
 
-            <v-divider/>
+          <v-divider/>
 
-            <v-list-tile @click="onLogout">
-              <span class="navbar-menu-icon"><mdi-icon icon="exit-to-app"/></span>
-              <v-list-tile-title>退 出</v-list-tile-title>
-            </v-list-tile>
-
-          </v-list>
-        </v-menu>
-      </v-toolbar-items>
+          <v-list-item @click="onLogout">
+            <span class="navbar-menu-icon"><mdi-icon icon="exit-to-app"/></span>
+            <v-list-item-title>退 出</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </div>
-  </v-toolbar>
+  </v-app-bar>
 </template>
 
 <script>
@@ -109,7 +112,7 @@ export default {
     },
 
     onGoLogin() {
-      if (this.username) {
+      if (this.username || (this.$route.name === 'login')) {
         return
       }
 
@@ -159,20 +162,6 @@ export default {
 
   .v-btn {
     font-size: 18px;
-  }
-
-  .brand-icon {
-    .v-btn {
-      padding: 0;
-      min-width: 45px;
-    }
-  }
-
-  .more-menu {
-    &.v-btn {
-      padding: 0;
-      min-width: 45px;
-    }
   }
 }
 

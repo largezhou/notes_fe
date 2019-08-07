@@ -152,7 +152,7 @@ export default {
   }
 }
 
-/deep/ {
+> > > {
   .v-expansion-panel__header {
     padding: 12px 16px;
   }

@@ -15,7 +15,7 @@
 
       <v-card-actions v-if="actions">
         <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" flat @click="shown = false">确定</v-btn>
+        <v-btn color="blue darken-1" text @click="shown = false">确定</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -72,7 +72,7 @@ export default Vue.extend({
   },
   methods: {
     onEscDown(e) {
-      if (this.escCLose && e.code == 'Escape') {
+      if (this.escCLose && e.code === 'Escape') {
         this.shown = false
       }
     },
@@ -95,7 +95,3 @@ export default Vue.extend({
   },
 })
 </script>
-
-<style scoped lang="scss">
-
-</style>

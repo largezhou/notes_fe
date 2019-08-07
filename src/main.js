@@ -3,7 +3,6 @@ import '@/libs/globals'
 
 import '@/mocks'
 import Vue from 'vue'
-import '@/plugins/vuetify'
 import '@/plugins/axios'
 import '@/plugins/mavon_editor'
 import App from '@/App.vue'
@@ -15,6 +14,7 @@ import utils from '@/libs/utils'
 import '@/components'
 import editMode from '@/mixins/edit_mode'
 import '@/libs/global_shortcuts'
+import vuetify from './plugins/vuetify'
 
 Vue.mixin(editMode)
 
@@ -37,12 +37,13 @@ Vue.prototype.$dialog = utils.dialog
 const $root = new Vue({
   router,
   store,
+  vuetify,
   render: h => h(App),
 }).$mount('#app')
 
 export default $root
 
-if (process.env.NODE_ENV == 'development') {
+if (process.env.NODE_ENV === 'development') {
   window.$root = $root
   window.Vue = Vue
   window.utils = utils

@@ -56,7 +56,7 @@ export default {
 .search-result {
   margin-bottom: 10px;
 
-  /deep/ {
+  > > > {
     em {
       font-style: normal;
       color: red;

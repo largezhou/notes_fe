@@ -2,15 +2,15 @@
   <div id="app" v-resize="onWindowResize" :class="[{ 'edit-mode': editMode }, deviceClass]">
     <v-app>
       <navbar ref="navbar"/>
-      <v-content :style="{ marginTop }">
+      <v-content>
         <keep-alive>
           <router-view v-if="$route.meta.keepAlive" :key="$route.name"/>
         </keep-alive>
         <router-view v-if="!$route.meta.keepAlive"/>
       </v-content>
-      <v-footer color="grey lighten-2 text-xs-center">
-        <div class="container footer-items">
-          <span>Copyright <strong>largezhou</strong></span>
+      <v-footer app color="grey lighten-2" class="flex justify-center">
+        <div class="footer-items">
+          <span class="copyright">Copyright <strong>largezhou</strong></span>
           <span><strong><a href="mailto:largezhou@hotmail.com">largezhou@hotmail.com</a></strong></span>
         </div>
       </v-footer>
@@ -58,15 +58,9 @@ export default {
 
       // 更新是不是宽屏的状态
       const widescreen = width >= 600
-      if (widescreen != this.widescreen) {
+      if (widescreen !== this.widescreen) {
         this.$store.commit('changeWidescreen', widescreen)
       }
-
-      // 捉摸不透导航栏的高度是怎么变化的，就这样 hack 一下
-      clearTimeout(this._st)
-      this._st = setTimeout(() => {
-        this.marginTop = this.$refs.navbar.$el.offsetHeight + 'px'
-      }, 500)
     },
   },
 }
@@ -82,6 +76,10 @@ export default {
     + span {
       margin-left: 20px;
     }
+  }
+
+  .copyright {
+    white-space: nowrap;
   }
 }
 </style>
