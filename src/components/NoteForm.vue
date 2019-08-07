@@ -53,7 +53,7 @@
       </v-container>
     </v-card-text>
     <v-card-actions>
-      <v-btn depressed color="primary" @click="onSubmit" :loading="submitting">{{ this.note ? '更新' : '添加笔记' }}</v-btn>
+      <v-btn depressed color="primary" @click="() => onSubmit()" :loading="submitting">{{ this.note ? '更新' : '添加笔记' }}</v-btn>
       <v-btn depressed @click="onReset" v-if="this.note">重置</v-btn>
       <v-btn depressed @click="onClear" v-else>清空</v-btn>
       <v-checkbox v-model="stay" v-if="this.note" label="留在此页" hide-details class="mt-0 ml-4"/>
