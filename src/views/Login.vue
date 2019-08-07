@@ -14,7 +14,7 @@
         :error-messages="validateErrors('form.password')"
         v-model="$v.form.password.$model"
       />
-      <v-btn color="primary" @click="onLogin" :loading="submitting">登录</v-btn>
+      <loading-action color="primary" :action="onLogin">登录</loading-action>
     </v-form>
   </page-layout>
 </template>
@@ -67,33 +67,18 @@ export default {
     }
   },
   methods: {
-    onLogin() {
-      if (this.submitting) {
-        this.$dialog('别急')
-        return
-      }
-
+    async onLogin() {
       this.$v.$touch()
 
       if (this.$v.$invalid) {
         return
       }
 
-      this.submitting = true
+      await this.$store.dispatch('login', {
+        data: this.form,
+      })
 
-      this.$store
-        .dispatch('login', {
-          data: this.form,
-        })
-        .then(res => {
-          const r = this.$route.query._redirect
-          const to = r || '/'
-
-          location.href = to
-        })
-        .catch(() => {
-          this.submitting = false
-        })
+      location.href = this.$route.query._redirect || '/'
     },
   },
 }
