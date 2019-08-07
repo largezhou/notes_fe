@@ -7,12 +7,7 @@ import MdiIcon from './MdiIcon'
 import ErrorsBag from './ErrorsBag'
 import Empty from './Empty'
 
-// 要注册为全局组件的添加到这里
-const components = [
-  PageLayout,
-  MdiIcon,
-  ErrorsBag,
-  Empty,
-]
-
-components.forEach(c => Vue.component(c.name, c))
+Vue.component(PageLayout.name, PageLayout)
+Vue.component(MdiIcon.name, MdiIcon)
+Vue.component(ErrorsBag.name, ErrorsBag)
+Vue.component(Empty.name, Empty)
