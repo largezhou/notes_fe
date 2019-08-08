@@ -1,22 +1,34 @@
 <template>
   <component :is="wrapperComponent" @afterLeave="forceDeletedHandler(book)">
-    <v-card class="book-info-card" :class="{ collapsed: !vExpand }" v-if="book" v-show="!book.force_deleted">
+    <v-card
+      class="book-info-card"
+      :class="{ collapsed: !vExpand }"
+      v-if="book"
+      v-show="!book.force_deleted"
+    >
       <v-card-text>
         <v-layout row wrap>
           <v-flex xs4 class="cover" v-show="vExpand">
             <img :src="book.cover">
           </v-flex>
-          <v-flex :xs6="vExpand" :sm8="vExpand" :xs10="!vExpand" class="book-info">
+          <v-flex
+            :xs6="vExpand"
+            :sm8="vExpand"
+            :xs10="!vExpand"
+            class="book-info"
+          >
             <div class="title text-ellipsis" :class="{ collapsed: !vExpand }">
               <v-tooltip :bottom="widescreen" :left="!widescreen">
-
-                <router-link
-                  v-if="widescreen"
-                  slot="activator"
-                  :to="`/books/${book.id}`"
-                >{{ book.title }}
-                </router-link>
-                <span v-else slot="activator">{{ book.title }}</span>
+                <template #activator="{ on }">
+                  <router-link
+                    v-on="on"
+                    :to="`/books/${book.id}`"
+                    v-if="widescreen"
+                  >
+                    {{ book.title }}
+                  </router-link>
+                  <span v-else v-on="on">{{ book.title }}</span>
+                </template>
 
                 <router-link :to="`/books/${book.id}`">{{ book.title }}</router-link>
               </v-tooltip>
@@ -24,24 +36,33 @@
             <div v-show="vExpand">
               <div class="item">
                 <span class="label">开始阅读</span>
-                <human-time v-if="book.started_at" :time="book.started_at" prefix="开始于："/>
-                <span v-else>未读</span>
+                <human-time
+                  text-class="grey--text text--darken-3"
+                  v-if="book.started_at"
+                  :time="book.started_at"
+                  prefix="开始于："
+                />
+                <span class="grey--text text--darken-3" v-else>未读</span>
               </div>
               <div class="item">
                 <span class="label">更新</span>
-                <human-time :time="book.updated_at" prefix="最近更新："/>
+                <human-time
+                  text-class="grey--text text--darken-3"
+                  :time="book.updated_at"
+                  prefix="最近更新："
+                />
               </div>
               <div class="item">
                 <span class="label">已读</span>
-                <span>{{ book.read }}</span> 页
+                <span class="grey--text text--darken-3">{{ book.read }} 页</span>
               </div>
               <div class="item">
                 <span class="label">总页数</span>
-                <span>{{ book.total }}</span> 页
+                <span class="grey--text text--darken-3">{{ book.total }} 页</span>
               </div>
               <div class="item">
                 <span class="label">笔记</span>
-                <span>{{ book.notes_count }}</span> 条
+                <span class="grey--text text--darken-3">{{ book.notes_count }} 条</span>
               </div>
             </div>
           </v-flex>
@@ -67,7 +88,7 @@
       <v-btn
         v-if="canExpand"
         class="toggle-btn"
-        flat
+        text
         icon
         small
         absolute
@@ -80,8 +101,6 @@
       <item-actions
         class="actions"
         :inline="false"
-        :background-color="null"
-        :style="{ top: canExpand ? '40px' : '0' }"
         v-if="canEdit"
         v-show="vExpand && editMode"
         :item="book"
@@ -104,10 +123,16 @@ import { mapState } from 'vuex'
 import { updateBook, deleteBook, forceDeleteBook } from '@/api/books'
 import ItemActions from '@/components/ItemActions'
 import HiddenMark from '@/components/HiddenMark'
+import { VSlideYReverseTransition } from 'vuetify/lib/components/transitions'
 
 export default {
   name: 'BookInfoCard',
-  components: { HumanTime, ItemActions, HiddenMark },
+  components: {
+    HumanTime,
+    ItemActions,
+    HiddenMark,
+    VSlideYReverseTransition,
+  },
   props: {
     book: Object,
     newNoteBtn: {
@@ -129,7 +154,7 @@ export default {
     forceDeletedHandler: {
       type: Function,
       default() {
-         this.$router.push({ name: 'bookIndex' })
+        this.$router.push({ name: 'bookIndex' })
       },
     },
   },
@@ -218,7 +243,7 @@ $add-note-btn-pos: 12px;
   overflow: hidden;
 
   + .book-info-card {
-    margin-top: 10px;
+    margin-top: 20px;
   }
 
   .cover {
@@ -257,7 +282,6 @@ $add-note-btn-pos: 12px;
     display: inline-block;
     width: 65px;
     margin-right: 10px;
-    color: $non-important-color;
   }
 
   @media only screen and (max-width: 500px) {
@@ -302,6 +326,8 @@ $add-note-btn-pos: 12px;
 
 <style lang="scss" scoped>
 .actions {
-  right: 0;
+  left: 5px;
+  right: initial;
+  border-bottom-right-radius: 4px;
 }
 </style>

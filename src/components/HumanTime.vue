@@ -1,7 +1,7 @@
 <template>
   <v-tooltip top>
     <template #activator="{ on }">
-      <span v-on="on">{{ human() }}</span>
+      <span :class="textClass" v-on="on">{{ human() }}</span>
     </template>
     <span>{{ prefix + time }}</span>
   </v-tooltip>
@@ -23,6 +23,7 @@ export default {
       type: String,
       default: '',
     },
+    textClass: String,
   },
   methods: {
     human() {

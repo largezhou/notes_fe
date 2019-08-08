@@ -17,3 +17,9 @@
 .v-messages {
   min-height: 16px;
 }
+
+.v-tooltip__content {
+  a {
+    color: white !important;
+  }
+}

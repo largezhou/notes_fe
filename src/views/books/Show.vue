@@ -6,15 +6,15 @@
         :expand.sync="expandBookCard"
       />
 
-      <v-card class="read-progress">
-        <v-progress-linear color="info" height="18" :value="readPercent"/>
+      <div class="read-progress">
+        <v-progress-linear color="info" height="22" :value="readPercent"/>
         <span class="progress-text">{{ readPercent }}%</span>
-      </v-card>
+      </div>
       <div class="notes-actions">
-        <v-btn flat @click="onChangeSort('page')">页数
+        <v-btn text @click="onChangeSort('page')">页数
           <mdi-icon :icon="sortIcon('page')"/>
         </v-btn>
-        <v-btn flat @click="onChangeSort('created_at')">时间
+        <v-btn text @click="onChangeSort('created_at')">时间
           <mdi-icon :icon="sortIcon('created_at')"/>
         </v-btn>
         <v-spacer style="height: 0;"/>
@@ -59,11 +59,11 @@
 
 <script>
 import BookNoteItem from '@/components/BookNoteItem'
-import { getBook } from '@/api/books'
+import { getBook, getBooksNotes } from '@/api/books'
 import reloadData from '@/mixins/reload_data'
 import BookInfoCard from '@/components/BookInfoCard'
 import getData from '@/mixins/get_data'
-import { getBooksNotes } from '@/api/books'
+
 import Paginator from '@/components/Paginator'
 
 export default {
@@ -115,8 +115,8 @@ export default {
   },
   methods: {
     onChangeSort(field) {
-      if (this.sortField == field) {
-        this.sortType = this.sortType == 'desc' ? 'asc' : 'desc'
+      if (this.sortField === field) {
+        this.sortType = this.sortType === 'desc' ? 'asc' : 'desc'
       } else {
         this.sortField = field
         this.sortType = 'desc'
@@ -129,11 +129,11 @@ export default {
     },
 
     sortIcon(field) {
-      if (this.sortField != field) {
+      if (this.sortField !== field) {
         return ''
       }
 
-      return (this.sortType == 'asc') ? 'menu-up' : 'menu-down'
+      return (this.sortType === 'asc') ? 'menu-up' : 'menu-down'
     },
 
     _getData() {
@@ -191,6 +191,10 @@ export default {
         return
       }
 
+      if (!this.searchPage && !this.$route.query.search_page) {
+        return
+      }
+
       this.$router.push({
         name: this.$route.name,
         query: {
@@ -206,7 +210,7 @@ export default {
 
         if (this.$active) {
           // 记录旧的 bookId，如果路由中 bookId 变了，则重新获取所有数据，否则只获取笔记的数据
-          if (this.oldBookId != this.$route.params.bookId) {
+          if (this.oldBookId !== Number(this.$route.params.bookId)) {
             this.getData()
           } else {
             this.expandBookCard = false

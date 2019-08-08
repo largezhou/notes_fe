@@ -4,8 +4,10 @@
     <div class="picker" @click="onClickPicker">
       <mdi-icon v-if="!this.filename" icon="file-upload"/>
       <v-tooltip top v-else>
-        <img v-if="src" :src="src" slot="activator"/>
-        <mdi-icon v-else slot="activator" icon="file"/>
+        <template #activator="{ on }">
+          <img v-if="src" :src="src" v-on="on">
+          <mdi-icon v-else v-on="on" icon="file"/>
+        </template>
         <span>{{ filename }}</span>
       </v-tooltip>
 
@@ -24,7 +26,12 @@
       </v-scale-transition>
     </div>
     <error-messages :error-messages="errorMessages"/>
-    <input type="file" :accept="accept" readonly ref="input" @change="onInputChange"/>
+    <input
+      type="file"
+      :accept="accept"
+      readonly
+      ref="input"
+      @change="onInputChange">
   </div>
 </template>
 
@@ -82,7 +89,7 @@ export default {
 
       if (vImage(newValue)) {
         this.src = URL.createObjectURL(newValue)
-      } else if (typeof newValue == 'string') {
+      } else if (typeof newValue === 'string') {
         this.src = newValue
       } else {
         this.src = ''

@@ -5,11 +5,11 @@
     persistent
   >
     <v-card>
-      <v-toolbar card dark color="primary">
+      <v-app-bar flat dark color="primary">
         <v-btn icon dark @click="onCancel">
           <mdi-icon icon="close"/>
         </v-btn>
-        <v-toolbar-title>{{ this.book ? `编辑 ${this.book.title}` : '添加一本书' }}</v-toolbar-title>
+        <v-toolbar-title>{{ this.book ? '编辑' : '添加一本书' }}</v-toolbar-title>
         <v-spacer/>
         <v-toolbar-items>
           <loading-action
@@ -20,7 +20,7 @@
             <mdi-icon icon="content-save"/>
           </loading-action>
         </v-toolbar-items>
-      </v-toolbar>
+      </v-app-bar>
       <v-card-text>
         <v-container grid-list-md>
           <v-form ref="form">
@@ -58,7 +58,6 @@
                   ref="startDateModal"
                   v-model="startDateModal"
                   :return-value.sync="form.started_at"
-                  lazy
                   full-width
                   width="290px"
                 >

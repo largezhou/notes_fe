@@ -38,8 +38,7 @@ export default {
     _getData() {
       return getBooks()
         .then(res => {
-          const data = res.data
-          this.books = data
+          this.books = res.data
         })
     },
 
@@ -56,6 +55,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss">
-</style>

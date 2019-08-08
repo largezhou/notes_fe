@@ -14,7 +14,7 @@
       <v-card-text v-else v-text="content"/>
 
       <v-card-actions v-if="actions">
-        <v-spacer></v-spacer>
+        <v-spacer/>
         <v-btn color="blue darken-1" text @click="shown = false">确定</v-btn>
       </v-card-actions>
     </v-card>
@@ -24,6 +24,7 @@
 <script>
 import Vue from 'vue'
 import router from '@/router'
+import vuetify from '@/plugins/vuetify'
 
 const DialogContent = {
   name: 'DialogContent',
@@ -40,6 +41,7 @@ const DialogContent = {
 
 export default Vue.extend({
   router,
+  vuetify,
   name: 'GlobalDialog',
   components: { DialogContent },
   data: () => ({

@@ -3,7 +3,6 @@
     dense
     class="item-actions"
     :class="{ inline }"
-    :style="{ backgroundColor }"
     rounded
   >
     <!-- 置顶与取消置顶 -->
@@ -96,10 +95,6 @@ export default {
       type: Boolean,
       default: true,
     },
-    backgroundColor: {
-      type: String,
-      default: 'rgba(255, 255, 255, 0.5)',
-    },
     setTop: Boolean,
   },
   computed: {
@@ -174,6 +169,7 @@ export default {
   right: 5px;
   flex-direction: column;
   padding: 0;
+  background: rgba(255, 255, 255, 0.5);
 
   &.inline {
     flex-direction: row;
