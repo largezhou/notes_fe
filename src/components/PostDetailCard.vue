@@ -1,16 +1,24 @@
 <template>
   <v-card class="post-info-card" v-if="post">
     <v-card-text class="post-content-card">
-      <h2 v-show="subTitle" style="text-align: center; font-weight: unset">{{ subTitle }}</h2>
-      <h1 style="text-align: center">{{ post.title }}</h1>
+      <h2
+        v-show="subTitle"
+        class="text-center"
+        style="font-weight: unset"
+      >{{ subTitle }}</h2>
+      <h1 class="text-center grey--text text--darken-3">{{ post.title }}</h1>
       <div class="time">
         <v-tooltip top>
-          <span slot="activator">{{ post.created_at }}</span>
+          <template #activator="{ on }">
+            <span v-on="on">{{ post.created_at }}</span>
+          </template>
           <span>添加于</span>
         </v-tooltip>
 
         <v-tooltip top style="margin-left: 10px;">
-          <span slot="activator">{{ post.updated_at }}</span>
+          <template #activator="{ on }">
+            <span v-on="on">{{ post.created_at }}</span>
+          </template>
           <span>修改于</span>
         </v-tooltip>
       </div>
@@ -78,7 +86,7 @@ export default {
 
 .time {
   color: $non-important-color;
-  font-size: 13px;
+  font-size: 14px;
   text-align: center;
   margin-bottom: 5px;
 }
@@ -94,8 +102,8 @@ export default {
 }
 
 .actions {
-  left: 0;
-  top: 0;
+  left: 5px;
+  right: initial;
   border-bottom-right-radius: 4px !important;
 }
 </style>

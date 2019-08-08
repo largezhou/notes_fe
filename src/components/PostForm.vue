@@ -46,10 +46,20 @@
       </v-container>
     </v-card-text>
     <v-card-actions>
-      <v-btn depressed color="primary" @click="() => onSubmit()" :loading="submitting">{{ this.post ? '更新' : '添加博客' }}</v-btn>
+      <v-btn
+        depressed
+        color="primary"
+        @click="() => onSubmit()"
+        :loading="submitting">{{ this.post ? '更新' : '添加博客' }}</v-btn>
       <v-btn depressed @click="onReset" v-if="this.post">重置</v-btn>
       <v-btn depressed @click="onClear" v-else>清空</v-btn>
-      <v-checkbox v-model="stay" v-if="this.post" label="留在此页" hide-details class="mt-0 ml-4"/>
+      <v-checkbox
+        v-model="stay"
+        v-if="this.post"
+        label="留在此页"
+        hide-details
+        class="mt-0 ml-4"
+      />
     </v-card-actions>
   </v-card>
 </template>

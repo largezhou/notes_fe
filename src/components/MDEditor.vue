@@ -6,13 +6,13 @@
         :style="{ height: editorHeightCSS }"
         ishljs
         code-style="monokai-sublime"
-        :externalLink="externalLink"
+        :external-link="externalLink"
         :box-shadow="false"
         :placeholder="placeholder"
         :toolbars="toolbars"
         :subfield="false"
-        defaultOpen="edit"
-        :class="{ widescreen, resize: !!dragging, mobile: device == 'mobile' }"
+        default-open="edit"
+        :class="{ widescreen, resize: !!dragging, mobile: device === 'mobile' }"
         :value="value"
         @change="onChange"
         ref="editor"
@@ -20,7 +20,6 @@
         @fullScreen="onFullscreen"
         @save="(payload) => $emit('save', payload)"
       />
-      <div v-if="device == 'desktop'" class="resizer" ref="resizer" @mousedown="onDragStart"/>
     </div>
     <error-messages :error-messages="errorMessages"/>
   </div>
@@ -189,7 +188,7 @@ export default {
      */
     cancelClearAllShortCut() {
       this.textarea.addEventListener('keydown', e => {
-        if (e.code == 'Backspace' && e.ctrlKey === true) {
+        if (e.code === 'Backspace' && e.ctrlKey === true) {
           e.stopPropagation()
         }
       })
@@ -203,37 +202,6 @@ export default {
           const data = res.data
           this.$refs.editor.$img2Url(pos, data.src)
         })
-    },
-
-    onDragStart(e) {
-      if (this.fullscreen) {
-        return
-      }
-
-      this.dragging = e.y
-      document.addEventListener('mousemove', this.onDrag)
-      document.addEventListener('mouseup', this.stopDrag)
-    },
-
-    onDrag(e) {
-      if (!this.dragging || this.fullscreen) {
-        return
-      }
-
-      this.editorHeight += e.y - this.dragging
-
-      // 编辑框默认 最小 300 高度
-      if (this.editorHeight < 300) {
-        this.editorHeight = 300
-      }
-
-      this.dragging = e.y
-    },
-
-    stopDrag() {
-      this.dragging = 0
-      document.removeEventListener('mousemove', this.onDrag)
-      document.removeEventListener('mouseup', this.stopDrag)
     },
 
     onFullscreen(full) {
@@ -288,16 +256,5 @@ export default {
   .v-note-wrapper {
     border-bottom: 2px solid $error-color;
   }
-}
-</style>
-
-<style lang="scss" scoped>
-.resizer {
-  width: 30px;
-  height: 7px;
-  cursor: row-resize;
-  border-bottom: 2px solid #1976d2;
-  margin: auto;
-  user-select: none;
 }
 </style>

@@ -57,7 +57,7 @@ export default {
 <style scoped lang="scss">
 .post {
   overflow: hidden;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .actions {

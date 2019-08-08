@@ -8,7 +8,7 @@
         </keep-alive>
         <router-view v-if="!$route.meta.keepAlive"/>
       </v-content>
-      <v-footer app color="grey lighten-2" class="flex justify-center">
+      <v-footer color="grey lighten-2" class="flex justify-center">
         <div class="footer-items">
           <span class="copyright">Copyright <strong>largezhou</strong></span>
           <span><strong><a href="mailto:largezhou@hotmail.com">largezhou@hotmail.com</a></strong></span>
