@@ -4,8 +4,8 @@
     v-bind="$attrs"
     v-on="$listeners"
     @click="onAction"
-    :loading="actionLoading || loading"
-    :disabled="disabled"
+    :loading="realLoading"
+    :disabled="realDisabled"
   >
     <slot/>
   </component>
@@ -21,8 +21,16 @@ export default {
   },
   data: () => ({
     actionLoading: false,
-    disabled: false,
+    actionDisabled: false,
   }),
+  computed: {
+    realLoading() {
+      return this.actionLoading || this.loading
+    },
+    realDisabled() {
+      return this.actionDisabled || this.disabled
+    },
+  },
   props: {
     /**
      * 要有效的使用 loading 效果，这里必须传入一个异步函数
@@ -39,6 +47,7 @@ export default {
       default: 'v-btn',
     },
     loading: Boolean,
+    disabled: Boolean,
     /**
      * action 执行成功后，继续禁用按钮按钮一小段时间，避免连续点击
      * 当执行成功后，需要跳转页面或者关闭弹窗之类的，可以设置为 true
@@ -54,7 +63,7 @@ export default {
   },
   methods: {
     async onAction() {
-      if (this.actionLoading || this.disabled) {
+      if (this.realLoading || this.realDisabled) {
         return false
       }
       this.actionLoading = true
@@ -68,10 +77,10 @@ export default {
     },
     handleDisableOnSuccess() {
       if (this.disableOnSuccess > 0) {
-        this.disabled = true
+        this.actionDisabled = true
         this.clearRecoverDisabledTimeout()
         this.recoverDisabledTimeout = setTimeout(() => {
-          this.disabled = false
+          this.actionDisabled = false
         }, this.disableOnSuccess)
       }
     },

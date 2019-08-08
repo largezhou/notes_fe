@@ -1,21 +1,14 @@
 <template>
   <page-layout
     page-desc="通往程序员之路"
-    :loading="loading && firstLoad"
+    :loading="firstLoad"
     :flex="{ md8: false, sm10: false }"
     style="max-width: 700px;"
   >
     <template v-if="days.length">
-      <v-expansion-panel expand>
-        <v-expansion-panel-content
-          v-for="day of days"
-          :key="day"
-          expand-icon
-        >
-          <div
-            slot="header"
-            class="progress-wrapper"
-          >
+      <v-expansion-panels multiple>
+        <v-expansion-panel v-for="day of days" :key="day">
+          <v-expansion-panel-header>
             <div>{{ day }}</div>
             <div class="progress">
               <v-progress-linear
@@ -25,35 +18,36 @@
               />
               <span class="sum">看了 {{ groupedByDay[day].sum }} 页</span>
             </div>
-          </div>
-          <div
-            class="books"
-            v-for="(r, index) of groupedByDay[day].books"
-            :key="index"
-          >
-            <router-link
-              v-if="r.book"
-              :to="`/books/${r.book_id}`"
+          </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <div
+              class="books"
+              v-for="(r, index) of groupedByDay[day].books"
+              :key="index"
             >
-              《{{ r.book.title }}》
-            </router-link>
-            <span v-else>《神秘书籍》</span>
-            <span class="book-sum">看了 {{ r.sum }} 页</span>
-          </div>
-        </v-expansion-panel-content>
-      </v-expansion-panel>
+              <router-link
+                v-if="r.book"
+                :to="`/books/${r.book_id}`"
+              >
+                《{{ r.book.title }}》
+              </router-link>
+              <span v-else>《神秘书籍》</span>
+              <span class="book-sum">看了 {{ r.sum }} 页</span>
+            </div>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
     </template>
     <empty v-else/>
-    <div class="text-center">
-      <v-btn
-        @click="onLoadMore"
-        flat
-        :loading="loading && !firstLoad"
+    <div class="text-center mt-4">
+      <loading-action
+        :action="onLoadMore"
+        text
         class="load-more"
         :disabled="isEnd"
       >
         {{ loadMoreText }}
-      </v-btn>
+      </loading-action>
     </div>
   </page-layout>
 </template>
@@ -66,7 +60,6 @@ export default {
   data: () => ({
     currentPage: 0,
     perPage: 15,
-    loading: false,
     groupedByDay: {},
     days: [],
     maxSum: 0,
@@ -83,17 +76,12 @@ export default {
   },
   methods: {
     async getData() {
-      this.loading = true
-      try {
-        const { data } = await getReadRecords(this.currentPage + 1)
-        this.currentPage = data.meta.current_page
-        this.perPage = data.meta.per_page
-        this.groupRecords(data.data)
-        if (this.firstLoad) {
-          this.firstLoad = false
-        }
-      } finally {
-        this.loading = false
+      const { data } = await getReadRecords(this.currentPage + 1)
+      this.currentPage = data.meta.current_page
+      this.perPage = data.meta.per_page
+      this.groupRecords(data.data)
+      if (this.firstLoad) {
+        this.firstLoad = false
       }
     },
 
@@ -133,8 +121,8 @@ export default {
       this.isEnd = this.perPage > daysCount
     },
 
-    onLoadMore() {
-      this.getData()
+    async onLoadMore() {
+      await this.getData()
     },
   },
 }
@@ -143,45 +131,19 @@ export default {
 <style scoped lang="scss">
 @import "~@/styles/variables";
 
-.v-expansion-panel {
-  box-shadow: none;
-
-  .v-expansion-panel__container {
-    border-top: none;
-    background: initial;
-  }
-}
-
-> > > {
-  .v-expansion-panel__header {
-    padding: 12px 16px;
-  }
-}
-
 .books {
-  padding: 12px 16px;
+  padding: 10px 0;
 }
 
-.progress-wrapper {
-  > div {
-    display: inline-block;
-    vertical-align: middle;
-  }
-
-  .v-progress-linear {
-    margin: 0;
-  }
-
-  .progress {
-    position: relative;
-    width: calc(100% - 100px);
-    margin-left: 15px;
-  }
+.progress {
+  position: relative;
+  width: calc(100% - 120px);
+  margin-left: 15px;
 }
 
 .sum {
   left: 5px;
-  top: 1px;
+  top: 3px;
   color: white;
   position: absolute;
   z-index: 1;
