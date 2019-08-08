@@ -1,6 +1,9 @@
 <template>
   <page-layout>
-    <v-form ref="form" class="login-form" @keydown.enter.native="onLogin">
+    <v-form
+      ref="form"
+      class="login-form"
+      @keydown.enter.native="$refs.loginBtn.onAction">
       <p class="title">登录吧</p>
       <v-text-field
         autofocus
@@ -14,7 +17,13 @@
         :error-messages="validateErrors('form.password')"
         v-model="$v.form.password.$model"
       />
-      <loading-action color="primary" :action="onLogin">登录</loading-action>
+      <loading-action
+        ref="loginBtn"
+        color="primary"
+        :action="onLogin"
+      >
+        登录
+      </loading-action>
     </v-form>
   </page-layout>
 </template>
@@ -62,8 +71,6 @@ export default {
           },
         },
       },
-
-      submitting: false,
     }
   },
   methods: {
@@ -88,7 +95,6 @@ export default {
 .login-form {
   text-align: center;
   width: 300px;
-  margin: auto;
-  margin-top: 100px;
+  margin: 100px auto 0 auto;
 }
 </style>

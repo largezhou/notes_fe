@@ -10,11 +10,15 @@
           <mdi-icon icon="close"/>
         </v-btn>
         <v-toolbar-title>{{ this.book ? `编辑 ${this.book.title}` : '添加一本书' }}</v-toolbar-title>
-        <v-spacer></v-spacer>
+        <v-spacer/>
         <v-toolbar-items>
-          <v-btn dark flat @click="onSubmit" :loading="submitting">
+          <loading-action
+            dark
+            text
+            :action="onSubmit"
+          >
             <mdi-icon icon="content-save"/>
-          </v-btn>
+          </loading-action>
         </v-toolbar-items>
       </v-toolbar>
       <v-card-text>
@@ -58,21 +62,24 @@
                   full-width
                   width="290px"
                 >
-                  <v-text-field
-                    v-model="form.started_at"
-                    slot="activator"
-                    label="开始时间"
-                    readonly
-                    clearable
-                  ></v-text-field>
+                  <template #activator="{ on }">
+                    <v-text-field
+                      v-on="on"
+                      v-model="form.started_at"
+                      slot="activator"
+                      label="开始时间"
+                      readonly
+                      clearable
+                    />
+                  </template>
                   <v-date-picker
                     v-model="form.started_at"
                     scrollable
                     locale="zh-cn"
                   >
                     <v-spacer/>
-                    <v-btn flat color="primary" @click="startDateModal = false">取消</v-btn>
-                    <v-btn flat color="primary" @click="$refs.startDateModal.save(form.started_at)">确定</v-btn>
+                    <v-btn text color="primary" @click="startDateModal = false">取消</v-btn>
+                    <v-btn text color="primary" @click="$refs.startDateModal.save(form.started_at)">确定</v-btn>
                   </v-date-picker>
                 </v-dialog>
               </v-flex>
@@ -173,8 +180,6 @@ export default {
     },
 
     book: null,
-
-    submitting: false,
   }),
   created() {
     this.$root.$on('editBook', this.onEdit)
@@ -189,12 +194,7 @@ export default {
       this.modal = true
       this.book = null
     },
-    onSubmit() {
-      if (this.submitting) {
-        this.$snackbar('别急')
-        return
-      }
-
+    async onSubmit() {
       this.$v.$touch()
 
       if (this.$v.$invalid) {
@@ -212,37 +212,25 @@ export default {
         fd.append(k, val)
       }
 
-      this.submitting = true
-
-      let res
       if (this.book) {
         if (!(fd.get('cover') instanceof File)) {
           fd.delete('cover')
         }
 
-        res = updateBook(this.book.id, fd)
-          .then(res => {
-            this.$root.$emit('bookUpdated', res.data)
-            this.onCancel()
-          })
+        const { data } = await updateBook(this.book.id, fd)
+        this.$root.$emit('bookUpdated', data)
+        this.onCancel()
       } else {
-        res = postCreateBook(fd)
-          .then(res => {
-            const data = res.data
-            this.onCancel()
-            this.$snackbar('已添加')
-            this.$router.push({
-              name: 'bookShow',
-              params: {
-                bookId: data.id,
-              },
-            })
-          })
+        const { data } = await postCreateBook(fd)
+        this.onCancel()
+        this.$snackbar('已添加')
+        this.$router.push({
+          name: 'bookShow',
+          params: {
+            bookId: data.id,
+          },
+        })
       }
-
-      res.finally(() => {
-        this.submitting = false
-      })
     },
     onCancel() {
       this.$refs.form.reset()
