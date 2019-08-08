@@ -3,7 +3,7 @@
     <v-layout row wrap justify-center>
       <v-flex md9 sm12>
 
-        <div v-if="loading" class="text-xs-center">
+        <div v-if="loading" class="text-center">
           <v-progress-circular
             :size="40"
             :width="2"

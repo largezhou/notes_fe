@@ -4,7 +4,7 @@
     <v-layout row wrap justify-center>
       <v-flex v-bind="flex">
         <div v-if="pageDesc" class="page-desc">~~ {{ pageDesc }} ~~</div>
-        <div v-if="loading" class="text-xs-center">
+        <div v-if="loading" class="text-center">
           <v-progress-circular
             :size="40"
             :width="2"

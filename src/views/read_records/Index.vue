@@ -44,7 +44,7 @@
       </v-expansion-panel>
     </template>
     <empty v-else/>
-    <div class="text-xs-center">
+    <div class="text-center">
       <v-btn
         @click="onLoadMore"
         flat

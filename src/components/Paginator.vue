@@ -1,6 +1,6 @@
 <template>
   <div
-    class="text-xs-center"
+    class="text-center"
     v-if="page && page.total > 0 && page.last_page > 1"
   >
     <v-pagination

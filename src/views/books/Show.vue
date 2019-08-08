@@ -31,7 +31,7 @@
           ref="searchPage"
         />
       </div>
-      <div v-if="notesLoading" class="text-xs-center">
+      <div v-if="notesLoading" class="text-center">
         <v-progress-circular
           :size="40"
           :width="2"
