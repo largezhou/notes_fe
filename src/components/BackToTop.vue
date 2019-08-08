@@ -9,7 +9,7 @@
         bottom
         right
         fixed
-        color="red"
+        color="#F44336"
         @click="onGoTop"
       >
         <mdi-icon icon="arrow-collapse-up"/>

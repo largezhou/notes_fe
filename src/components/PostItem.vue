@@ -61,8 +61,6 @@ export default {
 }
 
 .actions {
-  right: 0;
-  top: 0;
   border-bottom-left-radius: 4px;
 }
 </style>

@@ -3,24 +3,23 @@
     <v-card class="note-item" v-show="!item.force_deleted">
       <v-card-title>
         <div class="belong">
-          <v-btn
-            @click="onToggleDetail"
+          <loading-action
+            :action="onToggleDetail"
             class="hide-detail"
             color="primary"
-            flat
+            text
             icon
             small
+            disable-on-success="0"
           >
             <mdi-icon
               :icon="showDetail ? 'chevron-up' : 'chevron-down'"
-              :loading="loading"
             />
-          </v-btn>
+          </loading-action>
           <template v-if="!disableBook">
             <router-link :class="{ hidden: item.book.hidden, deleted: item.book.deleted_at }" :to="`/books/${item.book.id}`">{{ item.book.title }}</router-link>
-            <span> • </span>
           </template>
-          <router-link class="page-link" :to="`/notes/${item.id}`">第{{ item.page }}页</router-link>
+          <router-link class="page-link ml-3" :to="`/notes/${item.id}`">第{{ item.page }}页</router-link>
         </div>
       </v-card-title>
 
@@ -81,7 +80,6 @@ export default {
     book: Object,
   },
   data: () => ({
-    loading: false,
     showDetail: false,
   }),
   created() {
@@ -96,33 +94,22 @@ export default {
     }),
   },
   methods: {
-    onToggleDetail() {
+    async onToggleDetail() {
       if (this.showDetail) {
         this.showDetail = false
       } else {
-        this.onLoadDetail()
+        await this.onLoadDetail()
       }
     },
-    onLoadDetail() {
-      if (this.loading) {
-        return
-      }
-
+    async onLoadDetail() {
       if (this.item.html_content) {
         this.showDetail = true
         return
       }
 
-      this.loading = true
-
-      getNote(this.item.id, { only: 'html_content' })
-        .then(res => {
-          this.$set(this.item, 'html_content', res.data.html_content)
-          this.showDetail = true
-        })
-        .finally(() => {
-          this.loading = false
-        })
+      const { data } = await getNote(this.item.id, { only: 'html_content' })
+      this.$set(this.item, 'html_content', data.html_content)
+      this.showDetail = true
     },
   },
 }
@@ -132,7 +119,7 @@ export default {
 @import '~@/styles/variables';
 
 .note-item {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   overflow: hidden;
 
   .v-card__title {
@@ -148,6 +135,7 @@ export default {
     font-size: 14px;
     padding-top: 10px;
     padding-bottom: 10px;
+    color: rgba(0, 0, 0, 0.87);
   }
 
   .page-link {
@@ -174,13 +162,11 @@ export default {
 }
 
 .actions {
-  right: 0;
-  top: 0;
   border-bottom-left-radius: 4px;
 }
 
 .hide-detail {
-  margin: 0px 8px 0px 0px;
+  margin: 0 8px 0 0;
 }
 
 .detail-title {
@@ -188,5 +174,6 @@ export default {
   font-size: 2em;
   border-bottom: 1px solid #eaecef;
   margin-bottom: 16px;
+  color: rgba(0, 0, 0, 0.87);
 }
 </style>

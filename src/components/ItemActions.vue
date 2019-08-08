@@ -1,45 +1,81 @@
 <template>
-  <v-list dense class="item-actions" :class="{ inline }" :style="{ backgroundColor }">
+  <v-list
+    dense
+    class="item-actions"
+    :class="{ inline }"
+    :style="{ backgroundColor }"
+    rounded
+  >
     <!-- 置顶与取消置顶 -->
-    <v-list-tile
-      v-if="setTop"
-      @click="updateField('is_top')"
-    >
-      <v-list-tile-action>
-        <mdi-icon :loading="updating.is_top" :icon="item.is_top ? 'arrow-collapse-down' : 'arrow-collapse-up'"/>
-      </v-list-tile-action>
-    </v-list-tile>
+    <v-list-item v-if="setTop" @click="">
+      <v-list-item-action>
+        <loading-action
+          ref="toggleHidden"
+          :action="toggleIsTop"
+          icon
+          small
+        >
+          <mdi-icon :icon="item.is_top ? 'arrow-collapse-down' : 'arrow-collapse-up'"/>
+        </loading-action>
+      </v-list-item-action>
+    </v-list-item>
 
     <!-- 隐藏与显示 -->
-    <v-list-tile @click="updateField('hidden')">
-      <v-list-tile-action>
-        <mdi-icon :loading="updating.hidden" :icon="item.hidden ? 'eye' : 'eye-off'"/>
-      </v-list-tile-action>
-    </v-list-tile>
+    <v-list-item @click="">
+      <v-list-item-action>
+        <loading-action
+          ref="toggleHidden"
+          :action="toggleHidden"
+          icon
+          small
+        >
+          <mdi-icon :icon="item.hidden ? 'eye' : 'eye-off'"/>
+        </loading-action>
+      </v-list-item-action>
+    </v-list-item>
 
     <!-- 编辑 -->
-    <v-list-tile @click="onEdit" :to="editLink">
-      <v-list-tile-action>
-        <mdi-icon icon="pencil"/>
-      </v-list-tile-action>
-    </v-list-tile>
+    <v-list-item @click="">
+      <v-list-item-action>
+        <v-btn
+          icon
+          small
+          @click="onEdit"
+          :to="editLink"
+        >
+          <mdi-icon icon="pencil"/>
+        </v-btn>
+      </v-list-item-action>
+    </v-list-item>
 
     <!-- 删除与恢复 -->
-    <v-list-tile @click="onDeleteOrRestore">
-      <v-list-tile-action>
-        <mdi-icon
-          :loading="item.deleted_at ? restoring : deleting"
-          :icon="item.deleted_at ? 'delete-restore' : 'delete'"
-        />
-      </v-list-tile-action>
-    </v-list-tile>
+    <v-list-item @click="">
+      <v-list-item-action>
+        <loading-action
+          ref="deleteOrRestore"
+          :action="item.deleted_at ? restore : deleteNote"
+          small
+          icon
+        >
+          <mdi-icon :icon="item.deleted_at ? 'delete-restore' : 'delete'"/>
+        </loading-action>
+      </v-list-item-action>
+    </v-list-item>
 
     <!-- 彻底删除 -->
-    <v-list-tile @click="onForceDelete" v-if="item.deleted_at">
-      <v-list-tile-action>
-        <mdi-icon :loading="deleting" color="red" icon="delete-forever"/>
-      </v-list-tile-action>
-    </v-list-tile>
+    <v-list-item @click="" v-if="item.deleted_at">
+      <v-list-item-action>
+        <loading-action
+          ref="forceDelete"
+          color="red"
+          :action="forceDelete"
+          icon
+          small
+        >
+          <mdi-icon icon="delete-forever"/>
+        </loading-action>
+      </v-list-item-action>
+    </v-list-item>
   </v-list>
 </template>
 
@@ -48,8 +84,6 @@ export default {
   name: 'ItemActions',
   data: () => ({
     updating: {},
-    deleting: false,
-    restoring: false,
   }),
   props: {
     item: Object,
@@ -64,13 +98,13 @@ export default {
     },
     backgroundColor: {
       type: String,
-      default: 'rgba(234, 234, 234, 0.5)',
+      default: 'rgba(255, 255, 255, 0.5)',
     },
     setTop: Boolean,
   },
   computed: {
     editLink() {
-      if (typeof this.editHandler == 'function') {
+      if (typeof this.editHandler === 'function') {
         return ''
       } else {
         return this.editHandler
@@ -78,114 +112,84 @@ export default {
     },
   },
   methods: {
-    updateField(field) {
+    async toggleIsTop() {
+      await this.updateField('is_top')
+    },
+    async toggleHidden() {
+      await this.updateField('hidden')
+    },
+
+    async updateField(field) {
       this.$set(this.updating, field, true)
       const data = {}
       data[field] = !this.item[field]
-      this.updateHandler(this.item.id, data)
-        .then(res => {
-          this.$set(this.item, field, res.data[field])
-        })
-        .finally(() => {
-          this.updating[field] = false
-        })
+      const res = await this.updateHandler(this.item.id, data)
+      this.$set(this.item, field, res.data[field])
     },
+
     onEdit() {
-      if (typeof this.editHandler == 'function') {
+      if (typeof this.editHandler === 'function') {
         this.editHandler()
       }
     },
 
-    onDeleteOrRestore() {
-      if (this.item.deleted_at) {
-        this.restore()
-      } else {
-        this.delete()
-      }
-    },
-
-    restore() {
-      this.restoring = true
-
-      this.updateHandler(this.item.id, {
+    async restore() {
+      await this.updateHandler(this.item.id, {
         deleted_at: null,
       })
-        .then(res => {
-          this.$set(this.item, 'deleted_at', null)
-        })
-        .finally(() => {
-          this.restoring = false
-        })
+
+      this.$set(this.item, 'deleted_at', null)
     },
 
-    delete() {
-      this.$confirm({
+    async deleteNote() {
+      await this.$confirm({
         title: '删除确认',
         content: '删除后还可以恢复的，别慌',
         okText: '删除',
         okColor: 'red',
       })
-        .then(() => {
-          this.onDeleteConfirm()
-        })
+      await this.deleteHandler(this.item.id)
+      this.$set(this.item, 'deleted_at', true)
     },
 
-    onForceDelete() {
-      this.$confirm({
+    async forceDelete() {
+      await this.$confirm({
         title: '删除确认',
         content: this.forceDeleteMsg ? this.forceDeleteMsg : '彻底删除后不可恢复！！！',
         okText: '彻底删除',
         okColor: 'red',
       })
-        .then(() => {
-          this.onForceDeleteConfirm()
-        })
-    },
-
-    onForceDeleteConfirm() {
-      this.deleting = true
-
-      this.forceDeleteHandler(this.item.id)
-        .then(res => {
-          this.$emit('force-deleted', this.item)
-        })
-        .finally(() => {
-          this.deleting = false
-        })
-    },
-
-    onDeleteConfirm() {
-      this.deleting = true
-
-      this.deleteHandler(this.item.id)
-        .then(res => {
-          this.$set(this.item, 'deleted_at', true)
-        })
-        .finally(() => {
-          this.deleting = false
-        })
+      await this.forceDeleteHandler(this.item.id)
+      this.$emit('force-deleted', this.item)
     },
   },
 }
 </script>
 
 <style lang="scss" scoped>
-.v-list__tile__action {
-  min-width: initial;
-}
-
 .item-actions {
+  display: flex;
   position: absolute;
+  top: 5px;
+  right: 5px;
+  flex-direction: column;
+  padding: 0;
 
   &.inline {
-    > div {
-      display: inline-block;
-      vertical-align: middle;
-    }
+    flex-direction: row;
+  }
 
-    > > > .v-list__tile {
-      padding: 0 10px;
+  .v-list-item__action {
+    margin: 0;
+
+    > * {
+      padding: 8px;
     }
+  }
+
+  .v-list-item {
+    padding: 0;
+    margin-bottom: 0 !important;
   }
 }
 </style>

@@ -4,9 +4,9 @@
       <v-card-title class="headline">{{ options.title }}</v-card-title>
       <v-card-text v-html="options.content"/>
       <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn :color="options.cancelColor" flat @click.native="onCancel">{{ options.cancelText }}</v-btn>
-        <v-btn :color="options.okColor" flat @click.native="onOk">{{ options.okText }}</v-btn>
+        <v-spacer/>
+        <v-btn :color="options.cancelColor" text @click.native="onCancel">{{ options.cancelText }}</v-btn>
+        <v-btn :color="options.okColor" text @click.native="onOk">{{ options.okText }}</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

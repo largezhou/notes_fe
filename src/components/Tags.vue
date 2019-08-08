@@ -4,16 +4,16 @@
       v-for="tag of tags"
       :key="tag.id"
       class="tag"
-      flat
+      text
       color="primary"
       :to="`/tags/${tag.id}`"
-    >{{ tag.name }}
-    </v-btn>
+      v-text="tag.name"
+    />
     <v-btn
       :ripple="false"
       class="tag more"
       v-if="!widescreen"
-      flat
+      text
       color="primary"
       @click="onShowMore"
       v-text="oneLine ? '更多' : '收起'"

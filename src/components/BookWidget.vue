@@ -10,7 +10,7 @@
           <v-img
             :src="item.cover"
             aspect-ratio="0.75"
-          ></v-img>
+          />
 
           <v-card-title>
             <h3 class="title">{{ item.title }}</h3>
@@ -20,12 +20,12 @@
             <span>{{ item.read }} / {{ item.total }} 页</span>
             <span class="pull-right">
               <human-time :time="item.updated_at" prefix="更新于："/>
-              </span>
+            </span>
           </v-card-text>
 
           <v-card-actions>
             <v-spacer/>
-            <v-btn :to="`/books/${item.id}`" flat color="primary">详情</v-btn>
+            <v-btn :to="`/books/${item.id}`" text color="primary">详情</v-btn>
           </v-card-actions>
         </v-card>
       </template>

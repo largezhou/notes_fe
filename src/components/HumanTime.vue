@@ -1,6 +1,8 @@
 <template>
   <v-tooltip top>
-    <span slot="activator">{{ human() }}</span>
+    <template #activator="{ on }">
+      <span v-on="on">{{ human() }}</span>
+    </template>
     <span>{{ prefix + time }}</span>
   </v-tooltip>
 </template>
