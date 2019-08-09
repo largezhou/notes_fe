@@ -13,16 +13,16 @@
     @input="onInput"
   >
     <template slot="no-data">
-      <v-list-tile>
-        <v-list-tile-content>
-          <v-list-tile-title v-if="searching">
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title v-if="searching">
             搜索中...
-          </v-list-tile-title>
-          <v-list-tile-title v-else>
+          </v-list-item-title>
+          <v-list-item-title v-else>
             没有与 "<strong>{{ search }}</strong>" 匹配的标签，按 <kbd>enter</kbd> 添加
-          </v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
     </template>
   </v-combobox>
 </template>
