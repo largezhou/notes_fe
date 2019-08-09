@@ -186,6 +186,7 @@ export default {
   .v-list-item {
     padding: 0;
     margin-bottom: 0 !important;
+    flex: none;
   }
 }
 </style>

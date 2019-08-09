@@ -10,7 +10,7 @@
         <v-tab class="tag-type" href="#posts">博客{{ this.posts.length ? ` • ${this.posts.length}` : '' }}</v-tab>
       </v-tabs>
 
-      <v-tabs-items v-model="type" style="margin-top: 10px;">
+      <v-tabs-items v-model="type" style="margin-top: 10px; background: transparent">
         <v-tab-item value="notes">
           <template v-if="notes.length">
             <book-note-item
