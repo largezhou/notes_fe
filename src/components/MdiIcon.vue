@@ -11,7 +11,8 @@
     v-on="$listeners"
     ref="icon"
     :color="color"
-  >mdi-{{ icon }}
+  >
+    mdi-{{ icon }}
   </v-icon>
 </template>
 

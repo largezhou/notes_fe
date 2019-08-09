@@ -18,7 +18,7 @@
       @click="onShowMore"
       v-text="oneLine ? '更多' : '收起'"
       :absolute="oneLine"
-      outline
+      outlined
     />
   </div>
 </template>

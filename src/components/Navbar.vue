@@ -12,7 +12,7 @@
     :scroll-threshold="100"
   >
     <div class="v-toolbar__content wrapper container">
-      <v-btn flat icon v-if="!widescreen" @click="onToggleSliderBar">
+      <v-btn text icon v-if="!widescreen" @click="onToggleSliderBar">
         <mdi-icon icon="menu"/>
       </v-btn>
 
