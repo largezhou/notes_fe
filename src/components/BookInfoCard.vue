@@ -18,20 +18,7 @@
             class="book-info"
           >
             <div class="title text-ellipsis" :class="{ collapsed: !vExpand }">
-              <v-tooltip :bottom="widescreen" :left="!widescreen">
-                <template #activator="{ on }">
-                  <router-link
-                    v-on="on"
-                    :to="`/books/${book.id}`"
-                    v-if="widescreen"
-                  >
-                    {{ book.title }}
-                  </router-link>
-                  <span v-else v-on="on">{{ book.title }}</span>
-                </template>
-
-                <router-link :to="`/books/${book.id}`">{{ book.title }}</router-link>
-              </v-tooltip>
+              <router-link :to="`/books/${book.id}`">{{ book.title }}</router-link>
             </div>
             <div v-show="vExpand">
               <div class="item">

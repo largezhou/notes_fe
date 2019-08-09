@@ -3,10 +3,10 @@
     <v-card-text class="post-content-card">
       <h2
         v-show="subTitle"
-        class="text-center"
+        class="text-center sub-title"
         style="font-weight: unset"
       >{{ subTitle }}</h2>
-      <h1 class="text-center grey--text text--darken-3">{{ post.title }}</h1>
+      <h1 class="detail-title text-center grey--text text--darken-3">{{ post.title }}</h1>
       <div class="time">
         <v-tooltip top>
           <template #activator="{ on }">
@@ -105,5 +105,13 @@ export default {
   left: 5px;
   right: initial;
   border-bottom-right-radius: 4px !important;
+}
+
+.detail-title {
+  line-height: 35px;
+}
+
+.sub-title {
+  line-height: 30px;
 }
 </style>
