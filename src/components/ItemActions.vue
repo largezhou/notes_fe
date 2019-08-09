@@ -1,81 +1,58 @@
 <template>
-  <v-list
-    dense
-    class="item-actions"
-    :class="{ inline }"
-    rounded
-  >
+  <div class="item-actions" :class="{ inline }">
     <!-- 置顶与取消置顶 -->
-    <v-list-item v-if="setTop" @click="">
-      <v-list-item-action>
-        <loading-action
-          ref="toggleHidden"
-          :action="toggleIsTop"
-          icon
-          small
-        >
-          <mdi-icon :icon="item.is_top ? 'arrow-collapse-down' : 'arrow-collapse-up'"/>
-        </loading-action>
-      </v-list-item-action>
-    </v-list-item>
+    <loading-action
+      v-if="setTop"
+      ref="toggleHidden"
+      :action="toggleIsTop"
+      icon
+      small
+    >
+      <mdi-icon :icon="item.is_top ? 'arrow-collapse-down' : 'arrow-collapse-up'"/>
+    </loading-action>
 
     <!-- 隐藏与显示 -->
-    <v-list-item @click="">
-      <v-list-item-action>
-        <loading-action
-          ref="toggleHidden"
-          :action="toggleHidden"
-          icon
-          small
-        >
-          <mdi-icon :icon="item.hidden ? 'eye' : 'eye-off'"/>
-        </loading-action>
-      </v-list-item-action>
-    </v-list-item>
+    <loading-action
+      ref="toggleHidden"
+      :action="toggleHidden"
+      icon
+      small
+    >
+      <mdi-icon :icon="item.hidden ? 'eye' : 'eye-off'"/>
+    </loading-action>
 
     <!-- 编辑 -->
-    <v-list-item @click="">
-      <v-list-item-action>
-        <v-btn
-          icon
-          small
-          @click="onEdit"
-          :to="editLink"
-        >
-          <mdi-icon icon="pencil"/>
-        </v-btn>
-      </v-list-item-action>
-    </v-list-item>
+    <v-btn
+      icon
+      small
+      @click="onEdit"
+      :to="editLink"
+    >
+      <mdi-icon icon="pencil"/>
+    </v-btn>
 
     <!-- 删除与恢复 -->
-    <v-list-item @click="">
-      <v-list-item-action>
-        <loading-action
-          ref="deleteOrRestore"
-          :action="item.deleted_at ? restore : deleteNote"
-          small
-          icon
-        >
-          <mdi-icon :icon="item.deleted_at ? 'delete-restore' : 'delete'"/>
-        </loading-action>
-      </v-list-item-action>
-    </v-list-item>
+    <loading-action
+      ref="deleteOrRestore"
+      :action="item.deleted_at ? restore : deleteNote"
+      small
+      icon
+    >
+      <mdi-icon :icon="item.deleted_at ? 'delete-restore' : 'delete'"/>
+    </loading-action>
 
     <!-- 彻底删除 -->
-    <v-list-item @click="" v-if="item.deleted_at">
-      <v-list-item-action>
-        <loading-action
-          ref="forceDelete"
-          color="red"
-          :action="forceDelete"
-          icon
-          small
-        >
-          <mdi-icon icon="delete-forever"/>
-        </loading-action>
-      </v-list-item-action>
-    </v-list-item>
-  </v-list>
+    <loading-action
+      v-if="item.deleted_at"
+      ref="forceDelete"
+      color="red"
+      :action="forceDelete"
+      icon
+      small
+    >
+      <mdi-icon icon="delete-forever"/>
+    </loading-action>
+  </div>
 </template>
 
 <script>
@@ -173,20 +150,6 @@ export default {
 
   &.inline {
     flex-direction: row;
-  }
-
-  .v-list-item__action {
-    margin: 0;
-
-    > * {
-      padding: 8px;
-    }
-  }
-
-  .v-list-item {
-    padding: 0;
-    margin-bottom: 0 !important;
-    flex: none;
   }
 }
 </style>
