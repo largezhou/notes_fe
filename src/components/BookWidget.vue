@@ -1,7 +1,7 @@
 <template>
   <div style="overflow: hidden">
     <div class="book-widget">
-      <div v-if="books.length == 0 && !loading" class="empty title">啥书也没看~</div>
+      <div v-if="books.length === 0 && !loading" class="empty title">啥书也没看~</div>
       <template v-else>
         <v-card
           v-for="item of books"
@@ -71,7 +71,7 @@ export default {
   margin-right: -17px;
 
   .v-card {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
 
   .title {

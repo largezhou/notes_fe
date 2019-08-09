@@ -54,7 +54,7 @@ export default {
 
 <style scoped lang="scss">
 .search-result {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 
   ::v-deep {
     em {
