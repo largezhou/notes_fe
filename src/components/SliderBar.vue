@@ -5,7 +5,7 @@
     temporary
     @input="onChange"
   >
-    <v-list class="sidebar">
+    <v-list class="slider">
 
       <v-list-item
         @click="onClick"
@@ -162,9 +162,7 @@ export default {
 </script>
 
 <style lang="scss">
-.sidebar {
-  padding-top: 0;
-
+.slider {
   .v-list-item__icon {
     margin-right: 32px;
   }
