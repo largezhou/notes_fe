@@ -92,7 +92,7 @@ export default {
 
 <style scoped lang="scss">
 .markdown-body {
-  > > > {
+  ::v-deep {
     .katex-display {
       overflow-x: auto;
       overflow-y: hidden;

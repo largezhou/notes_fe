@@ -5,33 +5,71 @@
         :style="{ width: tagWidth }"
         ref="tags"
         class="tag"
-        flat
         color="primary"
-        outline
+        outlined
         :to="`/tags/${tag.id}`"
-      >{{ tag.name }}
+      >
+        {{ tag.name }}
         <span class="count">{{ tag.targets_count }}</span>
       </v-btn>
 
       <div class="actions" v-if="canEdit">
-        <v-input class="name-input" :style="nameInputStyle" v-show="nameEditing">
-          <input type="text" v-model="name" ref="input" @keyup.enter="onUpdateName">
-          <mdi-icon :loading="submitting" @click="onUpdateName" icon="check"/>
+        <v-input
+          hide-details
+          class="name-input"
+          :style="nameInputStyle"
+          v-show="nameEditing"
+        >
+          <input
+            type="text"
+            v-model="name"
+            ref="input"
+            @keyup.enter="() => $refs.updateName.onAction()"
+          >
+          <loading-action
+            ref="updateName"
+            :action="onUpdateName"
+            comp="mdi-icon"
+            icon="check"
+          />
           <mdi-icon @click="onCancelEditName" icon="close"/>
         </v-input>
+
         <div v-show="actionsOpened && !nameEditing">
-          <v-btn flat small icon @click="onNameEdit">
+          <v-btn
+            text
+            small
+            icon
+            @click="onNameEdit"
+          >
             <mdi-icon color="grey darken-1" icon="pencil"/>
           </v-btn>
-          <v-btn flat small icon @click="onDelete">
-            <mdi-icon :loading="deleting" color="grey darken-1" icon="delete"/>
-          </v-btn>
-          <v-btn flat small icon @click="actionsOpened = false">
+          <loading-action
+            :action="onDelete"
+            text
+            small
+            icon
+          >
+            <mdi-icon color="grey darken-1" icon="delete"/>
+          </loading-action>
+          <v-btn
+            text
+            small
+            icon
+            @click="actionsOpened = false"
+          >
             <mdi-icon color="grey darken-1" icon="close"/>
           </v-btn>
         </div>
 
-        <v-btn class="settings" v-show="!actionsOpened" flat small icon @click="onOpen">
+        <v-btn
+          class="settings"
+          v-show="!actionsOpened"
+          text
+          small
+          icon
+          @click="onOpen"
+        >
           <mdi-icon color="grey darken-1" icon="settings"/>
         </v-btn>
       </div>
@@ -54,9 +92,6 @@ export default {
     name: '',
     // 标签是否太靠右
     veryRight: false,
-
-    submitting: false,
-    deleting: false,
   }),
   created() {
     this.name = this.tag.name
@@ -92,24 +127,16 @@ export default {
     },
   },
   methods: {
-    onDelete() {
-      this.$confirm({
+    async onDelete() {
+      await this.$confirm({
         title: '删除确认',
         okColor: 'red',
         okText: '删除',
         content: '删除后不可恢复！！！',
       })
-        .then(() => {
-          this.deleting = true
 
-          delTag(this.tag.id)
-            .then(() => {
-              this.$set(this.tag, 'deleted', true)
-            })
-            .finally(() => {
-              this.deleting = false
-            })
-        })
+      await delTag(this.tag.id)
+      this.$set(this.tag, 'deleted', true)
     },
 
     onCancelEditName() {
@@ -130,12 +157,7 @@ export default {
         this.$refs.input.focus()
       })
     },
-    onUpdateName() {
-      if (this.submitting) {
-        this.$dialog('等下~')
-        return
-      }
-
+    async onUpdateName() {
       const name = this.name.trim()
 
       const error = msg => {
@@ -159,17 +181,10 @@ export default {
         return
       }
 
-      this.submitting = true
-
-      updateTag(this.tag.id, { name })
-        .then(res => {
-          this.tag.name = name
-          this.onCancelEditName()
-          this.actionsOpened = false
-        })
-        .finally(() => {
-          this.submitting = false
-        })
+      await updateTag(this.tag.id, { name })
+      this.tag.name = name
+      this.onCancelEditName()
+      this.actionsOpened = false
     },
 
     onOpen() {
@@ -177,8 +192,9 @@ export default {
       this.actionsOpened = true
     },
     onOtherTagActionsOpened(tag) {
-      if (this.tag.id != tag.id) {
+      if (this.tag.id !== tag.id) {
         this.actionsOpened = false
+        this.nameEditing = false
       }
     },
   },
@@ -249,7 +265,7 @@ export default {
 
   width: 140px;
 
-  > > > {
+  ::v-deep {
     .v-input__control {
       height: 100%;
     }

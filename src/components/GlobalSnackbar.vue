@@ -6,7 +6,7 @@
     {{ text }}
     <v-btn
       color="pink"
-      flat
+      text
       @click="shown = false"
     >
       <mdi-icon icon="close"/>

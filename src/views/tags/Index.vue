@@ -41,8 +41,7 @@ export default {
   methods: {
     _getData() {
       return getTags()
-        .then(res => {
-          const data = res.data
+        .then(({ data }) => {
           this.tags = data
         })
     },
@@ -52,8 +51,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.tag-index {
-}
-</style>

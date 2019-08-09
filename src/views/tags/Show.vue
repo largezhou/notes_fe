@@ -4,7 +4,7 @@
       <v-tabs
         fixed-tabs
         v-model="type"
-        color="transparent"
+        background-color="transparent"
       >
         <v-tab class="tag-type" href="#notes">笔记{{ this.notes.length ? ` • ${this.notes.length}` : '' }}</v-tab>
         <v-tab class="tag-type" href="#posts">博客{{ this.posts.length ? ` • ${this.posts.length}` : '' }}</v-tab>

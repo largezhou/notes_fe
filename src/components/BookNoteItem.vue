@@ -154,7 +154,7 @@ export default {
     color: #ccc;
   }
 
-  > > > {
+  ::v-deep {
     .v-progress-linear {
       margin: 3px 0;
     }

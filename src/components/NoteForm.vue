@@ -240,7 +240,7 @@ export default {
 <style scoped lang="scss">
 @import '~@/styles/variables';
 
-> > > {
+::v-deep {
   .has-error {
     .v-tabs__item {
       color: $error-color;

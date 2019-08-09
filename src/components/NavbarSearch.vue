@@ -61,7 +61,7 @@ export default {
 .navbar-search {
   flex-grow: 0;
 
-  > > > .v-input__control {
+  ::v-deep .v-input__control {
     min-height: 40px;
   }
 }
