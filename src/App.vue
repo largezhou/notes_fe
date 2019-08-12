@@ -14,12 +14,16 @@
           <span><strong><a href="mailto:largezhou@hotmail.com">largezhou@hotmail.com</a></strong></span>
         </div>
       </v-footer>
-    </v-app>
 
-    <back-to-top/>
-    <global-confirm/>
-    <slider-bar v-if="!widescreen"/>
-    <new-book/>
+      <back-to-top/>
+
+      <global-confirm/>
+
+      <slider-bar v-if="!widescreen"/>
+
+      <new-book/>
+
+    </v-app>
   </div>
 </template>
 

@@ -12,7 +12,12 @@
     :scroll-threshold="100"
   >
     <div class="v-toolbar__content wrapper container">
-      <v-btn text icon v-if="!widescreen" @click="onToggleSliderBar">
+      <v-btn
+        text
+        icon
+        v-if="!widescreen"
+        @click="onToggleSliderBar"
+      >
         <mdi-icon icon="menu"/>
       </v-btn>
 
@@ -163,10 +168,6 @@ export default {
   .v-btn {
     font-size: 18px;
   }
-}
-
-.v-btn--active:before {
-  background-color: initial;
 }
 
 .navbar-menu-icon {

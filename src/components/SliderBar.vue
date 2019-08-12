@@ -160,11 +160,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss">
-.slider {
-  .v-list-item__icon {
-    margin-right: 32px;
-  }
-}
-</style>
