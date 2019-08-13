@@ -4,6 +4,10 @@
 
 <script>
 import { mapState } from 'vuex'
+import Vue from 'vue'
+import { VImg } from 'vuetify/lib'
+
+Vue.component('VImg', VImg)
 
 export default {
   name: 'MarkdownBody',
@@ -36,12 +40,12 @@ export default {
     },
 
     onPreviewImg(e) {
-      if (e.target.tagName != 'IMG') {
+      if (e.target.tagName !== 'IMG') {
         return
       }
 
       const maxWidth = 1200
-      const maxHeight = this.device == 'mobile' ? 600 : 800
+      const maxHeight = this.device === 'mobile' ? 600 : 800
 
       const img = e.target
 
