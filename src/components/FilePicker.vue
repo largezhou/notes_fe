@@ -80,20 +80,23 @@ export default {
     },
   },
   watch: {
-    value(newValue) {
-      if (vFile(newValue)) {
-        this.filename = newValue.name
-      } else {
-        this.filename = newValue
-      }
+    value: {
+      handler(newValue) {
+        if (vFile(newValue)) {
+          this.filename = newValue.name
+        } else {
+          this.filename = newValue
+        }
 
-      if (vImage(newValue)) {
-        this.src = URL.createObjectURL(newValue)
-      } else if (typeof newValue === 'string') {
-        this.src = newValue
-      } else {
-        this.src = ''
-      }
+        if (vImage(newValue)) {
+          this.src = URL.createObjectURL(newValue)
+        } else if (typeof newValue === 'string') {
+          this.src = newValue
+        } else {
+          this.src = ''
+        }
+      },
+      immediate: true,
     },
   },
 }
