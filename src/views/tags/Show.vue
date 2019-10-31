@@ -1,5 +1,5 @@
 <template>
-  <page-layout :page-desc="tag ?`${tag.name} • ${tag.targets_count}` : ''" :loading="loading">
+  <page-layout :page-desc="tag ?`${tag.name} • ${allCount}` : ''" :loading="loading">
     <template v-if="tag">
       <v-tabs
         fixed-tabs
@@ -65,6 +65,11 @@ export default {
     posts: [],
     type: 'notes',
   }),
+  computed: {
+    allCount() {
+      return this.notes.length + this.posts.length
+    },
+  },
   created() {
     this.getData()
   },
