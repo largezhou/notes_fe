@@ -17,7 +17,7 @@
 
         <v-tooltip top style="margin-left: 10px;">
           <template #activator="{ on }">
-            <span v-on="on">{{ post.created_at }}</span>
+            <span v-on="on">{{ post.updated_at }}</span>
           </template>
           <span>修改于</span>
         </v-tooltip>
