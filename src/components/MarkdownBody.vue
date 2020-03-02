@@ -105,6 +105,10 @@ export default {
     img {
       cursor: pointer;
     }
+    
+    pre {
+      tab-size: 4;
+    }
   }
 
   line-height: 1.75;
