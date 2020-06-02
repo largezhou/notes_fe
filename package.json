@@ -26,7 +26,6 @@
     "mavon-editor": "^2.6.17",
     "mockjs": "^1.0.1-beta3",
     "moment": "^2.22.2",
-    "node-sass": "^4.9.0",
     "normalize.css": "^8.0.0",
     "roboto-fontface": "*",
     "sass": "^1.17.4",
