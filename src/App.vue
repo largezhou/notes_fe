@@ -10,8 +10,7 @@
       </v-content>
       <v-footer color="grey lighten-2" class="flex justify-center">
         <div class="footer-items">
-          <span class="copyright">Copyright <strong>largezhou</strong></span>
-          <span><strong><a href="mailto:largezhou@hotmail.com">largezhou@hotmail.com</a></strong></span>
+          <span><strong><a href="https://beian.miit.gov.cn/#/Integrated/recordQuery">湘ICP备20011753号-1</a></strong></span>
         </div>
       </v-footer>
 
